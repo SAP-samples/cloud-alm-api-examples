@@ -18,6 +18,7 @@ Currently we provide the following assets:
   - Kanban Board
 - Jupyter Notebooks
   - For Project and Tasks
+- Postman collections for testing
 
 ## How to obtain support
 
