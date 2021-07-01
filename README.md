@@ -14,9 +14,9 @@ https://www.youtube.com/playlist?list=PLFrwZZeBUtfiJyWpJ2nmokXOFSue_Z7sQ)
 Licenses are covered in [LICENSES/Apache-2.0.txt](LICENSES/Apache-2.0.txt)
 ## Details
 Currently we provide the following assets:
-- Sample Applications
+- [Sample Applications](applications)
   - Kanban Board
-- Jupyter Notebooks
+- [Jupyter Notebooks](jupyternotebooks)
   - For Project and Tasks
 - Postman collections for testing
 
