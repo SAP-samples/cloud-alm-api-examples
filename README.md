@@ -4,11 +4,8 @@
 
 In this Github repository we provide open source examples for APIs that get delivered within SAP Cloud ALM.
 
-## Requirements
+## Details
 
-## Download and Installation
-
-## Known Issues
 
 ## How to obtain support
 
