@@ -5,7 +5,7 @@ This is a sample application using the SAP Cloud ALM APIs for Project and Task M
 
 ### Structure
 Another
-´´´
+```
 
                                                    +----------------------------------+                                          
                                                     |                                  |                                          
@@ -38,4 +38,4 @@ Another
                                                     |                                  |                                          
                                                     +----------------------------------+                                          
                                                                                                        
-´´´
+```
