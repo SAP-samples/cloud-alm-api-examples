@@ -1,0 +1,311 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="utf-8" />
+	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+	<meta name="viewport" content="width=device-width, initial-scale=1" />
+	<title>SAP Cloud ALM - Kanban Board!</title>
+	<!-- bootstrap 5 is buggy shit -->
+	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
+		integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" />
+</head>
+
+<body>
+	<div class="container-fluid my-3">
+		<nav class="navbar navbar-light bg-light">
+			<form class="form-inline">
+				<select class="form-control mr-2 mb-2" id="kanbanProjects">
+				</select>
+				<button type="button" class="mb-2 btn btn-primary enableOnProjectSelected createNewTaskButton"
+					disabled>New Task</button>
+			</form>
+		</nav>
+		<div class="row" id="kanbanScopes">
+		</div>
+	</div>
+	<template id="kanbanScope">
+		<div class="kanbanScope col-md-4 mt-2">
+			<nav class="navbar {{ color }}">
+				<span class="navbar-text text-light">{{ label }}</span>
+				<button type="button" class="close" aria-label="Close">
+					<span aria-hidden="true">&times;</span>
+				</button>
+			</nav>
+			<div class="p-2 kanbanItems {{ color }} " data-scope="{{ scope }}">
+			</div>
+		</div>
+	</template>
+	<template id="kanbanItem">
+		<div class="m-2 kanbanItem card rounded" data-taskid="{{ id }}">
+			<div class="card-body ">
+				<h5 class="card-title ">{{ title }}</h5>
+				<input type="text" class="form-control clickedit " aria-label="Task Title"
+					aria-describedby="basic-addon2" value="{{ title }}">
+				<!--	<p class="card-text"><small class="text-muted">Due: {{ dueDate }}</small></p> -->
+			</div>
+		</div>
+	</template>
+	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
+		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+	<!-- bootstrap 5 is buggy shit -->
+	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
+		integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
+		crossorigin="anonymous"></script>
+	<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+	<script type="text/javascript">
+		var scopes = {
+			CIPTKOPEN: {
+				label: 'OPEN',
+				color: 'bg-secondary',
+				put: ['CIPTKINP']
+			},
+			CIPTKINP: {
+				label: 'IN PROGRESS',
+				color: 'bg-info',
+				put: ['CIPTKOPEN', 'CIPTKCLOSE']
+			},
+			CIPTKCLOSE: {
+				label: 'DONE',
+				color: 'bg-success',
+				put: ['CIPTKINP']
+			}
+		};
+
+		function getProjects() {
+			jQuery('select#kanbanProjects').off('change');
+			jQuery('select#kanbanProjects').find('option').remove();
+			jQuery.ajax('/getprojects', {
+				dataType: 'json',
+				crossDomain: true
+			}).done(function (data) {
+				jQuery('select#kanbanProjects').append(new jQuery('<option>', {
+					text: "Select Project",
+					disabled: '',
+					selected: '',
+				}));
+				jQuery.each(data, function (index, project) {
+					jQuery('select#kanbanProjects').append(new jQuery('<option>', {
+						value: project.id,
+						text: project.name
+					}))
+				});
+				jQuery('select#kanbanProjects').on('change', function (event) {
+					getItems(jQuery('select#kanbanProjects').val());
+				});
+				console.log("Projects retrieved: ", data);
+
+
+			}).fail(function () {
+				console.log("Failed project retrieval");
+				var projects = [
+					{ id: 0, name: 'Demo Data 0' },
+					{ id: 1, name: 'Demo Data 1' },
+
+				];
+				jQuery.each(projects, function (index, project) {
+					jQuery('select#kanbanProjects').append(new jQuery('<option>', {
+						value: project.id,
+						text: project.name
+					}))
+				});
+				jQuery('select#kanbanProjects').on('change', function (event) {
+					getItems(jQuery('select#kanbanProjects').val());
+				});
+			});
+		}
+
+		function getItems(projectId) {
+			jQuery('div#kanbanScopes').find('div.kanbanScope').remove();
+			jQuery.each(scopes, function (scopeName, scope) {
+				var scopeHtml = jQuery('template#kanbanScope').clone().html();
+				// replace {{ scope }} with scopeName
+				scopeHtml = scopeHtml.replace('{{ scope }}', scopeName);
+				// replace {{ placeholder }} with scope.placeholder
+				scopeHtml = scopeHtml.replace(/{{ (.*) }}/g, function (text, placeholder) {
+					return scope[placeholder] || '';
+				});
+				var scopeElement = jQuery(scopeHtml);
+
+
+				//Enable Creation of new elements after project has been loaded
+				$('.enableOnProjectSelected').prop('disabled', false);
+
+				// do ajax call for project tasks
+				jQuery.ajax('/gettasks?projectid=' + projectId + '&status=' + scopeName, {
+					dataType: 'json',
+					async: false,
+					crossDomain: true
+				}).done(function (data) {
+
+					jQuery.each(data, function (index, item) {
+						var itemHtml = jQuery('template#kanbanItem').clone().html();
+						itemHtml = itemHtml.replace(/{{ (.*) }}/g, function (text, placeholder) {
+							return item[placeholder] || '';
+						});
+						var itemElement = jQuery(itemHtml);
+						scopeElement.find('div.kanbanItems').append(itemElement);
+					});
+					jQuery('div#kanbanScopes').append(scopeElement);
+					new Sortable(jQuery('div.kanbanItems[data-scope="' + scopeName + '"]').get(0), {
+						draggable: '.kanbanItem',
+						sort: true,
+						direction: 'vertical',
+						animation: 100,
+						ghostClass: 'bg-light',
+						emptyInsertThreshold: 50,
+						group: {
+							name: scopeName,
+							put: scope.put,
+							pull: true
+						},
+						onEnd: function (evt) {
+
+							console.log("Task " + evt.item.dataset.taskid + " dropped on " + evt.to.dataset.scope);
+
+							var newTaskData = { status: evt.to.dataset.scope };
+
+
+							jQuery.ajax('/editTask?taskid=' + evt.item.dataset.taskid, {
+								dataType: 'json',
+								type: 'PATCH',
+								contentType: "application/json",
+								data: JSON.stringify(newTaskData),
+								async: false,
+								crossDomain: true
+							}).done(function (data) {
+
+								console.log("Task Status changed!");
+
+							}).fail(function () {
+
+								console.log("Task status change  FAILED!");
+
+							});
+
+							//console.log(evt);
+						}
+					});
+
+					console.log("Tasks retrieved: ", data);
+
+				}).fail(function () {
+
+					console.log("Failed project retrieval");
+
+				});
+			});
+
+			//Add Handler to all Input forms for click editing...
+			addClickEventHandlers();
+		}
+		// document ready
+		jQuery(function () {
+			getProjects();
+		});
+
+		$('.createNewTaskButton').click(function () {
+			var itemHtml = jQuery('template#kanbanItem').clone().html();
+			var itemElement = jQuery(itemHtml);
+
+			var newTaskData = { projectId: jQuery('select#kanbanProjects').val(), title: "New Task", type: "CALMTASK" };
+
+			console.log(newTaskData);
+
+			jQuery.ajax('/createTask', {
+				dataType: 'json',
+				type: 'POST',
+				contentType: "application/json",
+				data: JSON.stringify(newTaskData),
+				crossDomain: true
+			}).done(function (data) {
+
+				console.log(data);
+				console.log("Done task creation!");
+
+
+				itemHtml = itemHtml.replace(/{{ (.*) }}/g, function (text, placeholder) {
+					return data[placeholder] || '';
+				});
+
+				console.log('after creation of task: ' + data.id);
+
+				jQuery('div.kanbanItems[data-scope="CIPTKOPEN"]').prepend(itemHtml);
+				addClickEventHandlers();
+
+				//Add again after TASKID is really updated...
+				jQuery('div.kanbanItem[data-taskid="' + data.id + '"] .card-body .card-title').trigger('click');
+
+			}).fail(function () {
+
+				console.log("Failed task creation!");
+
+			});
+		});
+
+
+		function addClickEventHandlers() {
+			console.log('Click Event Handlers updated');
+
+			$('.clickedit').off();
+
+			$('.clickedit').hide()
+				.focusout(endEdit)
+				.keyup(function (e) {
+					if ((e.which && e.which == 13) || (e.keyCode && e.keyCode == 13)) {
+						endEdit(e);
+						return false;
+					} else {
+						return true;
+					}
+				})
+				.prev().click(function () {
+					$(this).hide();
+					$(this).next().show().focus();
+					$(this).next().show().focus().select();
+				});
+
+		}
+
+		function endEdit(e) {
+			var input = $(e.target),
+				label = input && input.prev();
+
+			var changedTaskId = input.parent().parent().data("taskid");
+			var newTitle = input.val();
+
+			console.log(input);
+
+			var newTaskData = { title: newTitle };
+
+			console.log(newTaskData);
+
+			jQuery.ajax('/editTask?taskid=' + changedTaskId, {
+				dataType: 'json',
+				type: 'PATCH',
+				contentType: "application/json",
+				data: JSON.stringify(newTaskData),
+				crossDomain: true
+			}).done(function (data) {
+				//When the update works, set also the label to the new text
+				label.text(input.val() === '' ? defaultText : input.val());
+				input.hide();
+				label.show();
+
+				console.log("Task edited!");
+
+			}).fail(function () {
+				//When the update fails, set the text back to the original
+				input.val( label.text() );
+
+				input.hide();
+				label.show();
+				console.log("Task edit FAILED!");
+
+			});
+			console.log("end Edit");
+		}
+	</script>
+</body>
+
+</html>

@@ -1,0 +1,19 @@
+{
+  "name": "kanban4calm",
+  "version": "0.0.1",
+  "description": "Node.js server for Kanban Board for CALM",
+  "main": "server.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "axios": "^0.21.1",
+    "express": "^4.17.1",
+    "request": "^2.88.2"
+  },
+  "engines": {
+    "node": "14.16.1"
+  }
+}
