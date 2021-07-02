@@ -27,8 +27,6 @@ In addition there are a few more rules that we would like you to follow:
 
 -   Apply a clean coding style adapted to the surrounding code, even though we are aware the existing code is not fully clean
 -   Use tabs for indentation (except if the modified file consistently uses spaces)
--   Use variable and CSS class naming conventions like in the other files you are seeing (e.g. hungarian notation)
--   No global variables, of course, and [use "jQuery" instead of "$"](http://learn.jquery.com/using-jquery-core/avoid-conflicts-other-libraries/)
 -   Only access public APIs of other entities 
 -   Comment your code where it gets non-trivial and remember to keep the public JSDoc documentation up-to-date
 -   Keep an eye on performance and memory consumption, properly destroy objects when not used anymore (e.g. avoid ancestor selectors in CSS)
