@@ -1,0 +1,14 @@
+
+{
+    //More info on how to maintain and obtain these values is HERE(tbd)
+    
+    "auth_url": "<URL to the authentication service of YOUR tenant>",
+    //e.g. https://calm-demo.authentication.eu10.alm.cloud.sap/oauth/token
+    
+    "client_id": "<YOUR client_id>",
+    "client_secret": "<YOUR client_secret>",
+    
+    "api_baseurl": "<URL to YOUR tenant>"
+    //e.g. https://calm-demo.eu10.alm.cloud.sap
+    //Note: WITHOUT trailing /
+}

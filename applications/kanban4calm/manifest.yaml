@@ -1,0 +1,7 @@
+---
+applications:
+- name: kanban4calmserver
+  random-routes: true
+  path: server
+  memory: 128M
+

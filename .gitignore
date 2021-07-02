@@ -5,6 +5,9 @@ npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 
+#Config Files for node.js applications ( provide config.json.sample instead)
+config.json
+
 #MacOs
 .DS_Store
 
