@@ -1,7 +1,5 @@
 # API examples for SAP Cloud ALM
 
-## Description
-
 In this Github repository we provide open source examples for APIs that get delivered within SAP Cloud ALM.
 The actual APIs for SAP Cloud ALM are [documented in the SAP API Hub](https://api.sap.com/package/SAPCloudALM/rest). Here we want to provide you with help on getting started with the APIs, some sample applications, code snippets,...
 
@@ -11,8 +9,6 @@ If you want to learn more about SAP Cloud ALM:
 - or watch some [videos on YouTube on SAP Cloud ALM](
 https://www.youtube.com/playlist?list=PLFrwZZeBUtfiJyWpJ2nmokXOFSue_Z7sQ)
 
-Licenses are covered in [LICENSES/Apache-2.0.txt](LICENSES/Apache-2.0.txt)
-## Details
 Currently we provide the following assets:
 - [Sample Applications](applications)
   - Kanban Board
