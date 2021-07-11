@@ -14,9 +14,9 @@ This is a sample application using the SAP Cloud ALM APIs for Project and Task M
 ### How it works
 
 The app consists mainly of three files
-- [server/static/index.html] - Contains the client side code, a very simple bootstrap based application that uses SortableJS to create containers, fill them with tasks and manage the creation of new tasks, editing existing tasks and drap&drop to change the stauts
-- [server/server.js] - Contains the server side code that serves the client side coding, handles OAuth2 authentification and making the actual API calls (incl. a bit of filtering here and there)
-- [server/config.json] - Contains the URLs to the SAP Cloud ALM tenant API and the client credentials (client_id and client_secret) used for authentication. Please copy config.json.sample and adapt to you local needs
+- [server/static/index.html](server/static/index.html) - Contains the client side code, a very simple bootstrap based application that uses SortableJS to create containers, fill them with tasks and manage the creation of new tasks, editing existing tasks and drap&drop to change the stauts
+- [server/server.js](server/server.js) - Contains the server side code that serves the client side coding, handles OAuth2 authentification and making the actual API calls (incl. a bit of filtering here and there)
+- [server/config.json](server/config.json) - Contains the URLs to the SAP Cloud ALM tenant API and the client credentials (client_id and client_secret) used for authentication. Please copy config.json.sample and adapt to you local needs
 
 Additionally two supporting files:
 - [server/package.json](server/package.json) - contains the required NodeJS modules, information on the runtime environment and the necessary NodeJS version to run it in CloudFoundry
