@@ -13,11 +13,8 @@ var calmAuth = new ClientOAuth2({
   accessTokenUri: CONFIG.auth_url
 })
 
-var myToken;
-
 app.use(express.static('static'));
 app.use(express.json());
-
 
 app.get('/test', function (req, res) {
   //See if the server is running and OAuth2 is working working...
@@ -42,9 +39,8 @@ app.get('/getprojects', function (req, res) {
     .then(function (user) {
 
       //The access token is provided in the results of the OAuth request
-      myToken = user.accessToken;
       const axiosConfig = {
-        headers: { Authorization: `Bearer ${myToken}` }
+        headers: { Authorization: `Bearer ${user.accessToken}` }
       };
 
       //Using Axios for the actual API Calls
@@ -91,32 +87,28 @@ app.post('/createTask', function (req, res) {
     .then(function (user) {
 
       //The access token is provided in the results of the OAuth request
-      myToken = user.accessToken;
-      //console.log("Access Token:", myToken);
-      var second = require('request');
-
-      const config = {
-        headers: { Authorization: `Bearer ${myToken}` }
+      const axiosConfig = {
+        headers: { Authorization: `Bearer ${user.accessToken}` }
       };
 
-      const bodyParameters = {
-        projectId: "f5b25719-e1ab-4de7-be36-e58b119b693b",
-        title: 'New Task',
-        type: 'CALMTASK'
-      };
+      //Using Axios for the actual API Calls
+      var apiCall = require('axios');
 
-      axios.post(
+      //Pass through the body parameters from the client to the API Call
+      const bodyParameters = req.body;
+
+      apiCall.post(
         CONFIG.api_baseurl + '/api/calm-tasks/v1/tasks/',
         bodyParameters,
-        config
-      ).then((response) => {
-        console.log(response.data);
-        res.send(response.data);
-      }, (error) => {
-        console.log('Error Code: ' + error.response.status);
+        axiosConfig
+      ).then((apiResponse) => {
+        //console.log(apiResponse.data);
+        res.send(apiResponse.data);
+      }, (apiError) => {
+        console.log('Error Code: ' + apiError.response.status);
 
-        res.send(error.response.status, error.response.data);
-        console.log(error);
+        res.send(apiError.response.status, apiError.response.data);
+        console.log(apiError);
       });
     });
 });
@@ -124,54 +116,54 @@ app.post('/createTask', function (req, res) {
 app.patch('/editTask', function (req, res) {
   const url = require('url');
   const queryObject = url.parse(req.url, true).query;
-  console.log(queryObject);
+
+  //console.log(queryObject);
 
   console.log('Edit task called');
 
-  console.log('Task ID: ' + queryObject.taskid);
-  console.log('New Title: ' + req.body.title);
+  console.log('  Task ID: ' + queryObject.taskid);
+  console.log('  New Title: ' + req.body.title);
+  console.log('  New Status: ' + req.body.status);
 
   //Perform OAuth Request to get Bearer Token
   calmAuth.credentials.getToken()
     .then(function (user) {
 
       //The access token is provided in the results of the OAuth request
-      myToken = user.accessToken;
-
-      const config = {
-        headers: { Authorization: `Bearer ${myToken}` }
+      const axiosConfig = {
+        headers: { Authorization: `Bearer ${user.accessToken}` }
       };
 
       const bodyParameters = {
         title: req.body.title,
         status: req.body.status
       };
-      var axios = require('axios');
 
+      var apiCall = require('axios');
 
-      axios.patch(
+      apiCall.patch(
         CONFIG.api_baseurl + '/api/calm-tasks/v1/tasks/' + queryObject.taskid,
         bodyParameters,
-        config
-      ).then((response) => {
-        console.log(response.data);
-        res.send(response.data);
-      }, (error) => {
-        console.log('Error Code: ' + error.response.status);
+        axiosConfig
+      ).then((apiResponse) => {
+        //console.log(apiResponse.data);
+        res.send(apiResponse.data);
+      }, (apiError) => {
+        console.log('Error Code: ' + apiError.response.status);
 
-        res.send(error.response.status, error.response.data);
-        console.log(error);
+        res.send(apiError.response.status, apiError.response.data);
+        console.log(apiError);
 
       });
     });
 });
 
 app.get('/gettasks', function (req, res) {
-  
+
   const url = require('url');
-  //console.log(req);
   const queryObject = url.parse(req.url, true).query;
-  //console.log(queryObject);
+
+  console.log('Get Tasks called');
 
   var tasks = [];
 
@@ -180,31 +172,41 @@ app.get('/gettasks', function (req, res) {
     .then(function (user) {
 
       //The access token is provided in the results of the OAuth request
-      myToken = user.accessToken;
-      //console.log("Access Token:", myToken);
-      var second = require('request');
-      second({
-        url: CONFIG.api_baseurl + '/api/calm-tasks/v1/tasks?projectId=' + queryObject.projectid,
-        auth: {
-          'bearer': myToken
-        }
-      }, function (api_err, api_res) {
-        //console.log(api_res.body);
+      const axiosConfig = {
+        headers: { Authorization: `Bearer ${user.accessToken}` }
+      };
 
-        JSON.parse(api_res.body).forEach(element => {
-          console.log(element);
+      var apiCall = require('axios');
+      apiCall.get(
+        CONFIG.api_baseurl + '/api/calm-tasks/v1/tasks?projectId=' + queryObject.projectid,
+        axiosConfig
+      ).then((apiResponse) => {
+        //The response contains the JSON with the project details...
+        //console.log(apiResponse.data);
+
+        //Filter out tasks with the wrong status
+        apiResponse.data.forEach(element => {
+          //console.log(element);
           if (element.status == queryObject.status) {
             //console.log("SENT");
             tasks.push(element);
           }
         });
 
-        ////console.log(tasks);
+        //send results
+        //console.log(tasks);
         res.send(tasks);
+
+      }, (apiError) => {
+        //Hand over the error response from the API to the client
+        console.log('Error Code: ' + apiError.response.status);
+
+        res.send(apiError.response.status, error.response.data);
+        console.log(apiError);
       });
     });
-
 });
+
 const port = process.env.PORT || 3000;
 app.listen(port, function () {
   console.log('myapp listening on port ' + port);
