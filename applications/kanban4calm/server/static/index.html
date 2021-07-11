@@ -20,18 +20,18 @@
 					disabled>New Task</button>
 			</form>
 		</nav>
-		<div class="row" id="kanbanScopes">
+		<div class="row" id="kanbanBoard">
 		</div>
 	</div>
-	<template id="kanbanScope">
-		<div class="kanbanScope col-md-4 mt-2">
+	<template id="kanbanContainer">
+		<div class="kanbanContainer col-md-4 mt-2">
 			<nav class="navbar {{ color }}">
 				<span class="navbar-text text-light">{{ label }}</span>
 				<button type="button" class="close" aria-label="Close">
 					<span aria-hidden="true">&times;</span>
 				</button>
 			</nav>
-			<div class="p-2 kanbanItems {{ color }} " data-scope="{{ scope }}">
+			<div class="p-2 kanbanItems {{ color }} " data-lane="{{ lane }}">
 			</div>
 		</div>
 	</template>
@@ -54,7 +54,7 @@
 	
 	<!-- Define the three swim lanes with the necessary task status mapping and drag&drop config-->
 	<script type="text/javascript">
-		var scopes = {
+		var lanes = {
 			CIPTKOPEN: {
 				label: 'OPEN',
 				color: 'bg-secondary',
@@ -125,26 +125,26 @@
 		//Getting the tasks for a specific project (is triggered when the project selection is changed)
 		function getItems(projectId) {
 			//Delete all exising Swimlanes
-			jQuery('div#kanbanScopes').find('div.kanbanScope').remove();
+			jQuery('div#kanbanBoard').find('div.kanbanContainer').remove();
 			
-			//For each scope defined in the global config, duplicate the template and replace placeholders
+			//For each lane defined in the global config, duplicate the template and replace placeholders
 			//Then get the tasks and add them to the swimlane, initialize SortableJS et voila...
-			jQuery.each(scopes, function (scopeName, scope) {
-				var scopeHtml = jQuery('template#kanbanScope').clone().html();
-				// replace {{ scope }} with scopeName
-				scopeHtml = scopeHtml.replace('{{ scope }}', scopeName);
-				// replace {{ placeholder }} with scope.placeholder
-				scopeHtml = scopeHtml.replace(/{{ (.*) }}/g, function (text, placeholder) {
-					return scope[placeholder] || '';
+			jQuery.each(lanes, function (laneName, lane) {
+				var laneHtml = jQuery('template#kanbanContainer').clone().html();
+				// replace {{ lane }} with laneName
+				laneHtml = laneHtml.replace('{{ lane }}', laneName);
+				// replace {{ placeholder }} with lane.placeholder
+				laneHtml = laneHtml.replace(/{{ (.*) }}/g, function (text, placeholder) {
+					return lane[placeholder] || '';
 				});
-				var scopeElement = jQuery(scopeHtml);
+				var laneElement = jQuery(laneHtml);
 
 
 				//Enable Creation of new elements after project has been loaded
 				$('.enableOnProjectSelected').prop('disabled', false);
 
 				// do ajax call to get the project tasks, for the current status...
-				jQuery.ajax('/gettasks?projectid=' + projectId + '&status=' + scopeName, {
+				jQuery.ajax('/gettasks?projectid=' + projectId + '&status=' + laneName, {
 					dataType: 'json',
 					async: false,
 					crossDomain: true
@@ -157,12 +157,12 @@
 							return item[placeholder] || '';
 						});
 						var itemElement = jQuery(itemHtml);
-						scopeElement.find('div.kanbanItems').append(itemElement);
+						laneElement.find('div.kanbanItems').append(itemElement);
 					});
-					jQuery('div#kanbanScopes').append(scopeElement);
+					jQuery('div#kanbanBoard').append(laneElement);
 
 					//Initialize SortableJS for the swimlane
-					new Sortable(jQuery('div.kanbanItems[data-scope="' + scopeName + '"]').get(0), {
+					new Sortable(jQuery('div.kanbanItems[data-lane="' + laneName + '"]').get(0), {
 						draggable: '.kanbanItem',
 						sort: true,
 						direction: 'vertical',
@@ -170,16 +170,16 @@
 						ghostClass: 'bg-light',
 						emptyInsertThreshold: 50,
 						group: {
-							name: scopeName,
-							put: scope.put,
+							name: laneName,
+							put: lane.put,
 							pull: true
 						},
 						//Event handler when something is dropped --> Change the status
 						onEnd: function (evt) {
 
-							console.log("Task " + evt.item.dataset.taskid + " dropped on " + evt.to.dataset.scope);
+							console.log("Task " + evt.item.dataset.taskid + " dropped on " + evt.to.dataset.lane);
 
-							var newTaskData = { status: evt.to.dataset.scope };
+							var newTaskData = { status: evt.to.dataset.lane };
 
 							jQuery.ajax('/editTask?taskid=' + evt.item.dataset.taskid, {
 								dataType: 'json',
@@ -250,7 +250,7 @@
 				console.log('after creation of task: ' + data.id);
 
 				//All new cards are added to the open swimlane
-				jQuery('div.kanbanItems[data-scope="CIPTKOPEN"]').prepend(itemHtml);
+				jQuery('div.kanbanItems[data-lane="CIPTKOPEN"]').prepend(itemHtml);
 				addClickEventHandlers();
 
 				//Simulate a click on the newly added card, so that the user can change the title
