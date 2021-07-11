@@ -51,7 +51,7 @@
 		integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
 		crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
-	
+
 	<!-- Define the three swim lanes with the necessary task status mapping and drag&drop config-->
 	<script type="text/javascript">
 		var lanes = {
@@ -75,7 +75,7 @@
 		function getProjects() {
 			jQuery('select#kanbanProjects').off('change');
 			jQuery('select#kanbanProjects').find('option').remove();
-			
+
 			//Call Server side API to retrieve the projects, filtering is done on the server side
 			jQuery.ajax('/getprojects', {
 				dataType: 'json',
@@ -103,7 +103,7 @@
 
 			}).fail(function () {
 				console.log("Failed project retrieval");
-				
+
 				//In case the server does not work, we fill the drop down with demo data, so we can at least test the client side...
 				var projects = [
 					{ id: 0, name: 'Demo Data 0' },
@@ -126,7 +126,7 @@
 		function getItems(projectId) {
 			//Delete all exising Swimlanes
 			jQuery('div#kanbanBoard').find('div.kanbanContainer').remove();
-			
+
 			//For each lane defined in the global config, duplicate the template and replace placeholders
 			//Then get the tasks and add them to the swimlane, initialize SortableJS et voila...
 			jQuery.each(lanes, function (laneName, lane) {
@@ -138,10 +138,6 @@
 					return lane[placeholder] || '';
 				});
 				var laneElement = jQuery(laneHtml);
-
-
-				//Enable Creation of new elements after project has been loaded
-				$('.enableOnProjectSelected').prop('disabled', false);
 
 				// do ajax call to get the project tasks, for the current status...
 				jQuery.ajax('/gettasks?projectid=' + projectId + '&status=' + laneName, {
@@ -201,6 +197,9 @@
 							//console.log(evt);
 						}
 					});
+
+					//Enable Creation of new elements after project has been loaded
+					$('.enableOnProjectSelected').prop('disabled', false);
 
 					console.log("Tasks retrieved: ", data);
 
@@ -317,7 +316,7 @@
 
 			}).fail(function () {
 				//When the update fails, set the text back to the original
-				input.val( label.text() );
+				input.val(label.text());
 
 				input.hide();
 				label.show();
