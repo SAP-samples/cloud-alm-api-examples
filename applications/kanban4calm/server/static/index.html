@@ -6,7 +6,6 @@
 	<meta http-equiv="X-UA-Compatible" content="IE=edge" />
 	<meta name="viewport" content="width=device-width, initial-scale=1" />
 	<title>SAP Cloud ALM - Kanban Board!</title>
-	<!-- bootstrap 5 is buggy shit -->
 	<link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/css/bootstrap.min.css"
 		integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous" />
 </head>
@@ -48,11 +47,12 @@
 	</template>
 	<script src="https://code.jquery.com/jquery-3.6.0.min.js"
 		integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
-	<!-- bootstrap 5 is buggy shit -->
 	<script src="https://cdn.jsdelivr.net/npm/bootstrap@4.6.0/dist/js/bootstrap.bundle.min.js"
 		integrity="sha384-Piv4xVNRyMGpqkS2by6br4gNJ7DXjqk09RmUpJ8jgGtD7zP9yug3goQfGII0yAns"
 		crossorigin="anonymous"></script>
 	<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+	
+	<!-- Define the three swim lanes with the necessary task status mapping and drag&drop config-->
 	<script type="text/javascript">
 		var scopes = {
 			CIPTKOPEN: {
@@ -75,21 +75,26 @@
 		function getProjects() {
 			jQuery('select#kanbanProjects').off('change');
 			jQuery('select#kanbanProjects').find('option').remove();
+			
+			//Call Server side API to retrieve the projects, filtering is done on the server side
 			jQuery.ajax('/getprojects', {
 				dataType: 'json',
 				crossDomain: true
 			}).done(function (data) {
+				//Initial entry in dropdown...
 				jQuery('select#kanbanProjects').append(new jQuery('<option>', {
 					text: "Select Project",
 					disabled: '',
 					selected: '',
 				}));
+				//Add all projects to the drop down
 				jQuery.each(data, function (index, project) {
 					jQuery('select#kanbanProjects').append(new jQuery('<option>', {
 						value: project.id,
 						text: project.name
 					}))
 				});
+				//Create handler that when project selection is changed, the swim lanes are filled
 				jQuery('select#kanbanProjects').on('change', function (event) {
 					getItems(jQuery('select#kanbanProjects').val());
 				});
@@ -98,6 +103,8 @@
 
 			}).fail(function () {
 				console.log("Failed project retrieval");
+				
+				//In case the server does not work, we fill the drop down with demo data, so we can at least test the client side...
 				var projects = [
 					{ id: 0, name: 'Demo Data 0' },
 					{ id: 1, name: 'Demo Data 1' },
@@ -115,8 +122,13 @@
 			});
 		}
 
+		//Getting the tasks for a specific project (is triggered when the project selection is changed)
 		function getItems(projectId) {
+			//Delete all exising Swimlanes
 			jQuery('div#kanbanScopes').find('div.kanbanScope').remove();
+			
+			//For each scope defined in the global config, duplicate the template and replace placeholders
+			//Then get the tasks and add them to the swimlane, initialize SortableJS et voila...
 			jQuery.each(scopes, function (scopeName, scope) {
 				var scopeHtml = jQuery('template#kanbanScope').clone().html();
 				// replace {{ scope }} with scopeName
@@ -131,13 +143,14 @@
 				//Enable Creation of new elements after project has been loaded
 				$('.enableOnProjectSelected').prop('disabled', false);
 
-				// do ajax call for project tasks
+				// do ajax call to get the project tasks, for the current status...
 				jQuery.ajax('/gettasks?projectid=' + projectId + '&status=' + scopeName, {
 					dataType: 'json',
 					async: false,
 					crossDomain: true
 				}).done(function (data) {
 
+					//Again for each task, duplicate the template, replace the placeholders with the actual data of the task and add it to the swimlane
 					jQuery.each(data, function (index, item) {
 						var itemHtml = jQuery('template#kanbanItem').clone().html();
 						itemHtml = itemHtml.replace(/{{ (.*) }}/g, function (text, placeholder) {
@@ -147,6 +160,8 @@
 						scopeElement.find('div.kanbanItems').append(itemElement);
 					});
 					jQuery('div#kanbanScopes').append(scopeElement);
+
+					//Initialize SortableJS for the swimlane
 					new Sortable(jQuery('div.kanbanItems[data-scope="' + scopeName + '"]').get(0), {
 						draggable: '.kanbanItem',
 						sort: true,
@@ -159,12 +174,12 @@
 							put: scope.put,
 							pull: true
 						},
+						//Event handler when something is dropped --> Change the status
 						onEnd: function (evt) {
 
 							console.log("Task " + evt.item.dataset.taskid + " dropped on " + evt.to.dataset.scope);
 
 							var newTaskData = { status: evt.to.dataset.scope };
-
 
 							jQuery.ajax('/editTask?taskid=' + evt.item.dataset.taskid, {
 								dataType: 'json',
@@ -199,19 +214,23 @@
 			//Add Handler to all Input forms for click editing...
 			addClickEventHandlers();
 		}
-		// document ready
+		// when document is ready, populate the drop down so a user can select a project
 		jQuery(function () {
 			getProjects();
 		});
 
+		//When the create new button is clicked, we create a new card from the template,
 		$('.createNewTaskButton').click(function () {
+			//Duplicate the template for a new card
 			var itemHtml = jQuery('template#kanbanItem').clone().html();
 			var itemElement = jQuery(itemHtml);
 
+			//Default data for a new card
 			var newTaskData = { projectId: jQuery('select#kanbanProjects').val(), title: "New Task", type: "CALMTASK" };
 
 			console.log(newTaskData);
 
+			//Create the new task in the backend
 			jQuery.ajax('/createTask', {
 				dataType: 'json',
 				type: 'POST',
@@ -223,17 +242,18 @@
 				console.log(data);
 				console.log("Done task creation!");
 
-
+				//When done we update the newly create card with the results from the backend, so we have the acual ID of the task in the card
 				itemHtml = itemHtml.replace(/{{ (.*) }}/g, function (text, placeholder) {
 					return data[placeholder] || '';
 				});
 
 				console.log('after creation of task: ' + data.id);
 
+				//All new cards are added to the open swimlane
 				jQuery('div.kanbanItems[data-scope="CIPTKOPEN"]').prepend(itemHtml);
 				addClickEventHandlers();
 
-				//Add again after TASKID is really updated...
+				//Simulate a click on the newly added card, so that the user can change the title
 				jQuery('div.kanbanItem[data-taskid="' + data.id + '"] .card-body .card-title').trigger('click');
 
 			}).fail(function () {
@@ -243,7 +263,7 @@
 			});
 		});
 
-
+		//this manages the clicks on a card
 		function addClickEventHandlers() {
 			console.log('Click Event Handlers updated');
 
@@ -267,6 +287,7 @@
 
 		}
 
+		//When edit has ended, we update the task in the backend with the new data of the task
 		function endEdit(e) {
 			var input = $(e.target),
 				label = input && input.prev();
