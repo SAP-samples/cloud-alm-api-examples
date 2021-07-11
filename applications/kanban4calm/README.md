@@ -14,10 +14,13 @@ This is a sample application using the SAP Cloud ALM APIs for Project and Task M
 ### How it works
 
 The app consists mainly of three files
-- static/index.html - Contains the client side code, a very simple bootstrap based application that uses SortableJS to create containers, fill them with tasks and manage the creation of new tasks, editing existing tasks and drap&drop to change the stauts
-- server.js - Contains the server side code that serves the client side coding, handles OAuth2 authentification and making the actual API calls (incl. a bit of filtering here and there)
-- config.json - Contains the URLs to the SAP Cloud ALM tenant API and the client credentials (client_id and client_secret) used for authentication. Please copy config.json.sample and adapt to you local needs
+- server/static/index.html - Contains the client side code, a very simple bootstrap based application that uses SortableJS to create containers, fill them with tasks and manage the creation of new tasks, editing existing tasks and drap&drop to change the stauts
+- server/server.js - Contains the server side code that serves the client side coding, handles OAuth2 authentification and making the actual API calls (incl. a bit of filtering here and there)
+- server/config.json - Contains the URLs to the SAP Cloud ALM tenant API and the client credentials (client_id and client_secret) used for authentication. Please copy config.json.sample and adapt to you local needs
 
+Additionally two supporting files:
+- [server/package.json](server/package.json) - contains the required NodeJS modules, information on the runtime environment and the necessary NodeJS version to run it in CloudFoundry
+- [manifest.yaml](manifest.yaml) - The manifest for pushing the application to a CloudFoundry environment [documentation can be found here](XXXXXXX)
 From an application logic the server side application is just a proxy that handles the OAuth2 authentication and proxies the calls from the client to the API. It is alos used to filter the returned projects and tasks based on their status values (only open projects and only tasks for a specific status values), as this is not yet supported natively by the APIs
 
 ### How to run?
