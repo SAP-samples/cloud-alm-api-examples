@@ -81,3 +81,7 @@ typings/
 
 # FuseBox cache
 .fusebox/
+.vscode/spellright.dict
+.vscode/settings.json
+
+.vscode/
