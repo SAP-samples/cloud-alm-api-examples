@@ -5,7 +5,7 @@ This is a sample application using the SAP Cloud ALM APIs for Project and Task M
 
 ### High-Level Architecture of the example application
 
-![High Level Architecture](HL_Architecture.svg)
+![High Level Architecture](HL_Architecture.drawio.svg)
 
 
 ### How it works
