@@ -1,6 +1,6 @@
 # SAP Cloud ALM Public API Reference Consumer Application
 
-[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/cloud-objectstore-java-sample)](https://api.reuse.software/info/github.com/SAP-samples/cloud-objectstore-java-sample)
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/cloud-alm-api-examples)](https://api.reuse.software/info/github.com/SAP-samples/cloud-alm-api-examples)
 
 SAP Cloud ALM Public API reference application is built to showcase the method of developing a single code-line multi cloud application consuming public APIs  of SAP Cloud ALM on SAP Business Technology Platform (SAP BTP) Cloud Foundry Environment.
 
