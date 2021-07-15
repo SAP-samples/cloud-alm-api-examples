@@ -26,22 +26,7 @@ A single DAO (Data Access Object)/repository class calls the SAP Cloud ALM Publi
 Following  dependencies are used in the application.
 
 ~~~
-    <!-- jclouds dependencies -->
-    <dependency>
-      <groupId>org.apache.jclouds.provider</groupId>
-      <artifactId>aws-s3</artifactId>
-      <version>2.3.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.jclouds.provider</groupId>
-      <artifactId>google-cloud-storage</artifactId>
-      <version>2.3.0</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.jclouds.provider</groupId>
-      <artifactId>azureblob</artifactId>
-      <version>2.3.0</version>
-    </dependency>
+   
 ~~~
 The size of each of the jclouds dependencies are as follows: 
 ~~~
@@ -89,29 +74,17 @@ For more information about the dependencies please refer [pom.xml file](./pom.xm
         
      Enter username, password, org and space when prompted to. [Please click here for more information](https://help.sap.com/viewer/65de2977205c403bbc107264b8eccf4b/Cloud/en-US/75125ef1e60e490e91eb58fe48c0f9e7.html#loio4ef907afb1254e8286882a2bdef0edf4).
     
-     Check if the Cloud Foundry Space you will be deploying the application has the following entitlements:
-
-     | Landscape       | Service         | Plan           | Number of Instances |
-     |-----------------|-----------------|----------------|:-------------------:|
-     | AWS             | objectstore     | s3-standard    |          1          |
-     | GCP             | objectstore	 | gcs-standard   |          1          |
-     | Azure           | objectstore	 | azure-standard |          1          |
+    
   
-  2. Create the Cloud Foundry Object Store Service Instance
+  2. Create the Cloud Foundry SAP Cloud ALM API  Service Instance
 
-     - To run the application on AWS landscape, create a service by executing the below command:
+     - To run the application create a service by executing the below command:
 
-       `cf create-service objectstore s3-standard objectstore-service`
+       `cf create-service sap-cloud-alm-api standard cloudalm-api-service`
 
-     - To run the application on GCP landscape, create a service by executing the below command:
+     
 
-       `cf create-service objectstore gcs-standard objectstore-service`
-        
-     - To run the application on Azure landscape, create a service by executing the below command:
-
-       `cf create-service objectstore azure-standard objectstore-service`
-
-      > Important: <b>*Please don't change the service instance name i.e. `objectstore-service`*</b>. In case you want to choose a user defined name for the service instance other than `objectstore-service`, then make sure to use the same name at the given location: `@ConfigurationProperties(prefix = "vcap.services.<objectstore-service>.credentials")` in the following configuration classes : [AmazonWebServiceConfiguration.java](https://github.com/SAP-samples/cloud-objectstore-java-sample/blob/master/src/main/java/com/sap/refapps/objectstore/config/AmazonWebServiceConfiguration.java), [GoogleCloudPlatformConfiguration.java](https://github.com/SAP-samples/cloud-objectstore-java-sample/blob/master/src/main/java/com/sap/refapps/objectstore/config/GoogleCloudPlatformConfiguration.java) and [AzureStorageConfiguration.java](https://github.com/SAP-samples/cloud-objectstore-java-sample/blob/master/src/main/java/com/sap/refapps/objectstore/config/AzureStorageConfiguration.java)
+      > Important: <b>*Please don't change the service instance name i.e. `cloudalm-api-service`*</b>. In case you want to choose a user defined name for the service instance other than `cloudalm-api-service`, then make sure to use the same name at the given location: `@ConfigurationProperties(prefix = "vcap.services.<cloudalm-api-service>.credentials")` in the following configuration classes : [AmazonWebServiceConfiguration.java](https://github.com/SAP-samples/cloud-objectstore-java-sample/blob/master/src/main/java/com/sap/refapps/objectstore/config/AmazonWebServiceConfiguration.java), [GoogleCloudPlatformConfiguration.java](https://github.com/SAP-samples/cloud-objectstore-java-sample/blob/master/src/main/java/com/sap/refapps/objectstore/config/GoogleCloudPlatformConfiguration.java) and [AzureStorageConfiguration.java](https://github.com/SAP-samples/cloud-objectstore-java-sample/blob/master/src/main/java/com/sap/refapps/objectstore/config/AzureStorageConfiguration.java)
 
   3. Edit manifest.yml file. Replace the `<unique_id>` placeholder with any unique string. You can use your *SAP User ID* so that the host name is unique in the CF landscape. You can find your *SAP User ID* in [your sap.com profile](https://people.sap.com/#personal_info).
 
@@ -120,13 +93,13 @@ For more information about the dependencies please refer [pom.xml file](./pom.xm
     applications:
     - name: objectstore-sample-svc
      ------------------------------------------
-    | host: <unique_id>-objectstore-sample-svc |
+    | host: <unique_id>-cloud-alm-api-sample-svc |
      ------------------------------------------
       memory: 2G
       buildpack: https://github.com/cloudfoundry/java-buildpack.git
       path: target/objectstore-sample-1.0.0.jar
       services:
-        - objectstore-service
+        - cloudalm-api-service
   ~~~
 
   4. To deploy the application, navigate to the root of the application and execute the below command:
@@ -144,30 +117,28 @@ Replace the `<application URL>` placeholder in the below steps with the URL of t
 
 <b>POST</b>
 
-To upload a file / object set the below request body and hit the endpoint url.
+To create a task in SAP Cloud ALM set the below request body and hit the endpoint url.
 
-EndPoint URL :   `<application URL>/objectstorage.svc/api/v1/storage/`
+EndPoint URL :   `<application URL>/cloudalmapi.svc/api/v1/tasks/`
 
 Request Body : form-data with key-value pair. Pass the name of the key as `file` and the value is `the path of the file`.
 
-> For the file upload, we have provided a [test file](/documents/test.rtf) in the documents folder which you can use if needed for the upload testing.
-
-![Alt text](./documents/postRequest.png "post request")
-
-A successful upload operation gives the following response : 
-
-Status: 202
-
-Response Body: `<uploaded_filename> uploaded successfully`
 
 
-##### List all the files / objects
+A successful create operation gives the following response : 
+
+Status: 200
+
+Response Body: `Task created successfully`
+
+
+##### List all the tasks
 
 <b>GET</b>
 
-To get the list of a files / objects set the content-type and hit the below endpoint url.
+To get the list of all tasks nd hit the below endpoint url.
 
-EndPoint URL :   `https://<application URL>/objectstorage.svc/api/v1/storage/`
+EndPoint URL :   `https://<application URL>/cloudalmapi.svc/api/v1/tasks/`
 
 Content-Type : `application/json`
 
@@ -177,57 +148,8 @@ Status: 200
 
 Response Body:
 ~~~
-[
-    {
-        "etag": "CIjak4uDxeACEAE=",
-        "bucket": "sap-cp-osaas-a78345d3-e45d-42eb-9c03-c47393d0d436",
-        "name": "SampleFile.pdf",
-        "url": "https://www.googleapis.com/storage/v1/b/sap-cp-osaas-a78345d3-e45d-42eb-9c03-c47393d0d436/o/SampleFile.pdf",
-        "lastModified": "Mon Feb 18 15:30:22 IST 2019",
-        "size": "245.7 KB",
-        "contentType": "application/pdf",
-        "userMetadata": {
-            "description": "sample content"
-        }
-    },
-    {
-        "etag": "COf+0p7uxOACEAE=",
-        "bucket": "sap-cp-osaas-a78345d3-e45d-42eb-9c03-c47393d0d436",
-        "name": "SampleImage.jpg",
-        "url": "https://www.googleapis.com/storage/v1/b/sap-cp-osaas-a78345d3-e45d-42eb-9c03-c47393d0d436/o/SampleImage.jpg",
-        "lastModified": "Mon Feb 18 13:57:06 IST 2019",
-        "size": "46.1 KB",
-        "contentType": "image/jpeg",
-        "userMetadata": {
-            "description": "sample content"
-        }
-    }
-  ...
 
-]
 ~~~
-
-##### Download a file / object
-
-<b>GET</b>
-
-> Please open any browser and hit the below endpoint url to download a file / object rather than using Postman to test it.</b>
-
-EndPoint URL :   `https://<application URL>/objectstorage.svc/api/v1/storage/{file-name}`
-
-##### Delete a file / object
-
-<b>DELETE</b>
-
-To delete a file / object hit the below endpoint url by appending the file / object name in postman.
-
-EndPoint URL :   `https://<application URL>/objectstorage.svc/api/v1/storage/{file-name}`
-
-A successful upload operation gives the following response :
-
-Status: 200
-
-Response Body: `<file-name> deleted from ObjectStore.`
 
 ## How to obtain support
 
