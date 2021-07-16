@@ -11,10 +11,8 @@ https://www.youtube.com/playlist?list=PLFrwZZeBUtfiJyWpJ2nmokXOFSue_Z7sQ)
 
 Currently we provide the following assets:
 - [Sample Applications](applications)
-  - Kanban Board
 - [Jupyter Notebooks](jupyternotebooks)
-  - For Project and Tasks
-- Postman collections for testing
+- [Postman collections](postmancollections)
 
 ## How to obtain support
 
