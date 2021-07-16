@@ -221,12 +221,6 @@
 						"key": "Authorization",
 						"value": "Bearer {{TOKEN}}",
 						"type": "text"
-					},
-					{
-						"key": "Dwc-Scopes",
-						"value": "calm-api.demo-tasks.read",
-						"type": "text",
-						"disabled": true
 					}
 				],
 				"body": {
