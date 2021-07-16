@@ -11,7 +11,7 @@ The backend part is a very simple NodeJS application, that serves the HTML compo
 
 ### How it works
 
-The app consists mainly of three files
+The app consists of three main files
 - [server/static/index.html](server/static/index.html) - Contains the client side code, a very simple bootstrap based application that uses SortableJS to create containers, fill them with tasks and manage the creation of new tasks, editing existing tasks and drag&drop to change the status
 - [server/server.js](server/server.js) - Contains the server side code that serves the client side coding, handles OAuth2 authentification and making the actual API calls (incl. a bit of filtering here and there)
 - [server/config.json](server/config.json) - Contains the URLs to the SAP Cloud ALM tenant API and the client credentials (client_id and client_secret) used for authentication. Please copy config.json.sample and adapt to you local needs
@@ -41,6 +41,8 @@ From an authorization perspective, the application needs at least a service inst
 }
 ```
 
+
+
 ### How to run?
 
 1. Clone this repository
@@ -50,7 +52,17 @@ From an authorization perspective, the application needs at least a service inst
     cp config.json.sample config.json
     ```
 3. Adapt config.json to your environment (changing URLs and authentication information)
-4. Run the application
+
+### Install Dependencies
+
+From the server directory, run `npm install`:
+
+```sh
+   npm install
+```
+
+### Start the Server Application
+
    - locally:
       ```
       node server.js
