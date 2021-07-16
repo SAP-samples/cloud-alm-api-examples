@@ -1,1 +1,1 @@
-# Postman colelction for usage with SAP Cloud ALM APIs
+# Postman collection for usage with SAP Cloud ALM APIs
