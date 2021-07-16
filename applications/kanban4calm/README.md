@@ -44,7 +44,8 @@ From an authorization perspective, the application needs at least a service inst
 ### How to run?
 
 1. Clone this repository
-2. Copy config.json.sample
+2. Install NodeJS dependencies using ```npm install```in the server directory containing the file ```package.json
+3. Copy config.json.sample
    ```
     cd applications/kanban4calm/server
     cp config.json.sample config.json
