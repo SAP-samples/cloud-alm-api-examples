@@ -46,15 +46,14 @@ From an authorization perspective, the application needs at least a service inst
 ### How to run?
 
 1. Clone this repository
-2. Install NodeJS dependencies using ```npm install```in the server directory containing the file ```package.json
-3. Copy config.json.sample
-   ```
+2. Copy config.json.sample
+   ```sh
     cd applications/kanban4calm/server
     cp config.json.sample config.json
     ```
 3. Adapt config.json to your environment (changing URLs and authentication information)
 
-### Install Dependencies
+#### Install Dependencies
 
 From the server directory, run `npm install`:
 
@@ -62,16 +61,16 @@ From the server directory, run `npm install`:
    npm install
 ```
 
-### Start the Server Application
+#### Start the Server Application
 
    - locally:
-      ```
+      ```sh
       node server.js
       ```
       After that you should see a message how you can access the application, typically using http://localhost:3000/ as a default
 
    - on Cloud Foundry:
-      ```
+      ```sh
       cd applications/kanban4calm/
       cf login
       cf push
