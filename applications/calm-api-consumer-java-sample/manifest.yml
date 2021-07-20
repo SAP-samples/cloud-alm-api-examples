@@ -1,9 +1,9 @@
 ---
 applications:
-- name: objectstore-sample-svc
-  host: calm-objectstore-sample-svc
+- name: calm-public-api-consumer-sample-svc
+  host: calm-public-api-consumer-sample-svc
   memory: 2G
   buildpack: https://github.com/cloudfoundry/java-buildpack.git
-  path: target/objectstore-sample-1.0.0.jar
+  path: target/cloudalm-api-sample-1.0.0.jar
   services:
-    - objectstore-service
+    - calm-public-api-service

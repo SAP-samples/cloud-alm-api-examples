@@ -1,6 +1,6 @@
 # SAP Cloud ALM Public API Reference Consumer Application
 
-[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/cloud-alm-api-examples)](https://api.reuse.software/info/github.com/SAP-samples/cloud-alm-api-examples)
+
 
 SAP Cloud ALM Public API reference application is built to showcase the method of developing a single code-line multi cloud application consuming public APIs  of SAP Cloud ALM on SAP Business Technology Platform (SAP BTP) Cloud Foundry Environment.
 
@@ -8,7 +8,7 @@ SAP Cloud ALM Public API reference application is built to showcase the method o
 SAP Cloud ALM offers public APIs for Task Management and Project Management and many more functionalities of SAP Cloud ALM
 #### Features of the Application
 
-•	The sample application provides RESTful endpoints to create and manage tasks.
+•	The sample application provides RESTful endpoints to read projects from SAP Cloud ALM.
 
 •	It calls SAP Cloud ALM's  public API endpoints to perform the above operations on the provisioned customer tenant of SAP Clod ALM SaaS Application. 
 
@@ -16,32 +16,7 @@ SAP Cloud ALM offers public APIs for Task Management and Project Management and 
 
 ![Alt text](./documents/cloud-alm-api-sample-architecture.jpg "Architecture")
 
-A single REST controller accepts the request (GET, POST, DELETE).
-
-Service implementations and configuration classes are provided for each of the Object Store Service provider.  
-
-A single DAO (Data Access Object)/repository class calls the SAP Cloud ALM Public APIs to perform create, read, delete operations on the SAP Cloud ALM Tasks. 
-
-## Referenced Libraries
-Following  dependencies are used in the application.
-
-~~~
-   
-~~~
-The size of each of the jclouds dependencies are as follows: 
-~~~
-    Dependency                Size
-    -------------             -------
-
-~~~
-
-Besides spring-boot and jclouds the other dependencies used in the application are: 
-
-•	jackson-databind: to parse json file
-
-•	commons-fileupload: to upload files 
-
-For more information about the dependencies please refer [pom.xml file](./pom.xml).
+A single REST controller accepts the request (GET).
 
 
 ## Requirements
@@ -55,7 +30,7 @@ For more information about the dependencies please refer [pom.xml file](./pom.xm
 ## Download and Installation
 
 #### Build the Application
-- [Clone](https://help.github.com/articles/cloning-a-repository/) the application `objectstore-sample` to your system
+- [Clone](https://help.github.com/articles/cloning-a-repository/) the application `cloudalm-api-examples` to your system
 
    Clone URL :  `https://github.wdf.sap.corp/refapps/objectstore-sample.git`
 - Navigate to the root folder of the application and run the below maven command to build the application:
@@ -63,6 +38,9 @@ For more information about the dependencies please refer [pom.xml file](./pom.xm
   mvn clean install
   ```
 
+#### Prerequisites
+- SAP Business Technology Platform with CloudFoundry Runtime enabled
+- Subscription to SAP Cloud ALM
 #### Deploy the Application on Cloud Foundry
 
   1. Logon to the Cloud Foundry environment using the following commands on the command prompt:
@@ -80,26 +58,29 @@ For more information about the dependencies please refer [pom.xml file](./pom.xm
 
      - To run the application create a service by executing the below command:
 
-       `cf create-service sap-cloud-alm-api standard cloudalm-api-service`
+       `cf create-service sap-cloud-alm-api standard calm-public-api-service -c cloud-alm-api-scopes.json
+        
+        Note:`A sample scopes file is provided [here](https://github.com/SAP-samples/cloud-alm-api-examples/blob/main/applications/calm-api-consumer-java-sample/cloud-alm-api-scopes.json)
 
      
 
-      > Important: <b>*Please don't change the service instance name i.e. `cloudalm-api-service`*</b>. In case you want to choose a user defined name for the service instance other than `cloudalm-api-service`, then make sure to use the same name at the given location: `@ConfigurationProperties(prefix = "vcap.services.<cloudalm-api-service>.credentials")` in the following configuration classes : [AmazonWebServiceConfiguration.java](https://github.com/SAP-samples/cloud-objectstore-java-sample/blob/master/src/main/java/com/sap/refapps/objectstore/config/AmazonWebServiceConfiguration.java), [GoogleCloudPlatformConfiguration.java](https://github.com/SAP-samples/cloud-objectstore-java-sample/blob/master/src/main/java/com/sap/refapps/objectstore/config/GoogleCloudPlatformConfiguration.java) and [AzureStorageConfiguration.java](https://github.com/SAP-samples/cloud-objectstore-java-sample/blob/master/src/main/java/com/sap/refapps/objectstore/config/AzureStorageConfiguration.java)
-
-  3. Edit manifest.yml file. Replace the `<unique_id>` placeholder with any unique string. You can use your *SAP User ID* so that the host name is unique in the CF landscape. You can find your *SAP User ID* in [your sap.com profile](https://people.sap.com/#personal_info).
-
+  3. Edit manifest.yml file. Replace the `<unique_id>` placeholder with any unique string. You can use your *User ID* or some unique ID so that the host name is unique in the CF landscape. 
   ~~~
+  
+  ---
+applications:
+- name: calm-public-api-consumer-sample-svc
+  ------------------------------------------
+ | host: <unique_id>-cloud-alm-api-sample-svc |
+  ------------------------------------------
+  memory: 2G
+  buildpack: https://github.com/cloudfoundry/java-buildpack.git
+  path: target/cloudalm-api-sample-1.0.0.jar
+  services:
+    - calm-public-api-service
+
     ---
-    applications:
-    - name: objectstore-sample-svc
-     ------------------------------------------
-    | host: <unique_id>-cloud-alm-api-sample-svc |
-     ------------------------------------------
-      memory: 2G
-      buildpack: https://github.com/cloudfoundry/java-buildpack.git
-      path: target/objectstore-sample-1.0.0.jar
-      services:
-        - cloudalm-api-service
+        
   ~~~
 
   4. To deploy the application, navigate to the root of the application and execute the below command:
@@ -113,32 +94,16 @@ For more information about the dependencies please refer [pom.xml file](./pom.xm
 
 Replace the `<application URL>` placeholder in the below steps with the URL of the application you deployed. 
 
-##### Upload a file / object
 
-<b>POST</b>
-
-To create a task in SAP Cloud ALM set the below request body and hit the endpoint url.
-
-EndPoint URL :   `<application URL>/cloudalmapi.svc/api/v1/tasks/`
-
-Request Body : form-data with key-value pair. Pass the name of the key as `file` and the value is `the path of the file`.
-
-
-
-A successful create operation gives the following response : 
-
-Status: 200
-
-Response Body: `Task created successfully`
 
 
 ##### List all the tasks
 
 <b>GET</b>
 
-To get the list of all tasks nd hit the below endpoint url.
+To get the list of all projects  hit the below endpoint url.
 
-EndPoint URL :   `https://<application URL>/cloudalmapi.svc/api/v1/tasks/`
+EndPoint URL :   `https://<application URL>/cloud-alm/projects`
 
 Content-Type : `application/json`
 
