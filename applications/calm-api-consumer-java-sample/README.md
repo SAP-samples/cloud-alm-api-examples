@@ -8,7 +8,7 @@ SAP Cloud ALM Public API reference application is built to showcase the method o
 SAP Cloud ALM offers public APIs for Task Management and Project Management and many more functionalities of SAP Cloud ALM
 #### Features of the Application
 
-•	The sample application provides RESTful endpoints to create and manage tasks.
+•	The sample application provides RESTful endpoints to read projects from SAP Cloud ALM.
 
 •	It calls SAP Cloud ALM's  public API endpoints to perform the above operations on the provisioned customer tenant of SAP Clod ALM SaaS Application. 
 
@@ -16,32 +16,7 @@ SAP Cloud ALM offers public APIs for Task Management and Project Management and 
 
 ![Alt text](./documents/cloud-alm-api-sample-architecture.jpg "Architecture")
 
-A single REST controller accepts the request (GET, POST, DELETE).
-
-Service implementations and configuration classes are provided for each of the Object Store Service provider.  
-
-A single DAO (Data Access Object)/repository class calls the SAP Cloud ALM Public APIs to perform create, read, delete operations on the SAP Cloud ALM Tasks. 
-
-## Referenced Libraries
-Following  dependencies are used in the application.
-
-~~~
-   
-~~~
-The size of each of the jclouds dependencies are as follows: 
-~~~
-    Dependency                Size
-    -------------             -------
-
-~~~
-
-Besides spring-boot and jclouds the other dependencies used in the application are: 
-
-•	jackson-databind: to parse json file
-
-•	commons-fileupload: to upload files 
-
-For more information about the dependencies please refer [pom.xml file](./pom.xml).
+A single REST controller accepts the request (GET).
 
 
 ## Requirements
@@ -55,7 +30,7 @@ For more information about the dependencies please refer [pom.xml file](./pom.xm
 ## Download and Installation
 
 #### Build the Application
-- [Clone](https://help.github.com/articles/cloning-a-repository/) the application `objectstore-sample` to your system
+- [Clone](https://help.github.com/articles/cloning-a-repository/) the application `cloudalm-api-examples` to your system
 
    Clone URL :  `https://github.wdf.sap.corp/refapps/objectstore-sample.git`
 - Navigate to the root folder of the application and run the below maven command to build the application:
