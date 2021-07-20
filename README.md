@@ -1,3 +1,4 @@
+[![REUSE status](https://api.reuse.software/badge/github.com/SAP-samples/cloud-alm-api-examples)](https://api.reuse.software/info/github.com/SAP-samples/cloud-alm-api-examples)
 # API examples for SAP Cloud ALM
 
 In this Github repository we provide open source examples for APIs that get delivered within SAP Cloud ALM.
