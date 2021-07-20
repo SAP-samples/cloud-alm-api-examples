@@ -32,7 +32,7 @@ A single REST controller accepts the request (GET).
 #### Build the Application
 - [Clone](https://help.github.com/articles/cloning-a-repository/) the application `cloudalm-api-examples` to your system
 
-   Clone URL :  `https://github.wdf.sap.corp/refapps/objectstore-sample.git`
+   Clone URL :  `https://github.com/SAP-samples/cloud-alm-api-examples.git`
 - Navigate to the root folder of the application and run the below maven command to build the application:
   ```
   mvn clean install
