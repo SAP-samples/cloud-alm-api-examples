@@ -212,7 +212,7 @@ const host = process.env.HOST || 'localhost'
 app.listen(port, function () {
   console.log('kanban4calmserver listening on port ' + port);
   console.log('to access the application use http://' + host + ':'+ port)
-  console.log(process.env);
+  //console.log(process.env);
 });
 
 

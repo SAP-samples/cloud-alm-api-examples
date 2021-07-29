@@ -1,0 +1,262 @@
+{
+	"info": {
+		"_postman_id": "24bb4cc6-7002-497b-831f-add6e47e9fcb",
+		"name": "SAP Cloud ALM Projects/Tasks Public Collection",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Projects",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let tokenUrl = pm.environment.get(\"TOKEN_URL\");\r",
+							"let clientId = pm.environment.get(\"CLIENT_ID\");\r",
+							"let clientSecret = pm.environment.get(\"CLIENT_SECRET\");\r",
+							"\r",
+							"let getTokenRequest3 = {\r",
+							"  method: \"POST\",\r",
+							"  url: tokenUrl,\r",
+							"  header: {\r",
+							"    \"Content-Type\": \"application/x-www-form-urlencoded\",\r",
+							"  },\r",
+							"  body: {\r",
+							"    mode: \"urlencoded\",\r",
+							"    urlencoded: [\r",
+							"      { key: \"grant_type\", value: \"client_credentials\" },\r",
+							"      { key: \"scope\", value: \"\" },\r",
+							"      { key: \"client_id\", value: clientId },\r",
+							"      { key: \"client_secret\", value: clientSecret },\r",
+							"    ],\r",
+							"  },\r",
+							"};\r",
+							"pm.sendRequest(getTokenRequest3, (err, response) => {\r",
+							"  let jsonResponse = response.json(),\r",
+							"    newAccessToken = jsonResponse.access_token;\r",
+							"  console.log({ err, jsonResponse, newAccessToken });\r",
+							"  pm.environment.set(\"TOKEN\", newAccessToken);\r",
+							"  pm.variables.set(\"TOKEN\", newAccessToken);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://eu10.alm.cloud.sap/api/calm-projects/v1/projects",
+					"protocol": "https",
+					"host": [
+						"eu10",
+						"alm",
+						"cloud",
+						"sap"
+					],
+					"path": [
+						"api",
+						"calm-projects",
+						"v1",
+						"projects"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tasks with projectId",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let tokenUrl = pm.environment.get(\"TOKEN_URL\");\r",
+							"let clientId = pm.environment.get(\"CLIENT_ID\");\r",
+							"let clientSecret = pm.environment.get(\"CLIENT_SECRET\");\r",
+							"\r",
+							"let getTokenRequest3 = {\r",
+							"  method: \"POST\",\r",
+							"  url: tokenUrl,\r",
+							"  header: {\r",
+							"    \"Content-Type\": \"application/x-www-form-urlencoded\",\r",
+							"  },\r",
+							"  body: {\r",
+							"    mode: \"urlencoded\",\r",
+							"    urlencoded: [\r",
+							"      { key: \"grant_type\", value: \"client_credentials\" },\r",
+							"      { key: \"scope\", value: \"\" },\r",
+							"      { key: \"client_id\", value: clientId },\r",
+							"      { key: \"client_secret\", value: clientSecret },\r",
+							"    ],\r",
+							"  },\r",
+							"};\r",
+							"pm.sendRequest(getTokenRequest3, (err, response) => {\r",
+							"  let jsonResponse = response.json(),\r",
+							"    newAccessToken = jsonResponse.access_token;\r",
+							"  console.log({ err, jsonResponse, newAccessToken });\r",
+							"  pm.environment.set(\"TOKEN\", newAccessToken);\r",
+							"  pm.variables.set(\"TOKEN\", newAccessToken);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://eu10.alm.cloud.sap/api/calm-tasks/v1/tasks?projectId=35b22fcc-cd63-4d6f-97ba-3a2be95a7367",
+					"protocol": "https",
+					"host": [
+						"eu10",
+						"alm",
+						"cloud",
+						"sap"
+					],
+					"path": [
+						"api",
+						"calm-tasks",
+						"v1",
+						"tasks"
+					],
+					"query": [
+						{
+							"key": "projectId",
+							"value": "35b22fcc-cd63-4d6f-97ba-3a2be95a7367"
+						}
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "Tasks",
+			"event": [
+				{
+					"listen": "prerequest",
+					"script": {
+						"exec": [
+							"let tokenUrl = pm.environment.get(\"TOKEN_URL\");\r",
+							"let clientId = pm.environment.get(\"CLIENT_ID\");\r",
+							"let clientSecret = pm.environment.get(\"CLIENT_SECRET\");\r",
+							"\r",
+							"let getTokenRequest3 = {\r",
+							"  method: \"POST\",\r",
+							"  url: tokenUrl,\r",
+							"  header: {\r",
+							"    \"Content-Type\": \"application/x-www-form-urlencoded\",\r",
+							"  },\r",
+							"  body: {\r",
+							"    mode: \"urlencoded\",\r",
+							"    urlencoded: [\r",
+							"      { key: \"grant_type\", value: \"client_credentials\" },\r",
+							"      { key: \"scope\", value: \"\" },\r",
+							"      { key: \"client_id\", value: clientId },\r",
+							"      { key: \"client_secret\", value: clientSecret },\r",
+							"    ],\r",
+							"  },\r",
+							"};\r",
+							"pm.sendRequest(getTokenRequest3, (err, response) => {\r",
+							"  let jsonResponse = response.json(),\r",
+							"    newAccessToken = jsonResponse.access_token;\r",
+							"  console.log({ err, jsonResponse, newAccessToken });\r",
+							"  pm.environment.set(\"TOKEN\", newAccessToken);\r",
+							"  pm.variables.set(\"TOKEN\", newAccessToken);\r",
+							"});\r",
+							""
+						],
+						"type": "text/javascript"
+					}
+				}
+			],
+			"protocolProfileBehavior": {
+				"disableBodyPruning": true
+			},
+			"request": {
+				"method": "GET",
+				"header": [
+					{
+						"key": "Authorization",
+						"value": "Bearer {{TOKEN}}",
+						"type": "text"
+					}
+				],
+				"body": {
+					"mode": "raw",
+					"raw": "",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "https://eu10.alm.cloud.sap/api/calm-tasks/v1/tasks/:id",
+					"protocol": "https",
+					"host": [
+						"eu10",
+						"alm",
+						"cloud",
+						"sap"
+					],
+					"path": [
+						"api",
+						"calm-tasks",
+						"v1",
+						"tasks",
+						":id"
+					],
+					"variable": [
+						{
+							"key": "id",
+							"value": "af7b0a47-0351-4f4c-b86d-8cf421e47e4b"
+						}
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
