@@ -1,5 +1,5 @@
 ## CALM4Kanban
- 
+
 ### Intro
 This is a sample application using the [SAP Cloud ALM APIs](https://api.sap.com/package/SAPCloudALM/rest) for Project and Task Management, building a very simple kanban style board using [JQuery](https://jquery.com), [Bootstrap](https://getbootstrap.com) and [SortableJS](https://github.com/SortableJS/Sortable).
 The backend part is a very simple NodeJS application, that serves the HTML component and acts as proxy to the actual API's handling the OAuth2 authorization with client_id and client_secret. The NodeJS application can either run as a standalone application, or it can be published to a CloudFoundry instance on SAP BTP
@@ -46,37 +46,36 @@ From an authorization perspective, the application needs at least a service inst
 ### How to run?
 
 1. Clone this repository
-2. Install NodeJS dependencies using ```npm install```in the server directory containing the file ```package.json
-3. Copy config.json.sample
-   ```
+2. Copy config.json.sample
+   ```sh
     cd applications/kanban4calm/server
     cp config.json.sample config.json
     ```
 3. Adapt config.json to your environment (changing URLs and authentication information)
 
-### Install Dependencies
+#### Install Dependencies
 
-From the server directory, run `npm install`:
+From the server directory, run:
 
 ```sh
    npm install
 ```
 
-### Start the Server Application
+#### Start the Server Application
 
    - locally:
-      ```
+      ```sh
       node server.js
       ```
       After that you should see a message how you can access the application, typically using http://localhost:3000/ as a default
 
    - on Cloud Foundry:
-      ```
+      ```sh
       cd applications/kanban4calm/
       cf login
       cf push
       ```
-      You should see something like this in the ouput:
+      You should see something like this in the output:
       ```
       Instances starting...
 
