@@ -92,3 +92,4 @@ From the server directory, run:
 This is what you should get:
 ![Example Screenshot](ExampleScreenshot.png)
 
+And of course, thanks to @pgerundt for the jumpstart help with JQuery, Bootstrap and Sortable.JS
