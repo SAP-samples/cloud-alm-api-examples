@@ -1,0 +1,77 @@
+<mvc:View
+	controllerName="sap.ui.demo.cloudalmapi.controller.App"
+	xmlns="sap.m"
+    xmlns:l="sap.ui.layout"
+	xmlns:f="sap.f"
+    xmlns:core="sap.ui.core"
+    xmlns:card="sap.f.cards"
+    xmlns:w="sap.ui.integration.widgets"
+	xmlns:mvc="sap.ui.core.mvc"
+	displayBlock="true">
+	<Shell>
+		<App class="myAppDemoWT">
+			<pages>
+				<Page title="{i18n>homePageTitle}">
+                    <headerContent>
+                        <MenuButton id="menuBTN" text="Select a destination">
+                            <menu>
+                                <Menu itemSelected=".onRESTCall">
+                                    <MenuItem key="Sandbox" text="Sandbox"  id="sandbox" />
+                                    <MenuItem key="Production" text="Production" id="production" />
+                                </Menu>
+                            </menu>
+                        </MenuButton>
+                    </headerContent>
+					<content>
+						<!-- <mvc:XMLView viewName="sap.ui.demo.cloudalmapi.view.ProjectList" async="true"/> -->
+                        <f:GridContainer id="grid" class="sapUiResponsiveMargin" >
+                            <f:layout>
+                                <f:GridContainerSettings rowSize="5rem" columnSize="5.25rem"/>
+                            </f:layout>
+                            <f:items>
+                            <f:Card>
+                                <f:layoutData>
+                                    <f:GridContainerItemLayoutData rows="4" columns="7" />
+                                </f:layoutData>
+                                <f:header>
+                                    <card:Header title="{i18n>projectListTitle}" subtitle="List of the available projects and their status" iconSrc="sap-icon://sap-box"/>
+                                </f:header>
+                                <f:content>
+
+                                        <mvc:XMLView viewName="sap.ui.demo.cloudalmapi.view.ProjectList" async="true"/>
+
+                                </f:content>
+                            </f:Card>
+                            <f:Card>
+                                <f:layoutData>
+                                    <f:GridContainerItemLayoutData rows="4" columns="5" />
+                                </f:layoutData>
+                                <f:header>
+                                    <card:Header title="Tasks Distribution" subtitle="Task repartition chart regarding due dates" iconSrc="sap-icon://pie-chart" />
+                                </f:header>
+                                <f:content>
+                                    <mvc:XMLView viewName="sap.ui.demo.cloudalmapi.view.PieChart" async="true"/>
+                                </f:content>
+                            </f:Card>
+
+                            <f:Card>
+                                <f:layoutData>
+                                    <f:GridContainerItemLayoutData rows="5" columns="12" />
+                                </f:layoutData>
+                                <f:header>
+                                    <card:Header title="Kanban" subtitle="Tasks board for the selected project" iconSrc="sap-icon://activities"/>
+                                </f:header>
+                                <f:content>
+                                    <mvc:XMLView id="viewKanban" viewName="sap.ui.demo.cloudalmapi.view.Kanban" async="true"/>
+                                </f:content>
+                            </f:Card>
+	
+                        </f:items>
+
+                        </f:GridContainer>
+					</content>
+				</Page>
+			</pages>
+		</App>
+	</Shell>
+</mvc:View>

@@ -1,0 +1,87 @@
+{
+	"_version": "1.21.0",
+	"sap.app": {
+		"id": "sap.ui.demo.cloudalmapi",
+		"type": "application",
+		"i18n": {
+			"bundleUrl": "i18n/i18n.properties",
+			"supportedLocales": [
+				""
+			],
+			"fallbackLocale": ""
+		},
+		"title": "{{appTitle}}",
+		"description": "{{appDescription}}",
+		"applicationVersion": {
+			"version": "1.0.0"
+        },
+        "dataSources": {
+                "projectRemote": {
+                        "uri": "/SAPCALM/calm-projects/v1/projects",
+                        "type": "JSON"
+                }
+        }
+	},
+	"sap.ui": {
+		"technology": "UI5",
+		"deviceTypes": {
+			"desktop": true,
+			"tablet": true,
+			"phone": true
+		}
+	},
+	"sap.ui5": {
+		"rootView": {
+			"viewName": "sap.ui.demo.cloudalmapi.view.App",
+			"type": "XML",
+			"async": true,
+			"id": "app"
+		},
+		"dependencies": {
+			"minUI5Version": "1.60",
+			"libs": {
+				"sap.m": {}
+			}
+		},
+		"models": {
+			"i18n": {
+				"type": "sap.ui.model.resource.ResourceModel",
+				"settings": {
+					"bundleName": "sap.ui.demo.cloudalmapi.i18n.i18n",
+					"supportedLocales": [
+						""
+					],
+					"fallbackLocale": ""
+				}
+            },
+            "tasksStatistic": {
+                "type": "sap.ui.model.json.JSONModel",
+                "uri": "models/TasksStatistics.json"
+            }, 
+            "kanbanModel": {
+                "type": "sap.ui.model.json.JSONModel",
+                "uri": "models/KanbanModel.json"
+            },
+			"project": {
+				"type": "sap.ui.model.json.JSONModel",
+				"uri": "models/Projects.json"
+            },
+            "task": {
+                "type": "sap.ui.model.json.JSONModel",
+				"uri": "models/Tasks.json"
+            },
+            "infoTask": {
+                "type": "sap.ui.model.json.JSONModel",
+                "uri": "models/InfoTask.json"
+            }
+            
+		},
+		"resources": {
+			"css": [
+				{
+					"uri": "css/style.css"
+				}
+			]
+		}
+	}
+}
