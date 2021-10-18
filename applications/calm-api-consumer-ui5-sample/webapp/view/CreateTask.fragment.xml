@@ -1,0 +1,86 @@
+<core:FragmentDefinition
+   xmlns="sap.m"
+   xmlns:core="sap.ui.core" >
+   <Dialog
+      id="createTask"
+      busyIndicatorDelay="0"
+      title=" {/CreateOrEdit} a task"
+      contentHeight="60%"
+      contentWidth="50%"
+      >
+
+      <VBox class="sapUiResponsiveMargin">
+        <Label text="Title of the task" labelFor="inputTitle" />
+        <Input 
+            value="{infoTask>/title}"
+            id="inputTitle"
+            placeholder="Enter a title"
+            liveChange=".checkTitle"
+            required="true"
+            width="75%"
+            />
+      </VBox>
+
+      <VBox class="sapUiResponsiveMargin">
+        <Label text="Enter a due date" labelFor="inputDate"/>
+        <DatePicker
+            value="{infoTask>/dueDate}"
+            id="inputDate"
+            change="dateIsValid"
+            valueFormat="yyyy-MM-dd"
+            displayFormat="yyyy-MM-dd"
+            width="25%"
+            />
+      </VBox>
+
+      <VBox class="sapUiResponsiveMargin">
+        <Label text="Priority of the task" labelFor="inputPriority"/>
+        <Select
+            id="inputPriority"
+            forceSelection="false"
+            width="25%"
+            selectedKey="{/DeafaultNumberPrio}"
+            items="{/PriorityCollection}"
+            >
+                <core:Item key="{NumberPrio}" text="{PrioText}" />
+        </Select>
+      </VBox>
+
+      <VBox class="sapUiResponsiveMargin" id="typeVBox" >
+        <Label text="Type of the task" labelFor="inputType"/>
+        <Select
+            id="inputType"
+            forceSelection="false"
+            width="25%"
+            selectedKey="{/DeafaultTaskType}"
+            items="{/TypeCollection}"
+            >
+                <core:Item key="{TaskType}" text="{TypeText}" />
+        </Select>
+      </VBox>
+    
+      <VBox class="sapUiResponsiveMargin">
+        <Label text="Description of the task" labelFor="inputDescr"/>
+        <TextArea 
+            value="{infoTask>/description}"
+            id="inputDescr"
+            placeholder="Enter a description" 
+            growingMaxLines="7" 
+            width="100%"
+            growing="true"/>
+      </VBox>
+
+      <beginButton>
+         <Button
+            id="submitBtn"
+            text="{/SubmitOrUpdate} task"
+            enabled="false" 
+            press=".onSubmitTask"/>
+      </beginButton>
+      <endButton>
+         <Button
+            text="Cancel"
+            press=".onCloseDialog"/>
+      </endButton>
+   </Dialog>
+</core:FragmentDefinition>

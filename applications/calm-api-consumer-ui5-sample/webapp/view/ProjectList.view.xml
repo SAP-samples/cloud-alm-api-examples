@@ -1,0 +1,56 @@
+<mvc:View
+    controllerName="sap.ui.demo.cloudalmapi.controller.ProjectList"
+	xmlns="sap.m"
+	xmlns:mvc="sap.ui.core.mvc"
+    xmlns:table="sap.ui.table"
+    xmlns:m="sap.m"
+	xmlns:tnt="sap.tnt">
+    
+    <HBox justifyContent="SpaceBetween" wrap="WrapReverse">
+
+        <Input width="90%" class="sapUiTinyMarginEnd" placeholder="Search a project" id="input" liveChange=".onFilterProjects"/>
+        <Button
+        id="refreshProjects"
+        icon="sap-icon://refresh"
+        press=".onRefreshProjects"
+        class="sapUiTinyMarginEnd"
+        />
+    </HBox>
+    <HBox  busyIndicatorDelay="0" id="tablehbox">
+        <table:Table rows="{
+                        path : 'project>/',
+                        sorter : [{
+                            path : 'status',
+                            descending : 'true'
+                        }, {
+                            path: 'name', 
+                            descending: false
+                        }]
+                    }" enableSelectAll="false" id="projectList" selectionMode="Single"
+                    visibleRowCount="6"
+                    rowSelectionChange="showTasks"
+                    >
+                    
+            <table:columns>
+                <table:Column sortProperty="{project>name}" width="80%" filterProperty="{project>name}">
+                    <Label text="Project name"/>
+                    <table:template>
+                        <Text text="{project>name}" />
+                    </table:template>
+                </table:Column>
+                
+                <table:Column  hAlign="Center" sortProperty="{project>status}"  filterProperty="{project>status}" >
+                    <Label text="Status" />
+                    <table:template>
+                        <tnt:InfoLabel 
+                            id="il1" 
+                            text="{= ${project>status} === 'O' ? 'Active' : 'Hidden' }" 
+                            colorScheme="{= ${project>status} === 'O' ? 8 : 2 }"
+                            displayOnly= "true" />
+                    </table:template>
+                </table:Column>
+            </table:columns>
+        </table:Table>
+    </HBox>
+</mvc:View>
+

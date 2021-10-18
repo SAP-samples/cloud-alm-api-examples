@@ -1,0 +1,46 @@
+<mvc:View
+    controllerName="sap.ui.demo.cloudalmapi.controller.PieChart"
+	xmlns:core="sap.ui.core"
+    xmlns:mvc="sap.ui.core.mvc"
+	xmlns="sap.m"
+    xmlns:layout="sap.ui.layout"
+    xmlns:viz="sap.viz.ui5.controls"
+    xmlns:viz.data="sap.viz.ui5.data"
+    xmlns:viz.feeds="sap.viz.ui5.controls.common.feeds"
+    >
+
+    <layout:FixFlex>
+
+        <layout:flexContent>
+            <viz:VizFrame id="idVizFrame" busyIndicatorDelay="0" uiConfig="{applicationSet:'fiori'}"
+                height='100%' width="100%" vizType='pie'
+                vizProperties="{plotArea: { colorPalette : ['green', 'firebrick', 'grey'], drawingEffect: 'glossy'}, 
+                                title:{ text:' ',
+                                    visible: false},
+                                dataLabel:{visible:true,showTotal:true}}"
+                >
+                <viz:dataset>
+                    <viz.data:FlattenedDataset data="{tasksStatistic>/}">
+                        <viz.data:dimensions>
+                            <viz.data:DimensionDefinition name="Status Name"
+                                value="{StatusName}" />
+                        </viz.data:dimensions>
+                        <viz.data:measures>
+                            <viz.data:MeasureDefinition name="Percentage"
+                                value="{Percentage}" />
+                        </viz.data:measures>
+                    </viz.data:FlattenedDataset>
+                </viz:dataset>
+
+                <viz:feeds>
+                    <viz.feeds:FeedItem uid="size" type="Measure"
+                        values="Percentage" />
+                    <viz.feeds:FeedItem uid="color" type="Dimension"
+                        values="Status Name" />
+                </viz:feeds>
+            </viz:VizFrame>
+        </layout:flexContent>
+    
+    </layout:FixFlex>
+
+</mvc:View>

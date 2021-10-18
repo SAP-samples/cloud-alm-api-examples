@@ -1,0 +1,259 @@
+<mvc:View
+    controllerName="sap.ui.demo.cloudalmapi.controller.Kanban"
+    xmlns:table="sap.ui.table"
+    xmlns:dnd="sap.ui.core.dnd"
+    xmlns:mvc="sap.ui.core.mvc"
+    xmlns:tnt="sap.tnt"
+    xmlns:c="sap.ui.core"
+    xmlns:l="sap.ui.layout"
+    xmlns="sap.m"
+    height="100%">
+    <HBox justifyContent="SpaceBetween">
+        <l:HorizontalLayout class="sapUiTinyMarginEnd">
+            <Input  placeholder="Search a task"  id="input" liveChange=".onFilterTasks"/>
+           
+        </l:HorizontalLayout>
+        <l:HorizontalLayout class="sapUiTinyMarginBeginEnd">
+            <Select id="idComboBox" class="sapUiTinyMarginBeginEnd" width="200px" selectedKey="placeHolder" enabled="false" change="filterByPriority" >
+                <c:ListItem key="placeHolder" enabled="false" text="Filter by priority"/>
+                <c:ListItem key="All" text="All priorities"/>
+                <c:ListItem key="VeryHigh" icon="sap-icon://collapse-group" text="Very High" >
+                    <c:customData>
+                        <c:CustomData key="iconcolor" value="darkred" writeToDom="true"/>
+                    </c:customData>
+                </c:ListItem>
+                <c:ListItem key="High" icon="sap-icon://navigation-up-arrow" text="High">
+                    <c:customData>
+                        <c:CustomData key="iconcolor" value="red" writeToDom="true"/>
+                    </c:customData>
+                </c:ListItem>                
+                <c:ListItem key="Medium" icon="sap-icon://less" text="Medium">
+                    <c:customData>
+                        <c:CustomData key="iconcolor" value="orange" writeToDom="true"/>
+                    </c:customData>
+                </c:ListItem>                
+                <c:ListItem key="Low" icon="sap-icon://navigation-down-arrow"  text="Low">
+                    <c:customData>
+                        <c:CustomData key="iconcolor" value="green" writeToDom="true"/>
+                    </c:customData>
+                </c:ListItem>                
+            </Select> 
+        </l:HorizontalLayout>
+        <l:HorizontalLayout class="sapUiTinyMarginBegin">
+            <Button text="add task" id="btnAddTask" icon="sap-icon://add" class="sapUiTinyMarginBeginEnd" press=".onOpenDialog()" enabled="false"/>
+            <Button
+                id="refreshTask"
+                icon="sap-icon://refresh"
+                press=".onRefreshTasks"
+                class="sapUiTinyMarginEnd"
+                />
+            </l:HorizontalLayout>
+    </HBox>
+    <HBox
+        id="allTables"
+        busyIndicatorDelay="0">
+        <VBox width="25%" class="sapUiTinyMarginEnd" alignItems="End">
+            <HBox width="67.5%">
+                <Text text="Open" class="sapUiSmallMarginTopBottom sapUiMediumMarginBegin"/>
+                <Text text="" class="sapUiTinyMarginBegin" id="cptOpen"/>
+            </HBox>
+            <ScrollContainer height="285px"  vertical="true" id="open" horizontal="false" >
+                <Table
+                    id="tableOpen"
+                    mode="SingleSelectMaster"
+                    items="{kanbanModel>/open}">
+                    <columns>
+                        <Column width="10%"/>
+                        <Column/>
+                        <Column width="18%"/>
+                    </columns>
+                    <dragDropConfig>
+                        <dnd:DragInfo
+                            sourceAggregation="items" />
+                        <dnd:DropInfo
+                            targetAggregation="items"
+                            drop="performeDropTask($event, ${constants>/TASKS_STATUS/TASKOPEN})" />
+                    </dragDropConfig>
+                    <items>
+                        <ColumnListItem vAlign="Middle">
+                            <cells>
+                                <c:Icon src="{
+                                        parts: [
+                                            {path: 'kanbanModel>priorityId'}
+                                        ],
+                                        formatter: '.formatter.priorityIcon'
+                                    }" color="{
+                                        parts: [
+                                            {path: 'kanbanModel>priorityId'}
+                                        ],
+                                        formatter: '.formatter.priorityColorScheme'
+                                    }"/>
+                                <Text text="{kanbanModel>title}" wrapping="true" />
+                                <MenuButton>
+                                    <menu>
+                                        <Menu>
+                                            <MenuItem text="Edit" icon="sap-icon://edit" press=".onOpenDialog(${kanbanModel>})"/>
+                                            <MenuItem text="Delete" icon="sap-icon://delete" press=".onDeletePress( ${kanbanModel>id}, ${kanbanModel>title})"/>
+                                        </Menu>
+                                    </menu>
+                                </MenuButton>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </ScrollContainer>
+        </VBox>
+        <VBox width="25%" class="sapUiTinyMarginEnd" alignItems="End">
+            <HBox width="67.5%">
+                <Text text="Blocked" class="sapUiSmallMarginTopBottom sapUiMediumMarginBegin"/>
+                <Text text="" class="sapUiTinyMarginBegin" id="cptBlocked"/>
+            </HBox>
+            <ScrollContainer height="285px"  vertical="true" id="blocked" horizontal="false" >
+                <Table
+                    id="tableBlocked"
+                    mode="SingleSelectMaster"
+                    items="{kanbanModel>/blocked}">
+                    <columns>
+                        <Column width="10%"/>
+                        <Column/>
+                        <Column width="18%"/>
+
+                    </columns>
+                    <dragDropConfig>
+                        <dnd:DragInfo
+                            sourceAggregation="items" />
+                        <dnd:DropInfo
+                            targetAggregation="items"
+                            drop="performeDropTask($event, ${constants>/TASKS_STATUS/TASKBLOCKED})" />
+                    </dragDropConfig>
+                    <items>
+                        <ColumnListItem vAlign="Middle">
+                            <cells>
+                                <c:Icon src="{
+                                        parts: [
+                                            {path: 'kanbanModel>priorityId'}
+                                        ],
+                                        formatter: '.formatter.priorityIcon'
+                                    }" color="{
+                                        parts: [
+                                            {path: 'kanbanModel>priorityId'}
+                                        ],
+                                        formatter: '.formatter.priorityColorScheme'
+                                    }"/>
+                                <Text text="{kanbanModel>title}" wrapping="true" />
+                                <MenuButton>
+                                    <menu>
+                                        <Menu>
+                                            <MenuItem text="Edit" icon="sap-icon://edit" press=".onOpenDialog(${kanbanModel>})"/>
+                                            <MenuItem text="Delete" icon="sap-icon://delete" press=".onDeletePress( ${kanbanModel>id}, ${kanbanModel>title})"/>
+                                        </Menu>
+                                    </menu>
+                                </MenuButton>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </ScrollContainer>
+        </VBox>
+        <VBox width="25%" class="sapUiTinyMarginEnd" alignItems="End">
+            <HBox width="75%">
+                <Text text="In Progress" class="sapUiSmallMarginTopBottom sapUiMediumMarginBegin"/>
+                <Text text="" class="sapUiTinyMarginBegin" id="cptInProgress"/>
+            </HBox>
+            <ScrollContainer height="285px"  vertical="true" id="in_progress" horizontal="false" >
+                <Table
+                    id="tableInProgress"
+                    items="{kanbanModel>/in_progress}">
+                    <columns>
+                        <Column width="10%"/>
+                        <Column/>
+                        <Column width="18%"/>
+                    </columns>
+                    <dragDropConfig>
+                        <dnd:DragInfo
+                            sourceAggregation="items" />
+                        <dnd:DropInfo
+                            targetAggregation="items"
+                            drop="performeDropTask($event, ${constants>/TASKS_STATUS/TASKINPROGRESS})" />
+                    </dragDropConfig>
+                    <items>
+                        <ColumnListItem vAlign="Middle">
+                            <cells>
+                               <c:Icon src="{
+                                        parts: [
+                                            {path: 'kanbanModel>priorityId'}
+                                        ],
+                                        formatter: '.formatter.priorityIcon'
+                                    }" color="{
+                                        parts: [
+                                            {path: 'kanbanModel>priorityId'}
+                                        ],
+                                        formatter: '.formatter.priorityColorScheme'
+                                    }"/>               
+                                <Text text="{kanbanModel>title}" wrapping="true" />
+                                <MenuButton>
+                                    <menu>
+                                        <Menu>
+                                            <MenuItem text="Edit" icon="sap-icon://edit" press=".onOpenDialog(${kanbanModel>})"/>
+                                            <MenuItem text="Delete" icon="sap-icon://delete" press=".onDeletePress( ${kanbanModel>id}, ${kanbanModel>title})"/>
+                                        </Menu>
+                                    </menu>
+                                </MenuButton>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </ScrollContainer>
+        </VBox>
+        <VBox width="25%" class="sapUiTinyMarginEnd" alignItems="End">
+            <HBox width="67.5%">
+                <Text text="Done" class="sapUiSmallMarginTopBottom sapUiMediumMarginBegin"/>
+                <Text text="" class="sapUiTinyMarginBegin" id="cptDone"/>
+            </HBox>
+            <ScrollContainer height="285px"  vertical="true" id="done" horizontal="false">
+                <Table
+                    id="tableDone"
+                    items="{kanbanModel>/done}">
+                    <columns>
+                        <Column width="10%"/>
+                        <Column/>
+                        <Column width="18%"/>
+                    </columns>
+                    <dragDropConfig>
+                        <dnd:DragInfo
+                            sourceAggregation="items" />
+                        <dnd:DropInfo
+                            targetAggregation="items"
+                            drop="performeDropTask($event, ${constants>/TASKS_STATUS/TASKDONE})" />
+                    </dragDropConfig>
+                    <items>
+                        <ColumnListItem vAlign="Middle">
+                            <cells>
+                                <c:Icon src="{
+                                        parts: [
+                                            {path: 'kanbanModel>priorityId'}
+                                        ],
+                                        formatter: '.formatter.priorityIcon'
+                                    }" color="{
+                                        parts: [
+                                            {path: 'kanbanModel>priorityId'}
+                                        ],
+                                        formatter: '.formatter.priorityColorScheme'
+                                    }"/>
+                                <Text text="{kanbanModel>title}" wrapping="true" />
+                                <MenuButton>
+                                    <menu>
+                                        <Menu>
+                                            <MenuItem text="Edit" icon="sap-icon://edit" press=".onOpenDialog(${kanbanModel>})"/>
+                                            <MenuItem text="Delete" icon="sap-icon://delete" press=".onDeletePress( ${kanbanModel>id}, ${kanbanModel>title})"/>
+                                        </Menu>
+                                    </menu>
+                                </MenuButton>
+                            </cells>
+                        </ColumnListItem>
+                    </items>
+                </Table>
+            </ScrollContainer>
+        </VBox>
+    </HBox>
+</mvc:View>
