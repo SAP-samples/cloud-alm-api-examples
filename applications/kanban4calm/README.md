@@ -24,7 +24,7 @@ From an application logic the server side application is just a proxy that handl
 
 ### How to obtain client_id and client_secret for your customer tenant
 
-The overall process of creating a service instance for your customer tenant is [described in SAP Help Portal](https://help.sap.com/viewer/fe419bfabbdc46dfbddbfd78b21483d5/2021-07-28/en-US/e9c41bb0aa1e47e88af6a8cc3371673a.html)
+The overall process of creating a service instance for your customer tenant is [described in SAP Help Portal](https://help.sap.com/products/CloudALM/08879d094f3b4de3ac67832f4a56a6de/704b5dc854f549888a238f94015e1eac.html)
 
 From an authorization perspective, the application needs at least a service instance with the following authorization scope (remember to change the xsappname parameter to be unique)
 
