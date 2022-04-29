@@ -11,3 +11,7 @@ Note the prerequisites listed in that file. For the code in the notebook to work
 ### Feature Updates from 2022-02-01
 
 Notebook `calm-project-task-2022-02-updates.ipynb` contains samples of new features added up to February 2022.
+
+### Requirements as Task Type in API from 2022-04-29
+
+Notebook `calm-requirements-api.ipynb` contains samples of listing, creating, updating, deleting (where possible) Requirement task types.
