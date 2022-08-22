@@ -230,7 +230,7 @@ sap.ui.define([
             // Event to trigger the busy indicators for the projects in the UI            
             this.fireEvent("requestLoadProjectsStart", {});
             // Sending request
-            oModel.loadData(this.getBaseUrl() + "/calm-projects/v1/projects", null, true, "GET", null, false, sHeaders);
+            oModel.loadData(this.getBaseUrl() + "/calm-projects/v1/projects", null, true, "GET", null, true, sHeaders);
         },
 
         /**
@@ -262,7 +262,7 @@ sap.ui.define([
             // Event to trigger the busy indicators for the task in the UI     
             this.fireEvent("requestLoadTasksStart", {});
             // Sending request
-            oModel.loadData(this.getBaseUrl() + "/calm-tasks/v1/tasks", parameter, true, "GET", null, false, sHeaders);
+            oModel.loadData(this.getBaseUrl() + "/calm-tasks/v1/tasks", parameter, true, "GET", null, true, sHeaders);
 
         },
 
@@ -273,7 +273,7 @@ sap.ui.define([
             const URL = this.getBaseUrl() + "/calm-tasks/v1/tasks/" + idTask; 
             console.log("URL :", URL); 
             this.fireEvent("requestLoadInfoTaskStart", {});
-            oModel.loadData(URL , true, "GET", null, false, sHeaders);
+            oModel.loadData(URL , true, "GET", null, true, sHeaders);
             
             console.log("Task infos :", oModel); 
         }, 
