@@ -30,7 +30,7 @@ When it is opened, do not forget to connect to your Cloud Foundry account. Here 
 -	Search “cloud foundry” in the search bar
 -	Check the “Display the current Cloud Foundry target information in the status bar” checkbox
 -	Click on “Connect to CF” in the bottom left corner
--	Fill in the successive fields with the right information for your subaccount (at the top of the screen)
+-	Fill in the successive fields with the right information for your subaccount (you can find the endpoint in the cockpit from your subaccount overview)
 -	On the bottom left corner is now written your BTP tenant.
 
 
