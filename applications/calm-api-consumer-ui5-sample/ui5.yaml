@@ -8,12 +8,15 @@ server:
   - name: fiori-tools-proxy
     afterMiddleware: compression
     configuration:
-      ignoreCertError: false # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
+      debug: true
+      ignoreCertError: true # If set to true, certificate errors will be ignored. E.g. self-signed certificates will be accepted
       backend:
       - path: /V3
         url: https://services.odata.org
       - path: /SAPCALM
-        url: https://sandbox.api.sap.com
+        destination: cloudalmapi_sandbox
+      - path: /api
+        destination: cloudalmapi
       ui5:
         path: 
         - /resources

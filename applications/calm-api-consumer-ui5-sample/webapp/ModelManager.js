@@ -215,7 +215,7 @@ sap.ui.define([
          */
         getBaseUrl: function () {
             if (this.mDestination == "Sandbox") return ("SAPCALM");
-            else return ("cloudalmapi");
+            else return ("api");
         },
 
         //////////////////////////////////////////////// REST REQUESTS -- API MODELS GENERATION ////////////////////////////////////////////////
