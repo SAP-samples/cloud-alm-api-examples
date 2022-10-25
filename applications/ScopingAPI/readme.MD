@@ -28,6 +28,12 @@ export default {
 }
 ```
 Please make sure you have sufficient authorizations to call the APIs. 
+The required authorisation scopes, to run the sample, are:
+
+calm-api.processmanagement.read: to read process management entities.
+calm-api.processmanagement.write: to write process management entities.
+calm-api.processmanagement.delete: to delete process management entities.
+calm-api.projects.read: to view projects.
 
 ## Run the script
 
