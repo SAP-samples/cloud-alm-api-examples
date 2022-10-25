@@ -3,7 +3,7 @@
 This is an example to illustrate how you can use SAP Cloud ALM Scoping API. The code is not production ready and you use it on your own risk. :-)
 Even though the Scoping API is actually built as batch oriented REST API, this example implements UI interactions. Overall the API is not intended to build UIs but rather synchronization scenarios.
 
-You can find all the details about the SAP Cloud ALM Scoping API on the [SAP API Business Hub](https://api.sap.com/package/SAPCloudALM/rest) and internal [here](https://int.api.hana.ondemand.com/api/CALM_PM/resource?context=staging).
+You can find all the details about the SAP Cloud ALM Scoping API on the [SAP API Business Hub](https://api.sap.com/api/CALM_PM/overview).
 
 ## Demo
 
