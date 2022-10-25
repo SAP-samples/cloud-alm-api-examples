@@ -14,3 +14,7 @@ SAPUI5 custom application developed on the SAP BTP platform with the SAP Cloud A
 ### calm-api-consumer-ui5-sample
 Application developed with SAPUI5 to serve as example of what it is possible to achieve with the SAP Cloud ALM Rest APIs. 
 In this app, we connect to the Rest APIs "project" and "task" of SAP CALM APIs to display the tasks of a project in an interactive kanban.
+
+
+### Scoping API
+Simple console app that show cases how you can interact with SAP Cloud ALM Scopes. The example demos how you can manage scopes, add/remove Solution Scenarios, and how you can set processes in/out of scope.

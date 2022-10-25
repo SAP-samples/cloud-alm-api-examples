@@ -1,0 +1,25 @@
+{
+  "name": "scopingapi",
+  "version": "1.0.0",
+  "description": "This is an example to illustrate how you can use SAP Cloud ALM Scoping API. The code is not production ready and you use it on your own risk. :-) Even though the Scoping API is actually built as batch oriented REST API, this example implements UI interactions. Overall the API is not intended to build UIs but rather synchronization scenarios.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.tools.sap/D033027/ScopingAPI.git"
+  },
+  "dependencies": {
+    "axios": "^0.27.2",
+    "axios-oauth-client": "^1.5.0",
+    "axios-token-interceptor": "^0.2.0",
+    "chalk": "^5.0.1",
+    "clear": "^0.1.0",
+    "figlet": "^1.5.2",
+    "inquirer": "^9.1.1",
+    "inquirer-search-checkbox": "^1.0.0",
+    "winston": "^3.8.2"
+  }
+}
