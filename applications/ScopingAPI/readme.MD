@@ -35,6 +35,9 @@ The required authorisation scopes, to run the sample, are:
 * calm-api.processmanagement.delete: to delete process management entities.
 * calm-api.projects.read: to view projects.
 
+
+You can use the [service.json](service.json) example to generate keys in the BPT Cockpit. To learn how generate the needed client id and secret please check this [blog](https://blogs.sap.com/2021/08/12/sap-cloud-alm-extend-with-api-get-started-with-sap-cloud-alm-api/).
+
 ## Run the script
 
 > node index.js
