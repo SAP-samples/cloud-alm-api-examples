@@ -1,0 +1,13 @@
+{
+    "xs-security": {
+      "xsappname": "sap_cloud_alm_api",
+      "authorities": [
+        "$XSMASTERAPPNAME.calm-api.projects.write", 
+        "$XSMASTERAPPNAME.calm-api.projects.read", 
+        "$XSMASTERAPPNAME.calm-api.tasks.write", 
+        "$XSMASTERAPPNAME.calm-api.tasks.read",
+        "$XSMASTERAPPNAME.calm-api.processmanagement.read",
+        "$XSMASTERAPPNAME.calm-api.processmanagement.write"
+         ]
+  }
+}
