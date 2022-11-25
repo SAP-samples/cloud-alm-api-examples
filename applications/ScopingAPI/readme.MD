@@ -12,7 +12,9 @@ Please find a recording [here](recording/2022-09-14_11-49-53.mp4).
 
 [Sad but true.](https://www.monkeyuser.com/2017/npm-delivery/)
 
-> cd ScopingAPI && mkdir log && npm install
+Navigate to ScopingAPI folder, and then
+
+> mkdir log && npm install
 
 ## Maintain credentials
 
