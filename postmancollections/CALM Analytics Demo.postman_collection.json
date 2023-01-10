@@ -1,0 +1,1475 @@
+{
+	"info": {
+		"_postman_id": "17c3b8b0-a9f1-44d3-82c8-c33978d44fdd",
+		"name": "CALM Analytics Demo",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Dataset (OData)",
+			"item": [
+				{
+					"name": "Providers List",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'PROVIDERS_LIST' &$select=d2v,d3v,d4v",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"odata",
+								"v4",
+								"analytics",
+								"DataSet"
+							],
+							"query": [
+								{
+									"key": "$filter",
+									"value": "provider eq 'PROVIDERS_LIST' ",
+									"description": "$"
+								},
+								{
+									"key": "$select",
+									"value": "d2v,d3v,d4v"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Projects",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_PROJECTS' &$count=true",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"odata",
+								"v4",
+								"analytics",
+								"DataSet"
+							],
+							"query": [
+								{
+									"key": "$filter",
+									"value": "provider eq 'DP_PROJECTS' "
+								},
+								{
+									"key": "$count",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Tasks",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_TASKS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L6M'&$top=10&$skip=0&$count=true",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"odata",
+								"v4",
+								"analytics",
+								"DataSet"
+							],
+							"query": [
+								{
+									"key": "$filter",
+									"value": "provider eq 'DP_TASKS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L6M'",
+									"description": "$"
+								},
+								{
+									"key": "$top",
+									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
+								},
+								{
+									"key": "$count",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Tests",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_TESTS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L6M'",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"odata",
+								"v4",
+								"analytics",
+								"DataSet"
+							],
+							"query": [
+								{
+									"key": "$filter",
+									"value": "provider eq 'DP_TESTS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L6M'"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Defects",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_DEFECTS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L6M'",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"odata",
+								"v4",
+								"analytics",
+								"DataSet"
+							],
+							"query": [
+								{
+									"key": "$filter",
+									"value": "provider eq 'DP_DEFECTS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L6M'"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Requirements",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_REQUIREMENTS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L6M'&$count=true&$limit=10&$kip=0",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"odata",
+								"v4",
+								"analytics",
+								"DataSet"
+							],
+							"query": [
+								{
+									"key": "$filter",
+									"value": "provider eq 'DP_REQUIREMENTS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L6M'"
+								},
+								{
+									"key": "$count",
+									"value": "true"
+								},
+								{
+									"key": "$limit",
+									"value": "10"
+								},
+								{
+									"key": "$kip",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Health Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'HM_ANALYTICS_DP' and resolution eq 'D' and period eq 'L1D'&$select=date,d1v,d2v,d3v,d4v,d5v,d6v,m1v,m2v,m3v,m4v,m5v,m6v",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"odata",
+								"v4",
+								"analytics",
+								"DataSet"
+							],
+							"query": [
+								{
+									"key": "$filter",
+									"value": "provider eq 'HM_ANALYTICS_DP' and resolution eq 'D' and period eq 'L1D'",
+									"description": "$"
+								},
+								{
+									"key": "$select",
+									"value": "date,d1v,d2v,d3v,d4v,d5v,d6v,m1v,m2v,m3v,m4v,m5v,m6v"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Status Events",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'EVENTS_DATA_SET' and resolution eq 'W' and period eq 'L6W'&$select=date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v&$count=true",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"odata",
+								"v4",
+								"analytics",
+								"DataSet"
+							],
+							"query": [
+								{
+									"key": "$filter",
+									"value": "provider eq 'EVENTS_DATA_SET' and resolution eq 'W' and period eq 'L6W'",
+									"description": "$"
+								},
+								{
+									"key": "$select",
+									"value": "date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v"
+								},
+								{
+									"key": "$count",
+									"value": "true"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Providers (REST)",
+			"item": [
+				{
+					"name": "Providers",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								""
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Filters (REST)",
+			"item": [
+				{
+					"name": "ALM Projects",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"providerName\":\"DP_PROJECTS\",\n    \"providerVersion\":\"v1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/filters",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"filters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Tasks",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"providerName\":\"DP_TASKS\",\n    \"providerVersion\":\"v1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/filters",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"filters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Tests",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"providerName\":\"DP_DEFECTS\",\n    \"providerVersion\":\"v1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/filters",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"filters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Defects",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"providerName\":\"DP_TESTS\",\n    \"providerVersion\":\"v1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/filters",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"filters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Requirements",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"providerName\":\"DP_REQUIREMENTS\",\n    \"providerVersion\":\"v1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/filters",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"filters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Health Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"providerName\":\"HM_ANALYTICS_DP\",\n    \"providerVersion\":\"v1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/filters",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"filters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Status Events",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"providerName\":\"EVENTS_DATA_SET\",\n    \"providerVersion\":\"v1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/filters",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"filters"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Data (REST)",
+			"item": [
+				{
+					"name": "ALM Projects",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"table\",\n    \"tableType\": \"snapshot\",\n    \"timeRange\": {\n        \"semantic\": \"L1D\"        \n    },\n    \"limit\":\"20\",\n    \"queries\": [\n        {\n            \"provider\": \"DP_PROJECTS\"\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Tasks",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"table\",\n    \"tableType\": \"snapshot\",\n    \"timeRange\": {\n        \"semantic\": \"L6M\"        \n    },\n    \"resolution\": \"M\",\n    \"offset\": \"0\",\n    \"limit\": \"10\",\n    \"timezone\": \"+00:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"DP_TASKS\",\n            \"columns\": { \n                \"dimensions\": [\n                    \"project\",\n                    \"name\",\n                    \"type\",\n                    \"status\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"count\"\n                    }\n                ]\n            },\n            \"filters\": [\n                {\n                    \"key\": \"Project\",\n                    \"values\": [\n                        \"11111111-1111-1111-1111-111111111111\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Tests",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"table\",\n    \"tableType\": \"raw\",\n    \"timeRange\": {\n        \"semantic\": \"L6M\"\n    },\n    \"limit\": \"10\",\n    \"resolution\": \"M\",\n    \"queries\": [\n        {\n            \"name\": \"legend\",\n            \"provider\": \"DP_REQUIREMENTS\",\n            \"version\": \"V1\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"project\",\n                    \"projectName\",\n                    \"scope\",\n                    \"scopeName\",\n                    \"name\",\n                    \"GUID\",\n                    \"status\",\n                    \"statusText\",\n                    \"team\",\n                    \"assignee\",\n                    \"priority\",\n                    \"workstream\",\n                    \"process\",\n                    \"release\",\n                    \"role\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"total\"\n                    }\n                ]\n            },\n            \"filters\": [\n                {\n                    \"key\": \"project\",\n                    \"values\": [\n                        \"11111111-1111-1111-1111-111111111111\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Requirements",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"table\",\n    \"tableType\": \"raw\",\n    \"timeRange\": {\n        \"semantic\": \"L6M\"\n        \n    },\n    \"resolution\": \"M\",\n    \"limit\": \"10\",\n    \"queries\": [\n        {\n            \"name\": \"legend\",\n            \"provider\": \"DP_REQUIREMENTS\",\n            \"version\": \"V1\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"project\",\n                    \"projectName\",\n                    \"scope\",\n                    \"scopeName\",\n                    \"name\",\n                    \"GUID\",\n                    \"status\",\n                    \"statusText\",\n                    \"team\",\n                    \"assignee\",\n                    \"priority\",\n                    \"workstream\",\n                    \"process\",\n                    \"release\",\n                    \"role\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"counter\"\n                    }\n                ]\n            },\n            \"filters\": [\n                {\n                    \"key\": \"project\",\n                    \"values\": [\n                        \"11111111-1111-1111-1111-111111111111\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Health Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L1W\"        \n    },\n    \"resolution\": \"W\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"HM_ANALYTICS_DP\",\n            \"columns\": { \n                \"dimensions\": [\n                    \"serviceName\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"okStatus\"\n                    },\n                    {\n                        \"measure\": \"warningStatus\"\n                    },\n                    {\n                        \"measure\": \"criticalStatus\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Health Monitoring (Time Series)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"time_series\",\n    \"timeRange\": {\n        \"semantic\": \"L7D\"        \n    },\n    \"resolution\": \"D\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"HM_ANALYTICS_DP\",\n            \"columns\": { \n                \"dimensions\": [\n                    \"serviceName\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"okStatus\"\n                    },\n                    {\n                        \"measure\": \"warningStatus\"\n                    },\n                    {\n                        \"measure\": \"criticalStatus\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Status Events",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L1W\"\n    },\n    \"resolution\": \"W\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"EVENTS_DATA_SET\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"type\",\n                    \"serviceType\",\n                    \"serviceName\",\n                    \"serviceDescription\",\n                    \"serviceID\",\n                    \"eventType\",\n                    \"eventStatus\",\n                    \"eventName\",\n                    \"eventDescription\",\n                    \"eventSource\",\n                    \"eventStartTime\",\n                    \"eventEndTime\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"duration\"\n                    },\n                    {\n                        \"measure\": \"counter\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Status Events (Time Series)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"time_series\",\n    \"timestampFormat\": \"unix\",\n    \"timeRange\": {\n        \"semantic\": \"L6M\"\n    },\n    \"resolution\": \"M\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"EVENTS_DATA_SET\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"type\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"duration\"\n                    },\n                    {\n                        \"measure\": \"counter\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					"let tokenUrl = pm.variables.get('CALM_DEMO_TOKEN_URL');",
+					"let clientId = pm.variables.get('CALM_DEMO_CLIENT_ID');",
+					"let clientSecret = pm.variables.get('CALM_DEMO_CLIENT_SECRET');",
+					"let sanboxRootUrl = pm.variables.get('CALM_DEMO_SANDBOX_PREFIX');",
+					"let calmRootUrl = pm.variables.get('CALM_DEMO_CALM_PREFIX');",
+					"",
+					"let getTokenRequest = {",
+					"    method: 'POST',",
+					"    url: tokenUrl,",
+					"    header: {",
+					"        'Content-Type': 'application/x-www-form-urlencoded',",
+					"    },",
+					"    body: {",
+					"        mode: 'urlencoded',",
+					"        urlencoded: [",
+					"            { key: 'grant_type', value: 'client_credentials' },",
+					"            { key: 'scope', value: '' },",
+					"            { key: 'client_id', value: clientId },",
+					"            { key: 'client_secret', value: clientSecret }",
+					"        ]",
+					"    }",
+					"};",
+					"",
+					"pm.collectionVariables.set('CALM_DEMO_ROOT_URL',sanboxRootUrl);",
+					"",
+					"",
+					"if ((typeof tokenUrl === 'undefined') || (tokenUrl === null) || (tokenUrl === '')) {",
+					"    return;",
+					"};",
+					"if ((typeof clientId === 'undefined') || (clientId === null) || (clientId === '')) { ",
+					"    return;",
+					"};",
+					"if ((typeof clientSecret === 'undefined') || (clientSecret === null) || (clientSecret === '')) { ",
+					"    return;",
+					"};",
+					"",
+					"pm.collectionVariables.set('CALM_DEMO_ROOT_URL',calmRootUrl);",
+					"",
+					"pm.sendRequest(getTokenRequest, (err, response) => {",
+					"    let jsonResponse = response.json(),",
+					"        newAccessToken = jsonResponse.access_token;",
+					"",
+					"    console.log({ err, jsonResponse, newAccessToken })",
+					"",
+					"    pm.collectionVariables.set('CALM_DEMO_TOKEN', newAccessToken);",
+					"});",
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "CALM_DEMO_API_KEY",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "CALM_DEMO_TOKEN_URL",
+			"value": "https://calm-dev-eu10-stabledata-all.authentication.eu10.hana.ondemand.com/oauth/token",
+			"type": "default"
+		},
+		{
+			"key": "CALM_DEMO_CLIENT_ID",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "CALM_DEMO_CLIENT_SECRET",
+			"value": "",
+			"type": "default"
+		},
+		{
+			"key": "CALM_DEMO_SANDBOX_PREFIX",
+			"value": "https://sandbox.api.sap.com/SAPCALM",
+			"type": "default"
+		},
+		{
+			"key": "CALM_DEMO_CALM_PREFIX",
+			"value": "https://eu10.alm.cloud.sap/api",
+			"type": "default"
+		},
+		{
+			"key": "CALM_DEMO_ROOT_URL",
+			"value": "https://sandbox.api.sap.com/SAPCALM"
+		},
+		{
+			"key": "CALM_DEMO_TOKEN",
+			"value": ""
+		}
+	]
+}
