@@ -28,6 +28,6 @@
 *   Select “Variables”.
 *   Set current value of parameter “CALM\_DEMO\_CLIENT\_ID” with your clientId.
 *   Set current value of parameter “CALM\_DEMO\_CLIENT\_SECRET” with your clientSecret.
-*   Set current value of parameter “CALM\_DEMO\_TOKEN\_URL” with your access token url. On region eu10, it should looks like: https://.authentication.eu10.hana.ondemand.com/oauth/token.
-*   If your tenant is not located on region eu10, you must also update the parameters "CALM\_DEMO\_CALM\_PREFIX".
+*   Set current value of parameter “CALM\_DEMO\_TOKEN\_URL” with your access token url. In SAP BTP region **eu10**, it should looks like: https://.authentication.eu10.hana.ondemand.com/oauth/token.
+*   If your tenant is not located in SAP BTP region **eu10**, you must update the parameters "CALM\_DEMO\_CALM\_PREFIX".
 *   You are ready to use the collection against your SAP Cloud ALM Tenant.
