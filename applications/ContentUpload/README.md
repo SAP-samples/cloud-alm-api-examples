@@ -51,7 +51,7 @@ The max. length of description is 5000 characters.
 
 ### Countries and Languages
 
-Countries and languages use the following [country code list](/codelists/countries.csv). The code list is very much like the Alpha-2 codes described in ISO 3166 but it is not identical. An empty or 'XX' country code is interpreted as cross country / all countries.
+Countries and languages use the following [country code list](codelists/countries.csv). The code list is very much like the Alpha-2 codes described in ISO 3166 but it is not identical. An empty or 'XX' country code is interpreted as cross country / all countries.
 
 | ID | name                                   |
 |----|----------------------------------------|
