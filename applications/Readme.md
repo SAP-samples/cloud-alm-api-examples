@@ -18,3 +18,7 @@ In this app, we connect to the Rest APIs "project" and "task" of SAP CALM APIs t
 
 ### Scoping API
 Simple console app that show cases how you can interact with SAP Cloud ALM Scopes. The example demos how you can manage scopes, add/remove Solution Scenarios, and how you can set processes in/out of scope.
+
+
+### Content Upload
+Simple console app that show cases how you can upload customer or partner content. The example demos how you can use Excel to define customer or partner practices, and how the Customer Processes API can be used to upload the content.
