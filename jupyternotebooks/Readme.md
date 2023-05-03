@@ -19,3 +19,5 @@ Notebook `calm-requirements-api.ipynb` contains samples of listing, creating, up
 ### Process API from 2022-24-10
 
 Notebook `PmApiTest.ipynb` contains samples of manipulating project scopes.
+
+### Copy a Template Project 2023-05-03
