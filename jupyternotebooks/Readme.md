@@ -21,3 +21,5 @@ Notebook `calm-requirements-api.ipynb` contains samples of listing, creating, up
 Notebook `PmApiTest.ipynb` contains samples of manipulating project scopes.
 
 ### Copy a Template Project 2023-05-03
+
+Notebook `calm-copy-template-project.ipynb` contains an example of copying a template project from one SAP Cloud ALM tenant to another.
