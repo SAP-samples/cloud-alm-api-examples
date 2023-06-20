@@ -3932,11 +3932,11 @@
 			"script": {
 				"type": "text/javascript",
 				"exec": [
-					"let tokenUrl = pm.variables.get('CALM_DEMO_TOKEN_URL');",
-					"let clientId = pm.variables.get('CALM_DEMO_CLIENT_ID');",
-					"let clientSecret = pm.variables.get('CALM_DEMO_CLIENT_SECRET');",
-					"let sanboxRootUrl = pm.variables.get('CALM_DEMO_SANDBOX_PREFIX');",
-					"let calmRootUrl = pm.variables.get('CALM_DEMO_CALM_PREFIX');",
+					"let tokenUrl = pm.collectionVariables.get('CALM_DEMO_TOKEN_URL');",
+					"let clientId = pm.collectionVariables.get('CALM_DEMO_CLIENT_ID');",
+					"let clientSecret = pm.collectionVariables.get('CALM_DEMO_CLIENT_SECRET');",
+					"let sanboxRootUrl = pm.collectionVariables.get('CALM_DEMO_SANDBOX_PREFIX');",
+					"let calmRootUrl = pm.collectionVariables.get('CALM_DEMO_CALM_PREFIX');",
 					"",
 					"let getTokenRequest = {",
 					"    method: 'POST',",
@@ -3959,12 +3959,15 @@
 					"",
 					"",
 					"if ((typeof tokenUrl === 'undefined') || (tokenUrl === null) || (tokenUrl === '')) {",
+					"    console.log(\"No tokenUrl\");",
 					"    return;",
 					"};",
 					"if ((typeof clientId === 'undefined') || (clientId === null) || (clientId === '')) { ",
+					"    console.log(\"No clientId\");",
 					"    return;",
 					"};",
 					"if ((typeof clientSecret === 'undefined') || (clientSecret === null) || (clientSecret === '')) { ",
+					"    console.log(\"clientSecret\");",
 					"    return;",
 					"};",
 					"",
@@ -4005,12 +4008,12 @@
 		},
 		{
 			"key": "CALM_DEMO_CLIENT_ID",
-			"value": "",
+			"value": "Client-Id",
 			"type": "default"
 		},
 		{
 			"key": "CALM_DEMO_CLIENT_SECRET",
-			"value": "",
+			"value": "Cliet-Secret",
 			"type": "default"
 		},
 		{
@@ -4022,14 +4025,6 @@
 			"key": "CALM_DEMO_CALM_PREFIX",
 			"value": "https://eu10.alm.cloud.sap/api",
 			"type": "default"
-		},
-		{
-			"key": "CALM_DEMO_ROOT_URL",
-			"value": "https://sandbox.api.sap.com/SAPCALM"
-		},
-		{
-			"key": "CALM_DEMO_TOKEN",
-			"value": ""
 		}
 	]
 }
