@@ -16,7 +16,7 @@ Notebook `calm-project-task-2022-02-updates.ipynb` contains samples of new featu
 
 Notebook `calm-requirements-api.ipynb` contains samples of listing, creating, updating, deleting (where possible) Requirement task types.
 
-### Process API from 2022-24-10
+### Process Scopes API from 2022-24-10
 
 Notebook `PmApiTest.ipynb` contains samples of manipulating project scopes.
 
