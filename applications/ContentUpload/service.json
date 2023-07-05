@@ -1,9 +1,0 @@
-{
-  "xs-security": {
-    "xsappname": "sap_cloud_alm_api",
-    "authorities": [
-      "$XSMASTERAPPNAME.calm-api.processauthoring.read",
-      "$XSMASTERAPPNAME.calm-api.processauthoring.write"
-    ]
-  }
-}
