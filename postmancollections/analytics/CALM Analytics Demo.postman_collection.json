@@ -1,6 +1,6 @@
 {
 	"info": {
-		"_postman_id": "17c3b8b0-a9f1-44d3-82c8-c33978d44fdd",
+		"_postman_id": "523f8d23-431c-4ba6-961d-810c5dff7266",
 		"name": "CALM Analytics Demo",
 		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
 	},
@@ -4008,12 +4008,12 @@
 		},
 		{
 			"key": "CALM_DEMO_CLIENT_ID",
-			"value": "Client-Id",
+			"value": "",
 			"type": "default"
 		},
 		{
 			"key": "CALM_DEMO_CLIENT_SECRET",
-			"value": "Cliet-Secret",
+			"value": "",
 			"type": "default"
 		},
 		{
@@ -4025,6 +4025,10 @@
 			"key": "CALM_DEMO_CALM_PREFIX",
 			"value": "https://eu10.alm.cloud.sap/api",
 			"type": "default"
+		},
+		{
+			"key": "CALM_DEMO_ROOT_URL",
+			"value": ""
 		}
 	]
 }
