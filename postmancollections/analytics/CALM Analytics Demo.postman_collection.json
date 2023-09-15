@@ -1,8 +1,9 @@
 {
 	"info": {
-		"_postman_id": "523f8d23-431c-4ba6-961d-810c5dff7266",
+		"_postman_id": "a1357f10-a2de-47ab-9611-a6232cc170d7",
 		"name": "CALM Analytics Demo",
-		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "10780979"
 	},
 	"item": [
 		{
@@ -96,7 +97,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_PROJECTS' &$count=true",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_PROJECTS' &$count=true&$top=100",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -116,6 +117,10 @@
 								{
 									"key": "$count",
 									"value": "true"
+								},
+								{
+									"key": "$top",
+									"value": "100"
 								}
 							]
 						}
@@ -219,7 +224,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_TESTS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L6M'",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_TESTS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L6M'&$top=10&$count=true",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -235,6 +240,14 @@
 								{
 									"key": "$filter",
 									"value": "provider eq 'DP_TESTS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L6M'"
+								},
+								{
+									"key": "$top",
+									"value": "10"
+								},
+								{
+									"key": "$count",
+									"value": "true"
 								}
 							]
 						}
@@ -272,7 +285,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_DEFECTS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L6M'",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_DEFECTS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L12M'&$top=10",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -287,7 +300,11 @@
 							"query": [
 								{
 									"key": "$filter",
-									"value": "provider eq 'DP_DEFECTS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L6M'"
+									"value": "provider eq 'DP_DEFECTS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L12M'"
+								},
+								{
+									"key": "$top",
+									"value": "10"
 								}
 							]
 						}
@@ -325,7 +342,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_REQUIREMENTS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L6M'&$count=true&$limit=10&$kip=0",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_REQUIREMENTS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L6M'&$count=true&$top=10&$kip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -347,7 +364,7 @@
 									"value": "true"
 								},
 								{
-									"key": "$limit",
+									"key": "$top",
 									"value": "10"
 								},
 								{
@@ -390,7 +407,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'HM_ANALYTICS_DP' and resolution eq 'D' and period eq 'L1D'&$select=date,d1v,d2v,d3v,d4v,d5v,d6v,m1v,m2v,m3v,m4v,m5v,m6v",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'HM_ANALYTICS_DP' and resolution eq 'D' and period eq 'L1D'&$select=date,d1v,d2v,d3v,d4v,d5v,d6v,m1v,m2v,m3v,m4v,m5v,m6v&$count=true&$top=10",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -411,6 +428,278 @@
 								{
 									"key": "$select",
 									"value": "date,d1v,d2v,d3v,d4v,d5v,d6v,m1v,m2v,m3v,m4v,m5v,m6v"
+								},
+								{
+									"key": "$count",
+									"value": "true"
+								},
+								{
+									"key": "$top",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Real User Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_RUM_REQUEST_TYPES' and resolution eq 'D' and period eq 'L1D' and query eq 'serviceType=SAP_S4HANA'&$select=date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v&$count=true&$top=10",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"odata",
+								"v4",
+								"analytics",
+								"DataSet"
+							],
+							"query": [
+								{
+									"key": "$filter",
+									"value": "provider eq 'DP_RUM_REQUEST_TYPES' and resolution eq 'D' and period eq 'L1D' and query eq 'serviceType=SAP_S4HANA'",
+									"description": "$"
+								},
+								{
+									"key": "$select",
+									"value": "date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v"
+								},
+								{
+									"key": "$count",
+									"value": "true"
+								},
+								{
+									"key": "$top",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Job Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_JOB_MONITORING' and resolution eq 'D' and period eq 'L7D' and query eq 'serviceType=SAP_S4HANA'&$select=date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v&$count=true&$top=10",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"odata",
+								"v4",
+								"analytics",
+								"DataSet"
+							],
+							"query": [
+								{
+									"key": "$filter",
+									"value": "provider eq 'DP_JOB_MONITORING' and resolution eq 'D' and period eq 'L7D' and query eq 'serviceType=SAP_S4HANA'",
+									"description": "$"
+								},
+								{
+									"key": "$select",
+									"value": "date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v"
+								},
+								{
+									"key": "$count",
+									"value": "true"
+								},
+								{
+									"key": "$top",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Exception Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'EXM_DATAPROVIDER' and resolution eq 'D' and period eq 'L7D' and query eq 'serviceType=SAP_S4HANA'&$select=date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v&$count=true&$top=10",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"odata",
+								"v4",
+								"analytics",
+								"DataSet"
+							],
+							"query": [
+								{
+									"key": "$filter",
+									"value": "provider eq 'EXM_DATAPROVIDER' and resolution eq 'D' and period eq 'L7D' and query eq 'serviceType=SAP_S4HANA'",
+									"description": "$"
+								},
+								{
+									"key": "$select",
+									"value": "date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v"
+								},
+								{
+									"key": "$count",
+									"value": "true"
+								},
+								{
+									"key": "$top",
+									"value": "10"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Synthetic User Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'SUM_DATAPROVIDER' and resolution eq 'D' and period eq 'L7D' and query eq 'serviceType=SAP_S4HANA'&$select=date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v&$count=true&$top=10",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"odata",
+								"v4",
+								"analytics",
+								"DataSet"
+							],
+							"query": [
+								{
+									"key": "$filter",
+									"value": "provider eq 'SUM_DATAPROVIDER' and resolution eq 'D' and period eq 'L7D' and query eq 'serviceType=SAP_S4HANA'",
+									"description": "$"
+								},
+								{
+									"key": "$select",
+									"value": "date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v"
+								},
+								{
+									"key": "$count",
+									"value": "true"
+								},
+								{
+									"key": "$top",
+									"value": "10"
 								}
 							]
 						}
@@ -448,7 +737,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'EVENTS_DATA_SET' and resolution eq 'W' and period eq 'L6W'&$select=date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v&$count=true",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'EVENTS_DATA_SET' and resolution eq 'W' and period eq 'L6W'&$select=date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v&$count=true&$top=10",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -473,6 +762,10 @@
 								{
 									"key": "$count",
 									"value": "true"
+								},
+								{
+									"key": "$top",
+									"value": "10"
 								}
 							]
 						}
@@ -510,7 +803,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'CPI_MESSAGES' and resolution eq 'H' and period eq 'L24H'&$select=date,d1v,d2v,d3v,m1v&$count=true&limit=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'CPI_MESSAGES' and resolution eq 'D' and period eq 'L7D'&$select=date,d1v,d2v,d3v,m1v&$count=true&$top=10",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -525,7 +818,7 @@
 							"query": [
 								{
 									"key": "$filter",
-									"value": "provider eq 'CPI_MESSAGES' and resolution eq 'H' and period eq 'L24H'",
+									"value": "provider eq 'CPI_MESSAGES' and resolution eq 'D' and period eq 'L7D'",
 									"description": "$"
 								},
 								{
@@ -537,7 +830,7 @@
 									"value": "true"
 								},
 								{
-									"key": "limit",
+									"key": "$top",
 									"value": "10"
 								}
 							]
@@ -576,7 +869,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Concur' and resolution eq 'H' and period eq 'L24H' &$select=date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8k,d8v,m1v&$count=true&limit=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Concur' and resolution eq 'H' and period eq 'L24H' &$select=date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8k,d8v,m1v&$count=true&$top=10",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -602,7 +895,7 @@
 									"value": "true"
 								},
 								{
-									"key": "limit",
+									"key": "$top",
 									"value": "10"
 								}
 							]
@@ -641,7 +934,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'SF' and resolution eq 'H' and period eq 'L24H'&$select=date,d1v,d2v,d3v,d4v,d5v,d6v,m1v&$count=true&limit=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'SF' and resolution eq 'H' and period eq 'L24H'&$select=date,d1v,d2v,d3v,d4v,d5v,d6v,m1v&$count=true&$top=10",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -667,7 +960,7 @@
 									"value": "true"
 								},
 								{
-									"key": "limit",
+									"key": "$top",
 									"value": "10"
 								}
 							]
@@ -706,7 +999,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'AIF' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,m1k,m1v&$count=true&limit=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'AIF' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,m1k,m1v&$count=true&$top=10",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -732,7 +1025,7 @@
 									"value": "true"
 								},
 								{
-									"key": "limit",
+									"key": "$top",
 									"value": "10"
 								}
 							]
@@ -771,7 +1064,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Ariba_CIG' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,m1k,m1v&$count=true&limit=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Ariba_CIG' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,m1k,m1v&$count=true&$top=10",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -797,7 +1090,7 @@
 									"value": "true"
 								},
 								{
-									"key": "limit",
+									"key": "$top",
 									"value": "10"
 								}
 							]
@@ -836,7 +1129,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Ariba_Network' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,m1k,m1v&$count=true&limit=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Ariba_Network' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,m1k,m1v&$count=true&$top=10",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -862,7 +1155,7 @@
 									"value": "true"
 								},
 								{
-									"key": "limit",
+									"key": "$top",
 									"value": "10"
 								}
 							]
@@ -901,7 +1194,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Ariba_Procurement' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,m1k,m1v&$count=true&limit=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Ariba_Procurement' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,m1k,m1v&$count=true&$top=10",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -927,7 +1220,7 @@
 									"value": "true"
 								},
 								{
-									"key": "limit",
+									"key": "$top",
 									"value": "10"
 								}
 							]
@@ -966,7 +1259,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Ariba_Sourcing' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,m1k,m1v&$count=true&limit=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Ariba_Sourcing' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,m1k,m1v&$count=true&$top=10",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -992,7 +1285,7 @@
 									"value": "true"
 								},
 								{
-									"key": "limit",
+									"key": "$top",
 									"value": "10"
 								}
 							]
@@ -1031,7 +1324,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'C4C' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,m1k,m1v&$count=true&limit=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'C4C' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,m1k,m1v&$count=true&$top=10",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -1057,7 +1350,7 @@
 									"value": "true"
 								},
 								{
-									"key": "limit",
+									"key": "$top",
 									"value": "10"
 								}
 							]
@@ -1096,7 +1389,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'WS' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,m1k,m1v&$count=true&limit=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'WS' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,m1k,m1v&$count=true&$top=10",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -1122,7 +1415,7 @@
 									"value": "true"
 								},
 								{
-									"key": "limit",
+									"key": "$top",
 									"value": "10"
 								}
 							]
@@ -1161,7 +1454,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'FG' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,m1k,m1v&$count=true&limit=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'FG' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,m1k,m1v&$count=true&$top=10",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -1187,7 +1480,7 @@
 									"value": "true"
 								},
 								{
-									"key": "limit",
+									"key": "$top",
 									"value": "10"
 								}
 							]
@@ -1226,7 +1519,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'MDI' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,m1k,m1v&$count=true&limit=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'MDI' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,m1k,m1v&$count=true&$top=10",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -1252,7 +1545,7 @@
 									"value": "true"
 								},
 								{
-									"key": "limit",
+									"key": "$top",
 									"value": "10"
 								}
 							]
@@ -1291,7 +1584,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Mob_Srv' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,m1k,m1v&$count=true&limit=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Mob_Srv' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,m1k,m1v&$count=true&$top=10",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -1317,7 +1610,7 @@
 									"value": "true"
 								},
 								{
-									"key": "limit",
+									"key": "$top",
 									"value": "10"
 								}
 							]
@@ -1356,7 +1649,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'IDoc' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,d9k,d9v,m1k,m1v&$count=true&limit=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'IDOC' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,d9k,d9v,m1k,m1v&$count=true&$top=10",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -1371,7 +1664,7 @@
 							"query": [
 								{
 									"key": "$filter",
-									"value": "provider eq 'IDoc' and resolution eq 'H' and period eq 'L24H' "
+									"value": "provider eq 'IDOC' and resolution eq 'H' and period eq 'L24H' "
 								},
 								{
 									"key": "$select",
@@ -1382,7 +1675,7 @@
 									"value": "true"
 								},
 								{
-									"key": "limit",
+									"key": "$top",
 									"value": "10"
 								}
 							]
@@ -1774,6 +2067,281 @@
 					"response": []
 				},
 				{
+					"name": "ALM Real User Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"providerName\":\"DP_RUM_REQUEST_TYPES\",\n    \"providerVersion\":\"v1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/filters",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"filters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Job Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"providerName\":\"DP_JOB_MONITORING\",\n    \"providerVersion\":\"v1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/filters",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"filters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Exception Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"providerName\":\"EXM_DATAPROVIDER\",\n    \"providerVersion\":\"v1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/filters",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"filters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Synthetic User Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"providerName\":\"SUM_DATAPROVIDER\",\n    \"providerVersion\":\"v1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/filters",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"filters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Business Process Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"providerName\":\"KPI_HISTORY_TOTALS\",\n    \"providerVersion\":\"v1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/filters",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"filters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "ALM Status Events",
 					"event": [
 						{
@@ -1915,7 +2483,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"providerName\":\"SF\",\n    \"providerVersion\":\"v1\"\n}",
+							"raw": "{\n    \"providerName\":\"Concur\",\n    \"providerVersion\":\"v1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2989,6 +3557,446 @@
 					"response": []
 				},
 				{
+					"name": "ALM Real User Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L3H\"\n    },\n    \"limit\": \"10\",\n    \"resolution\": \"H\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"DP_RUM_REQUEST_TYPES\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"serviceType\",\n                    \"serviceId\",\n                    \"serviceName\",\n                    \"requestType\",\n                    \"request\",\n                    \"metricLabel\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"responseTime\"\n                    },\n                    {\n                        \"measure\": \"users\"\n                    },\n                    {\n                        \"measure\": \"requests\"\n                    },\n                    {\n                        \"measure\": \"okStatus\"\n                    },\n                    {\n                        \"measure\": \"warningStatus\"\n                    },\n                    {\n                        \"measure\": \"criticalStatus\"\n                    }\n                ]\n            },\n            \"filters\": [\n                {\n                    \"key\": \"serviceType\",\n                    \"values\": [\n                        \"SAP_S4HANA\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Real User Monitoring (Time Series)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"time_series\",\n    \"timeRange\": {\n        \"semantic\": \"L3H\"\n    },\n    \"limit\": \"10\",\n    \"resolution\": \"H\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"DP_RUM_REQUEST_TYPES\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"serviceType\",\n                    \"serviceId\",\n                    \"serviceName\",\n                    \"requestType\",\n                    \"request\",\n                    \"metricLabel\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"responseTime\"\n                    },\n                    {\n                        \"measure\": \"users\"\n                    },\n                    {\n                        \"measure\": \"requests\"\n                    },\n                    {\n                        \"measure\": \"okStatus\"\n                    },\n                    {\n                        \"measure\": \"warningStatus\"\n                    },\n                    {\n                        \"measure\": \"criticalStatus\"\n                    }\n                ]\n            },\n            \"filters\": [\n                {\n                    \"key\": \"serviceType\",\n                    \"values\": [\n                        \"SAP_S4HANA\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Job Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L3H\"\n    },\n    \"limit\": \"10\",\n    \"resolution\": \"H\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"DP_JOB_MONITORING\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"serviceType\",\n                    \"serviceId\",\n                    \"serviceName\",\n                    \"serviceTypeLabel\",\n                    \"jobType\",\n                    \"jobTypeLabel\",\n                    \"jobName\",\n                    \"jobId\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"runTime\"\n                    },\n                    {\n                        \"measure\": \"averageRunTime\"\n                    },\n                    {\n                        \"measure\": \"executions\"\n                    },\n                    {\n                        \"measure\": \"success\"\n                    },\n                    {\n                        \"measure\": \"warning\"\n                    },\n                    {\n                        \"measure\": \"aborted\"\n                    },\n                    {\n                        \"measure\": \"applicationWarning\"\n                    },\n                    {\n                        \"measure\": \"applicationError\"\n                    }\n                ]\n            },\n            \"filters\": [\n                {\n                    \"key\": \"serviceType\",\n                    \"values\": [\n                        \"SAP_S4HANA\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Job Monitoring (Time Series)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"time_series\",\n    \"timeRange\": {\n        \"semantic\": \"L3H\"\n    },\n    \"limit\": \"10\",\n    \"resolution\": \"H\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"DP_JOB_MONITORING\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"serviceType\",\n                    \"serviceId\",\n                    \"serviceName\",\n                    \"serviceTypeLabel\",\n                    \"jobType\",\n                    \"jobTypeLabel\",\n                    \"jobName\",\n                    \"jobId\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"runTime\"\n                    },\n                    {\n                        \"measure\": \"averageRunTime\"\n                    },\n                    {\n                        \"measure\": \"executions\"\n                    },\n                    {\n                        \"measure\": \"success\"\n                    },\n                    {\n                        \"measure\": \"warning\"\n                    },\n                    {\n                        \"measure\": \"aborted\"\n                    },\n                    {\n                        \"measure\": \"applicationWarning\"\n                    },\n                    {\n                        \"measure\": \"applicationError\"\n                    }\n                ]\n            },\n            \"filters\": [\n                {\n                    \"key\": \"serviceType\",\n                    \"values\": [\n                        \"SAP_S4HANA\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Exception Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L3H\"\n    },\n    \"limit\": \"10\",\n    \"resolution\": \"H\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"EXM_DATAPROVIDER\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"serviceType\",\n                    \"serviceName\",\n                    \"categoryId\",\n                    \"categoryName\",\n                    \"serviceType\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"counter\"\n                    }\n                ]\n            },\n            \"filters\": [\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Exception Monitoring (Time Series)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"time_series\",\n    \"timeRange\": {\n        \"semantic\": \"L3H\"\n    },\n    \"limit\": \"10\",\n    \"resolution\": \"H\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"EXM_DATAPROVIDER\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"serviceType\",\n                    \"serviceName\",\n                    \"categoryId\",\n                    \"categoryName\",\n                    \"serviceType\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"counter\"\n                    }\n                ]\n            },\n            \"filters\": [\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Synthetic User Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L3H\"\n    },\n    \"limit\": \"10\",\n    \"resolution\": \"H\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"SUM_DATAPROVIDER\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"scenarioId\",\n                    \"scenarioName\",\n                    \"runnerId\",\n                    \"runnerName\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"notAvailable\"\n                    },\n                    {\n                        \"measure\": \"available\"\n                    },\n                    {\n                        \"measure\": \"availabilityNotRated\"\n                    },\n                    {\n                        \"measure\": \"executions\"\n                    },\n                    {\n                        \"measure\": \"criticalPerformance\"\n                    },\n                    {\n                        \"measure\": \"poorPerformance\"\n                    },\n                    {\n                        \"measure\": \"goodPerformance\"\n                    },\n                    {\n                        \"measure\": \"performanceNotRated\"\n                    },\n                    {\n                        \"measure\": \"responseTime\"\n                    }\n                ]\n            },\n            \"filters\": [\n                {\n                    \"key\": \"serviceType\",\n                    \"values\": [\n                        \"SAP_S4HANA\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Synthetic User Monitoring (Time Series)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"time_series\",\n    \"timeRange\": {\n        \"semantic\": \"L3H\"\n    },\n    \"limit\": \"10\",\n    \"resolution\": \"H\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"SUM_DATAPROVIDER\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"scenarioId\",\n                    \"scenarioName\",\n                    \"runnerId\",\n                    \"runnerName\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"notAvailable\"\n                    },\n                    {\n                        \"measure\": \"available\"\n                    },\n                    {\n                        \"measure\": \"availabilityNotRated\"\n                    },\n                    {\n                        \"measure\": \"executions\"\n                    },\n                    {\n                        \"measure\": \"criticalPerformance\"\n                    },\n                    {\n                        \"measure\": \"poorPerformance\"\n                    },\n                    {\n                        \"measure\": \"goodPerformance\"\n                    },\n                    {\n                        \"measure\": \"performanceNotRated\"\n                    },\n                    {\n                        \"measure\": \"responseTime\"\n                    }\n                ]\n            },\n            \"filters\": [\n                {\n                    \"key\": \"serviceType\",\n                    \"values\": [\n                        \"SAP_S4HANA\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "ALM Status Events",
 					"event": [
 						{
@@ -3240,7 +4248,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"SF\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"SourceInterface\",\n                    \"DestinationInterface\",\n                    \"IntegrationName\",\n                    \"Direction\",\n                    \"StatusGroup\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"Concur\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"SourceInterface\",\n                    \"DestinationInterface\",\n                    \"IntegrationName\",\n                    \"Direction\",\n                    \"StatusGroup\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3900,7 +4908,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"IDoc\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"MESTYP\",\n                    \"SNDPOR\",\n                    \"SNDPRN\",\n                    \"RCVPOR\",\n                    \"RCVPRN\",\n                    \"Direction\",\n                    \"MANDT\",\n                    \"StatusGroup\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"IDOC\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"MESTYP\",\n                    \"SNDPOR\",\n                    \"SNDPRN\",\n                    \"RCVPOR\",\n                    \"RCVPRN\",\n                    \"Direction\",\n                    \"MANDT\",\n                    \"StatusGroup\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4028,6 +5036,10 @@
 		},
 		{
 			"key": "CALM_DEMO_ROOT_URL",
+			"value": ""
+		},
+		{
+			"key": "CALM_DEMO_TOKEN",
 			"value": ""
 		}
 	]
