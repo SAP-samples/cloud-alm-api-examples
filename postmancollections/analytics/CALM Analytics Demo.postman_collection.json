@@ -7,6 +7,53 @@
 	},
 	"item": [
 		{
+			"name": "Providers (REST)",
+			"item": [
+				{
+					"name": "Providers",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
 			"name": "Dataset (OData)",
 			"item": [
 				{
@@ -40,7 +87,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'PROVIDERS_LIST' &$select=d2v,d3v,d4v",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'PROVIDERS_LIST' &$select=d1k,d2k,d2v,d3k,d3v,d4k,d4v&scount=true&scount=true&$top=10&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -59,7 +106,23 @@
 								},
 								{
 									"key": "$select",
-									"value": "d2v,d3v,d4v"
+									"value": "d1k,d2k,d2v,d3k,d3v,d4k,d4v"
+								},
+								{
+									"key": "scount",
+									"value": "true"
+								},
+								{
+									"key": "scount",
+									"value": "true"
+								},
+								{
+									"key": "$top",
+									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
 								}
 							]
 						}
@@ -97,7 +160,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_PROJECTS' &$count=true&$top=100",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_PROJECTS' &$count=true&$top=100&$select=d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -121,6 +184,14 @@
 								{
 									"key": "$top",
 									"value": "100"
+								},
+								{
+									"key": "$select",
+									"value": "d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
 								}
 							]
 						}
@@ -158,7 +229,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_TASKS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L6M'&$top=10&$skip=0&$count=true",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_TASKS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L1M'&$top=10&$skip=0&$count=true&$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,d9k,d9v,d10k,d10v,d11k,d11v,d12k,d12v,m1k,m1v,m2k,m2v",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -173,7 +244,7 @@
 							"query": [
 								{
 									"key": "$filter",
-									"value": "provider eq 'DP_TASKS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L6M'",
+									"value": "provider eq 'DP_TASKS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L1M'",
 									"description": "$"
 								},
 								{
@@ -187,6 +258,10 @@
 								{
 									"key": "$count",
 									"value": "true"
+								},
+								{
+									"key": "$select",
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,d9k,d9v,d10k,d10v,d11k,d11v,d12k,d12v,m1k,m1v,m2k,m2v"
 								}
 							]
 						}
@@ -285,7 +360,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_DEFECTS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L12M'&$top=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_DEFECTS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L12M'&$top=10&$skip=0&$count=true&$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,d9k,d9v,d10k,d10v,d11k,d11v,d12k,d12v,m1k,m1v",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -305,6 +380,18 @@
 								{
 									"key": "$top",
 									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
+								},
+								{
+									"key": "$count",
+									"value": "true"
+								},
+								{
+									"key": "$select",
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,d9k,d9v,d10k,d10v,d11k,d11v,d12k,d12v,m1k,m1v"
 								}
 							]
 						}
@@ -342,7 +429,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_REQUIREMENTS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L6M'&$count=true&$top=10&$kip=0",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_REQUIREMENTS' and query eq 'project=11111111-1111-1111-1111-111111111111' and resolution eq 'M' and period eq 'L6M'&$count=true&$top=10&$skip=0&$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,d9k,d9v,d10k,d10v,d11k,d11v,d12k,d12v,m1k,m1v",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -368,8 +455,12 @@
 									"value": "10"
 								},
 								{
-									"key": "$kip",
+									"key": "$skip",
 									"value": "0"
+								},
+								{
+									"key": "$select",
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,d9k,d9v,d10k,d10v,d11k,d11v,d12k,d12v,m1k,m1v"
 								}
 							]
 						}
@@ -407,7 +498,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'HM_ANALYTICS_DP' and resolution eq 'D' and period eq 'L1D'&$select=date,d1v,d2v,d3v,d4v,d5v,d6v,m1v,m2v,m3v,m4v,m5v,m6v&$count=true&$top=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'HM_ANALYTICS_DP' and resolution eq 'D' and period eq 'L1D'&$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,m1k,m1v,m2k,m2v,m3k,m3v,m4k,m4v,m5k,m5v,m6k,m6v&$count=true&$top=10&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -427,7 +518,7 @@
 								},
 								{
 									"key": "$select",
-									"value": "date,d1v,d2v,d3v,d4v,d5v,d6v,m1v,m2v,m3v,m4v,m5v,m6v"
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,m1k,m1v,m2k,m2v,m3k,m3v,m4k,m4v,m5k,m5v,m6k,m6v"
 								},
 								{
 									"key": "$count",
@@ -436,6 +527,10 @@
 								{
 									"key": "$top",
 									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
 								}
 							]
 						}
@@ -473,7 +568,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_RUM_REQUEST_TYPES' and resolution eq 'D' and period eq 'L1D' and query eq 'serviceType=SAP_S4HANA'&$select=date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v&$count=true&$top=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_RUM_REQUEST_TYPES' and resolution eq 'D' and period eq 'L1D' and query eq 'serviceType=SAP_S4HANA'&$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,m1k,m1v,m2k,m2v,m3k,m3v,m4k,m4v,m5k,m5v,m6k,m6v&$count=true&$top=10&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -493,7 +588,7 @@
 								},
 								{
 									"key": "$select",
-									"value": "date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v"
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,m1k,m1v,m2k,m2v,m3k,m3v,m4k,m4v,m5k,m5v,m6k,m6v"
 								},
 								{
 									"key": "$count",
@@ -502,6 +597,10 @@
 								{
 									"key": "$top",
 									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
 								}
 							]
 						}
@@ -539,7 +638,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_JOB_MONITORING' and resolution eq 'D' and period eq 'L7D' and query eq 'serviceType=SAP_S4HANA'&$select=date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v&$count=true&$top=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'DP_JOB_MONITORING' and resolution eq 'D' and period eq 'L7D' and query eq 'serviceType=SAP_S4HANA'&$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,m1k,m1v,m2k,m2v,m3k,m3v,m4k,m4v,m5k,m5v,m6k,m6v,m7k,m7v,m8k,m8v&$count=true&$top=10&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -559,7 +658,7 @@
 								},
 								{
 									"key": "$select",
-									"value": "date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v"
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,m1k,m1v,m2k,m2v,m3k,m3v,m4k,m4v,m5k,m5v,m6k,m6v,m7k,m7v,m8k,m8v"
 								},
 								{
 									"key": "$count",
@@ -568,6 +667,10 @@
 								{
 									"key": "$top",
 									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
 								}
 							]
 						}
@@ -605,7 +708,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'EXM_DATAPROVIDER' and resolution eq 'D' and period eq 'L7D' and query eq 'serviceType=SAP_S4HANA'&$select=date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v&$count=true&$top=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'EXM_DATAPROVIDER' and resolution eq 'D' and period eq 'L7D' and query eq 'serviceType=SAP_S4HANA'&$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,m1k,m1v&$count=true&$top=10&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -625,7 +728,7 @@
 								},
 								{
 									"key": "$select",
-									"value": "date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v"
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,m1k,m1v"
 								},
 								{
 									"key": "$count",
@@ -634,6 +737,10 @@
 								{
 									"key": "$top",
 									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
 								}
 							]
 						}
@@ -671,7 +778,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'SUM_DATAPROVIDER' and resolution eq 'D' and period eq 'L7D' and query eq 'serviceType=SAP_S4HANA'&$select=date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v&$count=true&$top=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'SUM_DATAPROVIDER' and resolution eq 'D' and period eq 'L7D' and query eq 'serviceType=SAP_S4HANA'&$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,m1k,m1v,m2k,m2v,m3k,m3v,m4k,m4v,m5k,m5v,m6k,m6v,m7k,m7v,m8k,m8v,m9k,m9v&$count=true&$top=10&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -691,7 +798,77 @@
 								},
 								{
 									"key": "$select",
-									"value": "date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v"
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,m1k,m1v,m2k,m2v,m3k,m3v,m4k,m4v,m5k,m5v,m6k,m6v,m7k,m7v,m8k,m8v,m9k,m9v"
+								},
+								{
+									"key": "$count",
+									"value": "true"
+								},
+								{
+									"key": "$top",
+									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Business Process Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'KPI_HISTORY_TOTALS' and resolution eq 'D' and period eq 'L1D' and query eq 'kpiId=KPSD000103'&$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,m1k,m1v&$count=true&$top=10",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"odata",
+								"v4",
+								"analytics",
+								"DataSet"
+							],
+							"query": [
+								{
+									"key": "$filter",
+									"value": "provider eq 'KPI_HISTORY_TOTALS' and resolution eq 'D' and period eq 'L1D' and query eq 'kpiId=KPSD000103'",
+									"description": "$"
+								},
+								{
+									"key": "$select",
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,m1k,m1v"
 								},
 								{
 									"key": "$count",
@@ -737,7 +914,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'EVENTS_DATA_SET' and resolution eq 'W' and period eq 'L6W'&$select=date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v&$count=true&$top=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'EVENTS_DATA_SET' and resolution eq 'W' and period eq 'L6W'&$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,d9k,d9v,d10k,d10v,d11k,d11v,d12k,d12v,m1k,m1v,m2k,m2v&$count=true&$top=10&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -757,7 +934,7 @@
 								},
 								{
 									"key": "$select",
-									"value": "date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,m1v,m2v"
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,d9k,d9v,d10k,d10v,d11k,d11v,d12k,d12v,m1k,m1v,m2k,m2v"
 								},
 								{
 									"key": "$count",
@@ -766,6 +943,148 @@
 								{
 									"key": "$top",
 									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Monitoring Events",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$select=date,d1k,d2k,d3k,d4k,d5k,d6k,d1v,d2v,d3v,d4v,d5v,d6v,m1k,m2k,m3k,m4k,m5k,m6k,m7k,m8k,m1v,m2v,m3v,m4v,m5v,m6v,m7v,m8v&$count=true&$top=10&$filter=provider eq 'EVENTS' and resolution eq 'H' and period eq 'L24H' and query eq 'useCaseId=IM,JOBMON,HM,BSM,BPMON,EXM'&$skip=0",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"odata",
+								"v4",
+								"analytics",
+								"DataSet"
+							],
+							"query": [
+								{
+									"key": "$select",
+									"value": "date,d1k,d2k,d3k,d4k,d5k,d6k,d1v,d2v,d3v,d4v,d5v,d6v,m1k,m2k,m3k,m4k,m5k,m6k,m7k,m8k,m1v,m2v,m3v,m4v,m5v,m6v,m7v,m8v"
+								},
+								{
+									"key": "$count",
+									"value": "true"
+								},
+								{
+									"key": "$top",
+									"value": "10"
+								},
+								{
+									"key": "$filter",
+									"value": "provider eq 'EVENTS' and resolution eq 'H' and period eq 'L24H' and query eq 'useCaseId=IM,JOBMON,HM,BSM,BPMON,EXM'"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Configuration and Security Analysis",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$select=date,d1k,d2k,d3k,d4k,d5k,d6k,d7k,d8k,d9k,d10k,d11k,d12k,d13k,d14k,d15k,d16k,d17k,d18k,d19k,d20k,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,d13v,d14v,d15v,d16v,d17v,d18v,d19v,d20v,m1k,m2k,m3k,m1v,m2v,m3v&$count=true&$top=10&$filter=provider eq 'CCDB_STORE_DATA' and resolution eq 'D' and period eq 'L7D' and query eq 'elementStatus=CURRENT'&$skip=0",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"odata",
+								"v4",
+								"analytics",
+								"DataSet"
+							],
+							"query": [
+								{
+									"key": "$select",
+									"value": "date,d1k,d2k,d3k,d4k,d5k,d6k,d7k,d8k,d9k,d10k,d11k,d12k,d13k,d14k,d15k,d16k,d17k,d18k,d19k,d20k,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8v,d9v,d10v,d11v,d12v,d13v,d14v,d15v,d16v,d17v,d18v,d19v,d20v,m1k,m2k,m3k,m1v,m2v,m3v"
+								},
+								{
+									"key": "$count",
+									"value": "true"
+								},
+								{
+									"key": "$top",
+									"value": "10"
+								},
+								{
+									"key": "$filter",
+									"value": "provider eq 'CCDB_STORE_DATA' and resolution eq 'D' and period eq 'L7D' and query eq 'elementStatus=CURRENT'"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
 								}
 							]
 						}
@@ -803,7 +1122,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'CPI_MESSAGES' and resolution eq 'D' and period eq 'L7D'&$select=date,d1v,d2v,d3v,m1v&$count=true&$top=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'CPI_MESSAGES' and resolution eq 'D' and period eq 'L7D'&$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,m1k,m1v&$count=true&$top=10&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -823,7 +1142,7 @@
 								},
 								{
 									"key": "$select",
-									"value": "date,d1v,d2v,d3v,m1v"
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,m1k,m1v"
 								},
 								{
 									"key": "$count",
@@ -832,6 +1151,10 @@
 								{
 									"key": "$top",
 									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
 								}
 							]
 						}
@@ -869,7 +1192,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Concur' and resolution eq 'H' and period eq 'L24H' &$select=date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8k,d8v,m1v&$count=true&$top=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Concur' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,d9k,d9v,d10k,d10v,m1k,m1v&$count=true&$top=10&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -888,7 +1211,7 @@
 								},
 								{
 									"key": "$select",
-									"value": "date,d1v,d2v,d3v,d4v,d5v,d6v,d7v,d8k,d8v,m1v"
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,d9k,d9v,d10k,d10v,m1k,m1v"
 								},
 								{
 									"key": "$count",
@@ -897,6 +1220,10 @@
 								{
 									"key": "$top",
 									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
 								}
 							]
 						}
@@ -934,7 +1261,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'SF' and resolution eq 'H' and period eq 'L24H'&$select=date,d1v,d2v,d3v,d4v,d5v,d6v,m1v&$count=true&$top=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'SF' and resolution eq 'H' and period eq 'L24H'&$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,m1k,m1v&$count=true&$top=10&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -953,7 +1280,7 @@
 								},
 								{
 									"key": "$select",
-									"value": "date,d1v,d2v,d3v,d4v,d5v,d6v,m1v"
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,m1k,m1v"
 								},
 								{
 									"key": "$count",
@@ -962,6 +1289,10 @@
 								{
 									"key": "$top",
 									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
 								}
 							]
 						}
@@ -999,7 +1330,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'AIF' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,m1k,m1v&$count=true&$top=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'AIF' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,m1k,m1v&$count=true&$top=10&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -1027,6 +1358,10 @@
 								{
 									"key": "$top",
 									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
 								}
 							]
 						}
@@ -1064,7 +1399,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Ariba_CIG' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,m1k,m1v&$count=true&$top=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Ariba_CIG' and resolution eq 'D' and period eq 'L7D' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,d9k,d9v,d10k,d10v,m1k,m1v&$count=true&$top=10&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -1079,11 +1414,11 @@
 							"query": [
 								{
 									"key": "$filter",
-									"value": "provider eq 'Ariba_CIG' and resolution eq 'H' and period eq 'L24H' "
+									"value": "provider eq 'Ariba_CIG' and resolution eq 'D' and period eq 'L7D' "
 								},
 								{
 									"key": "$select",
-									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,m1k,m1v"
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,d9k,d9v,d10k,d10v,m1k,m1v"
 								},
 								{
 									"key": "$count",
@@ -1092,6 +1427,10 @@
 								{
 									"key": "$top",
 									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
 								}
 							]
 						}
@@ -1129,7 +1468,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Ariba_Network' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,m1k,m1v&$count=true&$top=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Ariba_Network' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,m1k,m1v&$count=true&$top=10&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -1157,6 +1496,10 @@
 								{
 									"key": "$top",
 									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
 								}
 							]
 						}
@@ -1194,7 +1537,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Ariba_Procurement' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,m1k,m1v&$count=true&$top=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Ariba_Procurement' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,m1k,m1v&$count=true&$top=10&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -1213,7 +1556,7 @@
 								},
 								{
 									"key": "$select",
-									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,m1k,m1v"
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,m1k,m1v"
 								},
 								{
 									"key": "$count",
@@ -1222,6 +1565,10 @@
 								{
 									"key": "$top",
 									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
 								}
 							]
 						}
@@ -1259,7 +1606,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Ariba_Sourcing' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,m1k,m1v&$count=true&$top=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Ariba_Sourcing' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,m1k,m1v&$count=true&$top=10&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -1278,7 +1625,7 @@
 								},
 								{
 									"key": "$select",
-									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,m1k,m1v"
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,m1k,m1v"
 								},
 								{
 									"key": "$count",
@@ -1287,6 +1634,10 @@
 								{
 									"key": "$top",
 									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
 								}
 							]
 						}
@@ -1324,7 +1675,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'C4C' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,m1k,m1v&$count=true&$top=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'C4C' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,m1k,m1v&$count=true&$top=10&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -1343,7 +1694,7 @@
 								},
 								{
 									"key": "$select",
-									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,m1k,m1v"
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,m1k,m1v"
 								},
 								{
 									"key": "$count",
@@ -1352,6 +1703,10 @@
 								{
 									"key": "$top",
 									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
 								}
 							]
 						}
@@ -1389,7 +1744,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'WS' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,m1k,m1v&$count=true&$top=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'WS' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,d9k,d9v,d10k,d10v,m1k,m1v&$count=true&$top=10&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -1408,7 +1763,7 @@
 								},
 								{
 									"key": "$select",
-									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,m1k,m1v"
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,d9k,d9v,d10k,d10v,m1k,m1v"
 								},
 								{
 									"key": "$count",
@@ -1417,6 +1772,10 @@
 								{
 									"key": "$top",
 									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
 								}
 							]
 						}
@@ -1454,7 +1813,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'FG' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,m1k,m1v&$count=true&$top=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'FG' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,m1k,m1v&$count=true&$top=10&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -1473,7 +1832,7 @@
 								},
 								{
 									"key": "$select",
-									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,m1k,m1v"
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,m1k,m1v"
 								},
 								{
 									"key": "$count",
@@ -1482,6 +1841,10 @@
 								{
 									"key": "$top",
 									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
 								}
 							]
 						}
@@ -1519,7 +1882,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'MDI' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,m1k,m1v&$count=true&$top=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'MDI' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,m1k,m1v&$count=true&$top=10&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -1538,7 +1901,7 @@
 								},
 								{
 									"key": "$select",
-									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,m1k,m1v"
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,m1k,m1v"
 								},
 								{
 									"key": "$count",
@@ -1547,6 +1910,10 @@
 								{
 									"key": "$top",
 									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
 								}
 							]
 						}
@@ -1584,7 +1951,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Mob_Srv' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,m1k,m1v&$count=true&$top=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'Mob_Srv' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,m1k,m1v&$count=true&$top=10&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -1603,7 +1970,7 @@
 								},
 								{
 									"key": "$select",
-									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,m1k,m1v"
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,m1k,m1v"
 								},
 								{
 									"key": "$count",
@@ -1612,6 +1979,10 @@
 								{
 									"key": "$top",
 									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
 								}
 							]
 						}
@@ -1649,7 +2020,7 @@
 							}
 						],
 						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'IDOC' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,d9k,d9v,m1k,m1v&$count=true&$top=10",
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/odata/v4/analytics/DataSet?$filter=provider eq 'IDOC' and resolution eq 'H' and period eq 'L24H' &$select=date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,d9k,d9v,d10k,d10v,m1k,m1v&$count=true&$top=10&$skip=0",
 							"host": [
 								"{{CALM_DEMO_ROOT_URL}}"
 							],
@@ -1668,7 +2039,7 @@
 								},
 								{
 									"key": "$select",
-									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,d9k,d9v,m1k,m1v"
+									"value": "date,d1k,d1v,d2k,d2v,d3k,d3v,d4k,d4v,d5k,d5v,d6k,d6v,d7k,d7v,d8k,d8v,d9k,d9v,d10k,d10v,m1k,m1v"
 								},
 								{
 									"key": "$count",
@@ -1677,55 +2048,11 @@
 								{
 									"key": "$top",
 									"value": "10"
+								},
+								{
+									"key": "$skip",
+									"value": "0"
 								}
-							]
-						}
-					},
-					"response": []
-				}
-			]
-		},
-		{
-			"name": "Providers (REST)",
-			"item": [
-				{
-					"name": "Providers",
-					"event": [
-						{
-							"listen": "prerequest",
-							"script": {
-								"exec": [
-									""
-								],
-								"type": "text/javascript"
-							}
-						}
-					],
-					"request": {
-						"method": "GET",
-						"header": [
-							{
-								"key": "apiKey",
-								"value": "{{CALM_DEMO_API_KEY}}",
-								"type": "default"
-							},
-							{
-								"key": "Authorization",
-								"value": "Bearer {{CALM_DEMO_TOKEN}}",
-								"type": "default"
-							}
-						],
-						"url": {
-							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/",
-							"host": [
-								"{{CALM_DEMO_ROOT_URL}}"
-							],
-							"path": [
-								"calm-analytics",
-								"v1",
-								"analytics",
-								"providers",
-								""
 							]
 						}
 					},
@@ -1878,7 +2205,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"providerName\":\"DP_DEFECTS\",\n    \"providerVersion\":\"v1\"\n}",
+							"raw": "{\n    \"providerName\":\"DP_TESTS\",\n    \"providerVersion\":\"v1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -1933,7 +2260,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"providerName\":\"DP_TESTS\",\n    \"providerVersion\":\"v1\"\n}",
+							"raw": "{\n    \"providerName\":\"DP_DEFECTS\",\n    \"providerVersion\":\"v1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -2397,6 +2724,116 @@
 					"response": []
 				},
 				{
+					"name": "ALM Monitoring Events",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"providerName\":\"EVENTS\",\n    \"providerVersion\":\"v1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/filters",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"filters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Configuration and Security Analysis",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"providerName\":\"CCDB_STORE_DATA\",\n    \"providerVersion\":\"v1\"\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/filters",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"filters"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "IM - Cloud Platform Integration",
 					"event": [
 						{
@@ -2538,7 +2975,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"providerName\":\"Concur\",\n    \"providerVersion\":\"v1\"\n}",
+							"raw": "{\n    \"providerName\":\"SF\",\n    \"providerVersion\":\"v1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3143,7 +3580,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"providerName\":\"IDocs\",\n    \"providerVersion\":\"v1\"\n}",
+							"raw": "{\n    \"providerName\":\"IDOC\",\n    \"providerVersion\":\"v1\"\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3918,7 +4355,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L3H\"\n    },\n    \"limit\": \"10\",\n    \"resolution\": \"H\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"SUM_DATAPROVIDER\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"scenarioId\",\n                    \"scenarioName\",\n                    \"runnerId\",\n                    \"runnerName\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"notAvailable\"\n                    },\n                    {\n                        \"measure\": \"available\"\n                    },\n                    {\n                        \"measure\": \"availabilityNotRated\"\n                    },\n                    {\n                        \"measure\": \"executions\"\n                    },\n                    {\n                        \"measure\": \"criticalPerformance\"\n                    },\n                    {\n                        \"measure\": \"poorPerformance\"\n                    },\n                    {\n                        \"measure\": \"goodPerformance\"\n                    },\n                    {\n                        \"measure\": \"performanceNotRated\"\n                    },\n                    {\n                        \"measure\": \"responseTime\"\n                    }\n                ]\n            },\n            \"filters\": [\n                {\n                    \"key\": \"serviceType\",\n                    \"values\": [\n                        \"SAP_S4HANA\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L3D\"\n    },\n    \"limit\": \"10\",\n    \"resolution\": \"D\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"SUM_DATAPROVIDER\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"scenarioId\",\n                    \"scenarioName\",\n                    \"runnerId\",\n                    \"runnerName\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"notAvailable\"\n                    },\n                    {\n                        \"measure\": \"available\"\n                    },\n                    {\n                        \"measure\": \"availabilityNotRated\"\n                    },\n                    {\n                        \"measure\": \"executions\"\n                    },\n                    {\n                        \"measure\": \"criticalPerformance\"\n                    },\n                    {\n                        \"measure\": \"poorPerformance\"\n                    },\n                    {\n                        \"measure\": \"goodPerformance\"\n                    },\n                    {\n                        \"measure\": \"performanceNotRated\"\n                    },\n                    {\n                        \"measure\": \"responseTime\"\n                    }\n                ]\n            },\n            \"filters\": [\n                {\n                    \"key\": \"serviceType\",\n                    \"values\": [\n                        \"SAP_S4HANA\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -3973,7 +4410,117 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"format\": \"time_series\",\n    \"timeRange\": {\n        \"semantic\": \"L3H\"\n    },\n    \"limit\": \"10\",\n    \"resolution\": \"H\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"SUM_DATAPROVIDER\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"scenarioId\",\n                    \"scenarioName\",\n                    \"runnerId\",\n                    \"runnerName\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"notAvailable\"\n                    },\n                    {\n                        \"measure\": \"available\"\n                    },\n                    {\n                        \"measure\": \"availabilityNotRated\"\n                    },\n                    {\n                        \"measure\": \"executions\"\n                    },\n                    {\n                        \"measure\": \"criticalPerformance\"\n                    },\n                    {\n                        \"measure\": \"poorPerformance\"\n                    },\n                    {\n                        \"measure\": \"goodPerformance\"\n                    },\n                    {\n                        \"measure\": \"performanceNotRated\"\n                    },\n                    {\n                        \"measure\": \"responseTime\"\n                    }\n                ]\n            },\n            \"filters\": [\n                {\n                    \"key\": \"serviceType\",\n                    \"values\": [\n                        \"SAP_S4HANA\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"raw": "{\n    \"format\": \"time_series\",\n    \"timeRange\": {\n        \"semantic\": \"L3D\"\n    },\n    \"limit\": \"10\",\n    \"resolution\": \"D\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"SUM_DATAPROVIDER\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"scenarioId\",\n                    \"scenarioName\",\n                    \"runnerId\",\n                    \"runnerName\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"notAvailable\"\n                    },\n                    {\n                        \"measure\": \"available\"\n                    },\n                    {\n                        \"measure\": \"availabilityNotRated\"\n                    },\n                    {\n                        \"measure\": \"executions\"\n                    },\n                    {\n                        \"measure\": \"criticalPerformance\"\n                    },\n                    {\n                        \"measure\": \"poorPerformance\"\n                    },\n                    {\n                        \"measure\": \"goodPerformance\"\n                    },\n                    {\n                        \"measure\": \"performanceNotRated\"\n                    },\n                    {\n                        \"measure\": \"responseTime\"\n                    }\n                ]\n            },\n            \"filters\": [\n                {\n                    \"key\": \"serviceType\",\n                    \"values\": [\n                        \"SAP_S4HANA\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Business Process Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L1D\"\n    },\n    \"limit\": \"10\",\n    \"resolution\": \"D\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"KPI_HISTORY_TOTALS\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"kpiId\",\n                    \"kpiName\",\n                    \"kpiCategory\",\n                    \"kpiDescription\",\n                    \"serviceId\",\n                    \"serviceName\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"kpiValue\"\n                    }\n                ]\n            },\n            \"filters\": [\n                {\n                    \"key\": \"kpiId\",\n                    \"values\": [\n                        \"KPSD000103\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Business Process Monitoring (Time Series)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"time_series\",\n    \"timeRange\": {\n        \"semantic\": \"L1D\"\n    },\n    \"limit\": \"10\",\n    \"resolution\": \"D\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"KPI_HISTORY_TOTALS\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"kpiId\",\n                    \"kpiName\",\n                    \"kpiCategory\",\n                    \"kpiDescription\",\n                    \"serviceId\",\n                    \"serviceName\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"kpiValue\"\n                    }\n                ]\n            },\n            \"filters\": [\n                {\n                    \"key\": \"kpiId\",\n                    \"values\": [\n                        \"KPSD000103\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4107,6 +4654,226 @@
 					"response": []
 				},
 				{
+					"name": "ALM Monitoring Events",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"timezone\": \"+01:00\",\n    \"limit\":\"10\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"EVENTS\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"serviceType\",\n                    \"useCaseId\",\n                    \"useCase\",\n                    \"serviceId\",\n                    \"serviceName\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"events\"\n                    },\n                    {\n                        \"measure\": \"eventSituations\"\n                    },\n                    {\n                        \"measure\": \"totalDuration\"\n                    },\n                    {\n                        \"measure\": \"tickets\"\n                    },\n                    {\n                        \"measure\": \"alerts\"\n                    },\n                    {\n                        \"measure\": \"mails\"\n                    },\n                    {\n                        \"measure\": \"chatMessages\"\n                    },\n                    {\n                        \"measure\": \"operationFlows\"\n                    }\n                ]\n            },\n            \"filters\": [\n                {\n                    \"key\": \"useCaseId\",\n                    \"values\": [\n                        \"HM\",\"EXM\",\"IM\",\"BPMON\",\"BSM\",\"JOBMON\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Monitoring Events (Time Series)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"time_series\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"timezone\": \"+01:00\",\n    \"limit\":\"10\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"EVENTS\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"serviceType\",\n                    \"useCaseId\",\n                    \"useCase\",\n                    \"serviceId\",\n                    \"serviceName\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"events\"\n                    },\n                    {\n                        \"measure\": \"eventSituations\"\n                    },\n                    {\n                        \"measure\": \"totalDuration\"\n                    },\n                    {\n                        \"measure\": \"tickets\"\n                    },\n                    {\n                        \"measure\": \"alerts\"\n                    },\n                    {\n                        \"measure\": \"mails\"\n                    },\n                    {\n                        \"measure\": \"chatMessages\"\n                    },\n                    {\n                        \"measure\": \"operationFlows\"\n                    }\n                ]\n            },\n            \"filters\": [\n                {\n                    \"key\": \"useCaseId\",\n                    \"values\": [\n                        \"HM\",\"EXM\",\"IM\",\"BPMON\",\"BSM\",\"JOBMON\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Configuration and Security Analysis",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"C1D\"\n    },\n    \"resolution\": \"D\",\n    \"timezone\": \"+01:00\",\n    \"limit\":\"10\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"CCDB_STORE_DATA\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"serviceType\",\n                    \"serviceTypeLabel\",\n                    \"serviceId\",\n                    \"serviceName\",\n                    \"serviceNameDesc\",\n                    \"storeLscpId\",\n                    \"storeLscpCaption\",\n                    \"sciId\",\n                    \"sciDesc\",\n                    \"storeId\",\n                    \"storeNameExt\",\n                    \"storeName\",\n                    \"storeType\",\n                    \"storeHasSecrec\",\n                    \"elementDate\",\n                    \"elementDateTo\",\n                    \"elementModification\",\n                    \"elementStatus\",\n                    \"itemSecRecStatus\",\n                    \"itemSecRecIndex\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"numChanges\"\n                    },\n                    {\n                        \"measure\": \"numStores\"\n                    },\n                    {\n                        \"measure\": \"numItems\"\n                    },\n                    {\n                        \"measure\": \"tickets\"\n                    },\n                    {\n                        \"measure\": \"alerts\"\n                    },\n                    {\n                        \"measure\": \"mails\"\n                    },\n                    {\n                        \"measure\": \"chatMessages\"\n                    },\n                    {\n                        \"measure\": \"operationFlows\"\n                    }\n                ]\n            },\n            \"filters\": [\n                {\n                    \"key\": \"elementStatus\",\n                    \"values\": [\n                        \"CURRENT\"\n                    ]\n                },\n                {\n                    \"key\": \"elementModification\",\n                    \"values\": [\n                        \"INITIAL\",\"ADDED\",\"UPDATED\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "ALM Configuration and Security Analysis (Time Series)",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"protocolProfileBehavior": {
+						"disabledSystemHeaders": {}
+					},
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "default"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{CALM_DEMO_TOKEN}}",
+								"type": "default"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"format\": \"time_Series\",\n    \"timeRange\": {\n        \"semantic\": \"L7D\"\n    },\n    \"resolution\": \"D\",\n    \"timezone\": \"+01:00\",\n    \"limit\":\"10\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"CCDB_STORE_DATA\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"serviceType\",\n                    \"serviceTypeLabel\",\n                    \"serviceId\",\n                    \"serviceName\",\n                    \"serviceNameDesc\",\n                    \"storeLscpId\",\n                    \"storeLscpCaption\",\n                    \"sciId\",\n                    \"sciDesc\",\n                    \"storeId\",\n                    \"storeNameExt\",\n                    \"storeName\",\n                    \"storeType\",\n                    \"storeHasSecrec\",\n                    \"elementDate\",\n                    \"elementDateTo\",\n                    \"elementModification\",\n                    \"elementStatus\",\n                    \"itemSecRecStatus\",\n                    \"itemSecRecIndex\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"numChanges\"\n                    },\n                    {\n                        \"measure\": \"numStores\"\n                    },\n                    {\n                        \"measure\": \"numItems\"\n                    },\n                    {\n                        \"measure\": \"tickets\"\n                    },\n                    {\n                        \"measure\": \"alerts\"\n                    },\n                    {\n                        \"measure\": \"mails\"\n                    },\n                    {\n                        \"measure\": \"chatMessages\"\n                    },\n                    {\n                        \"measure\": \"operationFlows\"\n                    }\n                ]\n            },\n            \"filters\": [\n                {\n                    \"key\": \"elementStatus\",\n                    \"values\": [\n                        \"OLD\"\n                    ]\n                }\n            ]\n        }\n    ]\n}",
+							"options": {
+								"raw": {
+									"language": "json"
+								}
+							}
+						},
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-analytics/v1/analytics/providers/data",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-analytics",
+								"v1",
+								"analytics",
+								"providers",
+								"data"
+							]
+						}
+					},
+					"response": []
+				},
+				{
 					"name": "IM - Cloud Platform Integration",
 					"event": [
 						{
@@ -4138,7 +4905,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"CPI_MESSAGES\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"IntegrationArtifactName\",\n                    \"StatusGroup\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"CPI_MESSAGES\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"IntegrationArtifactName\",\n                    \"StatusGroup\",\n                    \"Status\",\n                    \"serviceId\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4193,7 +4960,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"format\": \"time_series\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"CPI_MESSAGES\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"StatusGroup\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
+							"raw": "{\n    \"format\": \"time_series\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"CPI_MESSAGES\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"IntegrationArtifactName\",\n                    \"StatusGroup\",\n                    \"Status\",\n                    \"serviceId\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4248,7 +5015,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"Concur\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"Direction\",\n                    \"ConcurCompanyID\",\n                    \"SAPSystemId\",\n                    \"SAPSystemType\",\n                    \"Connection\",\n                    \"ObjectType\",\n                    \"StatusGroup\",\n                    \"Status\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"Concur\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"Direction\",\n                    \"ConcurCompanyID\",\n                    \"SAPSystemId\",\n                    \"SAPSystemType\",\n                    \"Connection\",\n                    \"ObjectType\",\n                    \"StatusGroup\",\n                    \"Status\",\n                    \"serviceId\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4303,7 +5070,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"Concur\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"Direction\",\n                    \"ConcurCompanyID\",\n                    \"SAPSystemId\",\n                    \"SAPSystemType\",\n                    \"Connection\",\n                    \"ObjectType\",\n                    \"StatusGroup\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"SF\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"SourceInterface\",\n                    \"DestinationInterface\",\n                    \"IntegrationName\",\n                    \"Direction\",\n                    \"StatusGroup\",\n                    \"serviceId\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4358,7 +5125,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"AIF\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"Direction\",\n                    \"Category\",\n                    \"Namespace\",\n                    \"Interface\",\n                    \"Version\",\n                    \"StatusGroup\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"AIF\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"Direction\",\n                    \"Category\",\n                    \"Namespace\",\n                    \"Interface\",\n                    \"Version\",\n                    \"StatusGroup\",\n                    \"serviceId\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4413,7 +5180,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"Ariba_CIG\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"ComponentName\",\n                    \"StatusGroup\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L7D\"\n    },\n    \"resolution\": \"D\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"Ariba_CIG\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"ComponentName\",\n                    \"Status\",\n                    \"serviceId\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4468,7 +5235,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"Ariba_Network\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"ComponentName\",\n                    \"EventName\",\n                    \"SenderNetworkId\",\n                    \"ReceiverNetworkId\",\n                    \"SenderName\",\n                    \"ReceiverName\",\n                    \"Direction\",\n                    \"StatusGroup\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"Ariba_Network\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"ComponentName\",\n                    \"EventName\",\n                    \"SenderNetworkId\",\n                    \"ReceiverNetworkId\",\n                    \"SenderName\",\n                    \"ReceiverName\",\n                    \"Direction\",\n                    \"StatusGroup\",\n                    \"serviceId\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4523,7 +5290,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"Ariba_Procurement\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"ComponentName\",\n                    \"EventName\",\n                    \"Direction\",\n                    \"StatusGroup\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"Ariba_Procurement\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"ComponentName\",\n                    \"EventName\",\n                    \"Direction\",\n                    \"StatusGroup\",\n                    \"serviceId\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4578,7 +5345,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"Ariba_Sourcing\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"ComponentName\",\n                    \"EventName\",\n                    \"Direction\",\n                    \"StatusGroup\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"Ariba_Sourcing\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"ComponentName\",\n                    \"EventName\",\n                    \"Direction\",\n                    \"StatusGroup\",\n                    \"serviceId\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4633,7 +5400,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"C4C\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"Direction\",\n                    \"InboundInterface\",\n                    \"OutboundInterface\",\n                    \"StatusGroup\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"C4C\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"Direction\",\n                    \"InboundInterface\",\n                    \"OutboundInterface\",\n                    \"StatusGroup\",\n                    \"serviceId\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4688,7 +5455,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"WS\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"STATE_GROUP_TEXT\",\n                    \"OB_IF_NAME\",\n                    \"OB_IF_NAMESPACE\",\n                    \"IB_IF_NAME\",\n                    \"IB_IF_NAMESPACE\",\n                    \"Direction\",\n                    \"StatusGroup\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"WS\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"StateGroup\",\n                    \"SenderInterfaceName\",\n                    \"SenderInterfaceNameSpace\",\n                    \"ReceiverInterfaceName\",\n                    \"ReceiverInterfaceNameSpace\",\n                    \"Direction\",\n                    \"Mandant\",\n                    \"StatusGroup\",\n                    \"serviceId\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4743,7 +5510,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"FG\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"CategoryType\",\n                    \"Direction\",\n                    \"StatusGroup\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"FG\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"CategoryType\",\n                    \"Direction\",\n                    \"StatusGroup\",\n                    \"serviceId\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4798,7 +5565,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"MDI\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"ServiceRole\",\n                    \"CommunicationScenario\",\n                    \"ObjectTypes\",\n                    \"Direction\",\n                    \"StatusGroup\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"MDI\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"ServiceRole\",\n                    \"CommunicationScenario\",\n                    \"ObjectTypes\",\n                    \"Direction\",\n                    \"StatusGroup\",\n                    \"serviceId\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4853,7 +5620,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"Mob_Srv\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"ApplicationID\",\n                    \"Feature\",\n                    \"Direction\",\n                    \"StatusGroup\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"Mob_Srv\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"ApplicationID\",\n                    \"Feature\",\n                    \"Direction\",\n                    \"StatusGroup\",\n                    \"serviceId\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4908,7 +5675,7 @@
 						],
 						"body": {
 							"mode": "raw",
-							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"IDOC\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"MESTYP\",\n                    \"SNDPOR\",\n                    \"SNDPRN\",\n                    \"RCVPOR\",\n                    \"RCVPRN\",\n                    \"Direction\",\n                    \"MANDT\",\n                    \"StatusGroup\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
+							"raw": "{\n    \"format\": \"table\",\n    \"timeRange\": {\n        \"semantic\": \"L24H\"\n    },\n    \"resolution\": \"H\",\n    \"limit\": \"10\",\n    \"timezone\": \"+01:00\",\n    \"queries\": [\n        {\n            \"name\": \"legend1\",\n            \"provider\": \"IDOC\",\n            \"columns\": {\n                \"dimensions\": [\n                    \"ServiceName\",\n                    \"MessageType\",\n                    \"SenderPort\",\n                    \"SenderParticipantNumber\",\n                    \"ReceiverPort\",\n                    \"ReceiverParticipantNumber\",\n                    \"Direction\",\n                    \"Mandant\",\n                    \"StatusGroup\",\n                    \"serviceId\"\n                ],\n                \"metrics\": [\n                    {\n                        \"measure\": \"Count\"\n                    }\n                ]\n            },\n            \"filters\": []\n        }\n    ]\n}",
 							"options": {
 								"raw": {
 									"language": "json"
@@ -4926,6 +5693,2637 @@
 								"analytics",
 								"providers",
 								"data"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Raw Data - Metrics",
+			"item": [
+				{
+					"name": "Outbound - ALM Health Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "document",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "navigate",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-User",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-metrics/v1/metrics?version=V1&period=L1H&provider=hm&dimensions=serviceType,serviceName,serviceId,metricName,metricLabel&prefix=hm&resolution=5Mi&metrics=measure:value,measure:usage,measure:okStatus,measure:warningStatus,measure:criticalStatus&shift=1&format=protobuf-json&preserveTimeStamp=true&limit=10&offset=0&onLimit=TRUNCATE",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-metrics",
+								"v1",
+								"metrics"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "V1"
+								},
+								{
+									"key": "period",
+									"value": "L1H"
+								},
+								{
+									"key": "provider",
+									"value": "hm"
+								},
+								{
+									"key": "dimensions",
+									"value": "serviceType,serviceName,serviceId,metricName,metricLabel"
+								},
+								{
+									"key": "prefix",
+									"value": "hm"
+								},
+								{
+									"key": "resolution",
+									"value": "5Mi"
+								},
+								{
+									"key": "metrics",
+									"value": "measure:value,measure:usage,measure:okStatus,measure:warningStatus,measure:criticalStatus"
+								},
+								{
+									"key": "shift",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "a863426f-9156-475b-9a89-723d9ea54b14",
+									"disabled": true
+								},
+								{
+									"key": "metric",
+									"value": "9b61c353-3987-4001-b8cb-7e59c65cae4a",
+									"disabled": true
+								},
+								{
+									"key": "format",
+									"value": "protobuf-json"
+								},
+								{
+									"key": "preserveTimeStamp",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "onLimit",
+									"value": "TRUNCATE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Outbound - ALM Real User Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "document",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "navigate",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-User",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-metrics/v1/metrics?version=V1&period=L1H&provider=rum&dimensions=request,requestType,serviceType,serviceName,serviceId&prefix=rum&resolution=5Mi&metrics=measure:okStatus,measure:requests,measure:users,measure:responseTime&shift=1&serviceType=SAP_S4HANA&format=protobuf-json&preserveTimeStamp=true&limit=10&offset=0&onLimit=TRUNCATE",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-metrics",
+								"v1",
+								"metrics"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "V1"
+								},
+								{
+									"key": "period",
+									"value": "L1H"
+								},
+								{
+									"key": "provider",
+									"value": "rum"
+								},
+								{
+									"key": "dimensions",
+									"value": "request,requestType,serviceType,serviceName,serviceId"
+								},
+								{
+									"key": "prefix",
+									"value": "rum"
+								},
+								{
+									"key": "resolution",
+									"value": "5Mi"
+								},
+								{
+									"key": "metrics",
+									"value": "measure:okStatus,measure:requests,measure:users,measure:responseTime"
+								},
+								{
+									"key": "shift",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "a863426f-9156-475b-9a89-723d9ea54b14",
+									"disabled": true
+								},
+								{
+									"key": "serviceType",
+									"value": "SAP_S4HANA"
+								},
+								{
+									"key": "format",
+									"value": "protobuf-json"
+								},
+								{
+									"key": "preserveTimeStamp",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "onLimit",
+									"value": "TRUNCATE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Outbound - ALM JobMonitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "document",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "navigate",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-User",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-metrics/v1/metrics?version=V1&period=C24H&provider=jam&dimensions=serviceId,serviceName,serviceType,serviceTypeLabel,jobType,jobTypeLabel,jobName,jobId&prefix=jam&resolution=5Mi&metrics=measure:executions,measure:runTime&shift=1&serviceType=SAP_S4HANA&format=protobuf-json&preserveTimeStamp=true&limit=10&offset=0&onLimit=TRUNCATE",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-metrics",
+								"v1",
+								"metrics"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "V1"
+								},
+								{
+									"key": "period",
+									"value": "C24H"
+								},
+								{
+									"key": "provider",
+									"value": "jam"
+								},
+								{
+									"key": "dimensions",
+									"value": "serviceId,serviceName,serviceType,serviceTypeLabel,jobType,jobTypeLabel,jobName,jobId"
+								},
+								{
+									"key": "prefix",
+									"value": "jam"
+								},
+								{
+									"key": "resolution",
+									"value": "5Mi"
+								},
+								{
+									"key": "metrics",
+									"value": "measure:executions,measure:runTime"
+								},
+								{
+									"key": "shift",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "c34cb684-0124-4ffd-9454-497d612a913c",
+									"disabled": true
+								},
+								{
+									"key": "serviceType",
+									"value": "SAP_S4HANA"
+								},
+								{
+									"key": "format",
+									"value": "protobuf-json"
+								},
+								{
+									"key": "preserveTimeStamp",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "onLimit",
+									"value": "TRUNCATE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Outbound - ALM Status Events",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "document",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "navigate",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-User",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-metrics/v1/metrics?version=V1&period=C24H&provider=bsm&dimensions=type,serviceType,serviceName,serviceDescription,serviceID,eventType,eventStatus,eventName,eventDescription,eventSource,eventStartTime,eventEndTime&prefix=bsm&resolution=5Mi&metrics=measure:counter,measure:duration&shift=1&format=protobuf-json&preserveTimeStamp=true&limit=10&offset=0&onLimit=TRUNCATE",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-metrics",
+								"v1",
+								"metrics"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "V1"
+								},
+								{
+									"key": "period",
+									"value": "C24H"
+								},
+								{
+									"key": "provider",
+									"value": "bsm"
+								},
+								{
+									"key": "dimensions",
+									"value": "type,serviceType,serviceName,serviceDescription,serviceID,eventType,eventStatus,eventName,eventDescription,eventSource,eventStartTime,eventEndTime"
+								},
+								{
+									"key": "prefix",
+									"value": "bsm"
+								},
+								{
+									"key": "resolution",
+									"value": "5Mi"
+								},
+								{
+									"key": "metrics",
+									"value": "measure:counter,measure:duration"
+								},
+								{
+									"key": "shift",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "53c778f2-0369-4acd-9c74-4514d7bb1239",
+									"disabled": true
+								},
+								{
+									"key": "format",
+									"value": "protobuf-json"
+								},
+								{
+									"key": "preserveTimeStamp",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "onLimit",
+									"value": "TRUNCATE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Outbound - ALM Synthetic User Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "document",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "navigate",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-User",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-metrics/v1/metrics?version=V1&period=C24H&provider=sum&dimensions=scenarioId,scenarioName,runnerId,runnerName,businessServiceId,businessServiceName&prefix=sum&resolution=5Mi&metrics=measure:notAvailable,measure:available,measure:availabilityNotRated,measure:executions,measure:criticalPerformance,measure:poorPerformance,measure:goodPerformance,measure:performanceNotRated,measure:responseTime&shift=1&format=protobuf-json&preserveTimeStamp=true&limit=10&offset=0&onLimit=TRUNCATE",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-metrics",
+								"v1",
+								"metrics"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "V1"
+								},
+								{
+									"key": "period",
+									"value": "C24H"
+								},
+								{
+									"key": "provider",
+									"value": "sum"
+								},
+								{
+									"key": "dimensions",
+									"value": "scenarioId,scenarioName,runnerId,runnerName,businessServiceId,businessServiceName"
+								},
+								{
+									"key": "prefix",
+									"value": "sum"
+								},
+								{
+									"key": "resolution",
+									"value": "5Mi"
+								},
+								{
+									"key": "metrics",
+									"value": "measure:notAvailable,measure:available,measure:availabilityNotRated,measure:executions,measure:criticalPerformance,measure:poorPerformance,measure:goodPerformance,measure:performanceNotRated,measure:responseTime"
+								},
+								{
+									"key": "shift",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "53c778f2-0369-4acd-9c74-4514d7bb1239",
+									"disabled": true
+								},
+								{
+									"key": "format",
+									"value": "protobuf-json"
+								},
+								{
+									"key": "preserveTimeStamp",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "onLimit",
+									"value": "TRUNCATE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Outbound - ALM Exception Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "document",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "navigate",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-User",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-metrics/v1/metrics?version=V1&period=C24H&provider=exm&dimensions=serviceId,serviceName,categoryId,categoryName,serviceType&prefix=exm&resolution=5Mi&metrics=measure:counter&shift=1&format=protobuf-json&preserveTimeStamp=true&limit=10&offset=0&onLimit=TRUNCATE",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-metrics",
+								"v1",
+								"metrics"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "V1"
+								},
+								{
+									"key": "period",
+									"value": "C24H"
+								},
+								{
+									"key": "provider",
+									"value": "exm"
+								},
+								{
+									"key": "dimensions",
+									"value": "serviceId,serviceName,categoryId,categoryName,serviceType"
+								},
+								{
+									"key": "prefix",
+									"value": "exm"
+								},
+								{
+									"key": "resolution",
+									"value": "5Mi"
+								},
+								{
+									"key": "metrics",
+									"value": "measure:counter"
+								},
+								{
+									"key": "shift",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "53c778f2-0369-4acd-9c74-4514d7bb1239",
+									"disabled": true
+								},
+								{
+									"key": "format",
+									"value": "protobuf-json"
+								},
+								{
+									"key": "preserveTimeStamp",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "onLimit",
+									"value": "TRUNCATE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Outbound - IM - Cloud Platform Integration",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "document",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "navigate",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-User",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-metrics/v1/metrics?version=V1&period=C24H&provider=cpi&dimensions=ServiceName,serviceId,IntegrationArtifactName,StatusGroup,Status&prefix=cpi&resolution=5Mi&metrics=measure:Count&shift=1&format=protobuf-json&preserveTimeStamp=true&limit=10&offset=0&onLimit=TRUNCATE",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-metrics",
+								"v1",
+								"metrics"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "V1"
+								},
+								{
+									"key": "period",
+									"value": "C24H"
+								},
+								{
+									"key": "provider",
+									"value": "cpi"
+								},
+								{
+									"key": "dimensions",
+									"value": "ServiceName,serviceId,IntegrationArtifactName,StatusGroup,Status"
+								},
+								{
+									"key": "prefix",
+									"value": "cpi"
+								},
+								{
+									"key": "resolution",
+									"value": "5Mi"
+								},
+								{
+									"key": "metrics",
+									"value": "measure:Count"
+								},
+								{
+									"key": "shift",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "d290e459-c872-421d-948d-e79819ce6b4c",
+									"disabled": true
+								},
+								{
+									"key": "format",
+									"value": "protobuf-json"
+								},
+								{
+									"key": "preserveTimeStamp",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "onLimit",
+									"value": "TRUNCATE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Outbound - IM - Concur",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "document",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "navigate",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-User",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-metrics/v1/metrics?version=V1&period=C24H&provider=concur&dimensions=ServiceName,Direction,ConcurCompanyID,SAPSystemId,SAPSystemType,Connection,ObjectType,StatusGroup,Status,serviceId&prefix=concur&resolution=5Mi&metrics=measure:Count&shift=1&format=protobuf-json&preserveTimeStamp=true&limit=10&offset=0&onLimit=TRUNCATE",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-metrics",
+								"v1",
+								"metrics"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "V1"
+								},
+								{
+									"key": "period",
+									"value": "C24H"
+								},
+								{
+									"key": "provider",
+									"value": "concur"
+								},
+								{
+									"key": "dimensions",
+									"value": "ServiceName,Direction,ConcurCompanyID,SAPSystemId,SAPSystemType,Connection,ObjectType,StatusGroup,Status,serviceId"
+								},
+								{
+									"key": "prefix",
+									"value": "concur"
+								},
+								{
+									"key": "resolution",
+									"value": "5Mi"
+								},
+								{
+									"key": "metrics",
+									"value": "measure:Count"
+								},
+								{
+									"key": "shift",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "d290e459-c872-421d-948d-e79819ce6b4c",
+									"disabled": true
+								},
+								{
+									"key": "format",
+									"value": "protobuf-json"
+								},
+								{
+									"key": "preserveTimeStamp",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "onLimit",
+									"value": "TRUNCATE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Outbound - IM - SuccessFactors",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "document",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "navigate",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-User",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-metrics/v1/metrics?version=V1&period=C24H&provider=sf&dimensions=ServiceName,SourceInterface,DestinationInterface,IntegrationName,Direction,StatusGroup,serviceId&prefix=sf&resolution=5Mi&metrics=measure:Count&shift=1&format=protobuf-json&preserveTimeStamp=true&limit=10&offset=0&onLimit=TRUNCATE",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-metrics",
+								"v1",
+								"metrics"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "V1"
+								},
+								{
+									"key": "period",
+									"value": "C24H"
+								},
+								{
+									"key": "provider",
+									"value": "sf"
+								},
+								{
+									"key": "dimensions",
+									"value": "ServiceName,SourceInterface,DestinationInterface,IntegrationName,Direction,StatusGroup,serviceId"
+								},
+								{
+									"key": "prefix",
+									"value": "sf"
+								},
+								{
+									"key": "resolution",
+									"value": "5Mi"
+								},
+								{
+									"key": "metrics",
+									"value": "measure:Count"
+								},
+								{
+									"key": "shift",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "d290e459-c872-421d-948d-e79819ce6b4c",
+									"disabled": true
+								},
+								{
+									"key": "format",
+									"value": "protobuf-json"
+								},
+								{
+									"key": "preserveTimeStamp",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "onLimit",
+									"value": "TRUNCATE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Outbound - IM - Application Interface Framework",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "document",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "navigate",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-User",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-metrics/v1/metrics?version=V1&period=C24H&provider=aif&dimensions=ServiceName,Direction,Category,Namespace,Interface,Version,StatusGroup,Status,serviceId&prefix=aif&resolution=5Mi&metrics=measure:Count&shift=1&format=protobuf-json&preserveTimeStamp=true&limit=10&offset=0&onLimit=TRUNCATE",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-metrics",
+								"v1",
+								"metrics"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "V1"
+								},
+								{
+									"key": "period",
+									"value": "C24H"
+								},
+								{
+									"key": "provider",
+									"value": "aif"
+								},
+								{
+									"key": "dimensions",
+									"value": "ServiceName,Direction,Category,Namespace,Interface,Version,StatusGroup,Status,serviceId"
+								},
+								{
+									"key": "prefix",
+									"value": "aif"
+								},
+								{
+									"key": "resolution",
+									"value": "5Mi"
+								},
+								{
+									"key": "metrics",
+									"value": "measure:Count"
+								},
+								{
+									"key": "shift",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "d290e459-c872-421d-948d-e79819ce6b4c",
+									"disabled": true
+								},
+								{
+									"key": "format",
+									"value": "protobuf-json"
+								},
+								{
+									"key": "preserveTimeStamp",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "onLimit",
+									"value": "TRUNCATE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Outbound - IM - Ariba Cloud Integration",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "document",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "navigate",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-User",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-metrics/v1/metrics?version=V1&period=C24H&provider=aribacig&dimensions=ServiceName,ComponentName,StatusGroup,Status,serviceId&prefix=aribacig&resolution=5Mi&metrics=measure:Count&shift=1&format=protobuf-json&preserveTimeStamp=true&limit=10&offset=0&onLimit=TRUNCATE",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-metrics",
+								"v1",
+								"metrics"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "V1"
+								},
+								{
+									"key": "period",
+									"value": "C24H"
+								},
+								{
+									"key": "provider",
+									"value": "aribacig"
+								},
+								{
+									"key": "dimensions",
+									"value": "ServiceName,ComponentName,StatusGroup,Status,serviceId"
+								},
+								{
+									"key": "prefix",
+									"value": "aribacig"
+								},
+								{
+									"key": "resolution",
+									"value": "5Mi"
+								},
+								{
+									"key": "metrics",
+									"value": "measure:Count"
+								},
+								{
+									"key": "shift",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "d290e459-c872-421d-948d-e79819ce6b4c",
+									"disabled": true
+								},
+								{
+									"key": "format",
+									"value": "protobuf-json"
+								},
+								{
+									"key": "preserveTimeStamp",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "onLimit",
+									"value": "TRUNCATE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Outbound - IM - Ariba Network",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "document",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "navigate",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-User",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-metrics/v1/metrics?version=V1&period=C24H&provider=aribanet&dimensions=ServiceName,ComponentName,EventName,SenderNetworkId,ReceiverNetworkId,SenderName,ReceiverName,Direction,StatusGroup,Status,serviceId&prefix=aribanet&resolution=5Mi&metrics=measure:Count&shift=1&format=protobuf-json&preserveTimeStamp=true&limit=10&offset=0&onLimit=TRUNCATE",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-metrics",
+								"v1",
+								"metrics"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "V1"
+								},
+								{
+									"key": "period",
+									"value": "C24H"
+								},
+								{
+									"key": "provider",
+									"value": "aribanet"
+								},
+								{
+									"key": "dimensions",
+									"value": "ServiceName,ComponentName,EventName,SenderNetworkId,ReceiverNetworkId,SenderName,ReceiverName,Direction,StatusGroup,Status,serviceId"
+								},
+								{
+									"key": "prefix",
+									"value": "aribanet"
+								},
+								{
+									"key": "resolution",
+									"value": "5Mi"
+								},
+								{
+									"key": "metrics",
+									"value": "measure:Count"
+								},
+								{
+									"key": "shift",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "d290e459-c872-421d-948d-e79819ce6b4c",
+									"disabled": true
+								},
+								{
+									"key": "format",
+									"value": "protobuf-json"
+								},
+								{
+									"key": "preserveTimeStamp",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "onLimit",
+									"value": "TRUNCATE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Outbound - IM - Ariba Procurement",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "document",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "navigate",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-User",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-metrics/v1/metrics?version=V1&period=C24H&provider=aribaproc&dimensions=ServiceName,ComponentName,EventName,Direction,StatusGroup,Status,serviceId&prefix=aribaproc&resolution=5Mi&metrics=measure:Count&shift=1&format=protobuf-json&preserveTimeStamp=true&limit=10&offset=0&onLimit=TRUNCATE",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-metrics",
+								"v1",
+								"metrics"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "V1"
+								},
+								{
+									"key": "period",
+									"value": "C24H"
+								},
+								{
+									"key": "provider",
+									"value": "aribaproc"
+								},
+								{
+									"key": "dimensions",
+									"value": "ServiceName,ComponentName,EventName,Direction,StatusGroup,Status,serviceId"
+								},
+								{
+									"key": "prefix",
+									"value": "aribaproc"
+								},
+								{
+									"key": "resolution",
+									"value": "5Mi"
+								},
+								{
+									"key": "metrics",
+									"value": "measure:Count"
+								},
+								{
+									"key": "shift",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "d290e459-c872-421d-948d-e79819ce6b4c",
+									"disabled": true
+								},
+								{
+									"key": "format",
+									"value": "protobuf-json"
+								},
+								{
+									"key": "preserveTimeStamp",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "onLimit",
+									"value": "TRUNCATE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Outbound - IM - Ariba Sourcing",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "document",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "navigate",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-User",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-metrics/v1/metrics?version=V1&period=C24H&provider=aribasrc&dimensions=ServiceName,ComponentName,EventName,Direction,StatusGroup,Status,serviceId&prefix=aribasrc&resolution=5Mi&metrics=measure:Count&shift=1&format=protobuf-json&preserveTimeStamp=true&limit=10&offset=0&onLimit=TRUNCATE",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-metrics",
+								"v1",
+								"metrics"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "V1"
+								},
+								{
+									"key": "period",
+									"value": "C24H"
+								},
+								{
+									"key": "provider",
+									"value": "aribasrc"
+								},
+								{
+									"key": "dimensions",
+									"value": "ServiceName,ComponentName,EventName,Direction,StatusGroup,Status,serviceId"
+								},
+								{
+									"key": "prefix",
+									"value": "aribasrc"
+								},
+								{
+									"key": "resolution",
+									"value": "5Mi"
+								},
+								{
+									"key": "metrics",
+									"value": "measure:Count"
+								},
+								{
+									"key": "shift",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "d290e459-c872-421d-948d-e79819ce6b4c",
+									"disabled": true
+								},
+								{
+									"key": "format",
+									"value": "protobuf-json"
+								},
+								{
+									"key": "preserveTimeStamp",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "onLimit",
+									"value": "TRUNCATE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Outbound - IM - Cloud for Customer",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "document",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "navigate",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-User",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-metrics/v1/metrics?version=V1&period=C24H&provider=c4c&dimensions=ServiceName,Direction,InboundInterface,OutboundInterface,StatusGroup,Status,serviceId&prefix=c4c&resolution=5Mi&metrics=measure:Count&shift=1&format=protobuf-json&preserveTimeStamp=true&limit=10&offset=0&onLimit=TRUNCATE",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-metrics",
+								"v1",
+								"metrics"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "V1"
+								},
+								{
+									"key": "period",
+									"value": "C24H"
+								},
+								{
+									"key": "provider",
+									"value": "c4c"
+								},
+								{
+									"key": "dimensions",
+									"value": "ServiceName,Direction,InboundInterface,OutboundInterface,StatusGroup,Status,serviceId"
+								},
+								{
+									"key": "prefix",
+									"value": "c4c"
+								},
+								{
+									"key": "resolution",
+									"value": "5Mi"
+								},
+								{
+									"key": "metrics",
+									"value": "measure:Count"
+								},
+								{
+									"key": "shift",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "d290e459-c872-421d-948d-e79819ce6b4c",
+									"disabled": true
+								},
+								{
+									"key": "format",
+									"value": "protobuf-json"
+								},
+								{
+									"key": "preserveTimeStamp",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "onLimit",
+									"value": "TRUNCATE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Outbound - IM - Web Services",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "document",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "navigate",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-User",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-metrics/v1/metrics?version=V1&period=C24H&provider=ws&dimensions=ServiceName,StateGroup,SenderInterfaceName,SenderInterfaceNameSpace,ReceiverInterfaceName,ReceiverInterfaceNameSpace,Direction,Mandant,StatusGroup,serviceId&prefix=ws&resolution=5Mi&metrics=measure:Count&shift=1&format=protobuf-json&preserveTimeStamp=true&limit=10&offset=0&onLimit=TRUNCATE",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-metrics",
+								"v1",
+								"metrics"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "V1"
+								},
+								{
+									"key": "period",
+									"value": "C24H"
+								},
+								{
+									"key": "provider",
+									"value": "ws"
+								},
+								{
+									"key": "dimensions",
+									"value": "ServiceName,StateGroup,SenderInterfaceName,SenderInterfaceNameSpace,ReceiverInterfaceName,ReceiverInterfaceNameSpace,Direction,Mandant,StatusGroup,serviceId"
+								},
+								{
+									"key": "prefix",
+									"value": "ws"
+								},
+								{
+									"key": "resolution",
+									"value": "5Mi"
+								},
+								{
+									"key": "metrics",
+									"value": "measure:Count"
+								},
+								{
+									"key": "shift",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "d290e459-c872-421d-948d-e79819ce6b4c",
+									"disabled": true
+								},
+								{
+									"key": "format",
+									"value": "protobuf-json"
+								},
+								{
+									"key": "preserveTimeStamp",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "onLimit",
+									"value": "TRUNCATE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Outbound - IM - Fieldglass",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "document",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "navigate",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-User",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-metrics/v1/metrics?version=V1&period=C24H&provider=fg&dimensions=ServiceName,CategoryType,Direction,StatusGroup,serviceId&prefix=fg&resolution=5Mi&metrics=measure:Count&shift=1&format=protobuf-json&preserveTimeStamp=true&limit=10&offset=0&onLimit=TRUNCATE",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-metrics",
+								"v1",
+								"metrics"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "V1"
+								},
+								{
+									"key": "period",
+									"value": "C24H"
+								},
+								{
+									"key": "provider",
+									"value": "fg"
+								},
+								{
+									"key": "dimensions",
+									"value": "ServiceName,CategoryType,Direction,StatusGroup,serviceId"
+								},
+								{
+									"key": "prefix",
+									"value": "fg"
+								},
+								{
+									"key": "resolution",
+									"value": "5Mi"
+								},
+								{
+									"key": "metrics",
+									"value": "measure:Count"
+								},
+								{
+									"key": "shift",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "d290e459-c872-421d-948d-e79819ce6b4c",
+									"disabled": true
+								},
+								{
+									"key": "format",
+									"value": "protobuf-json"
+								},
+								{
+									"key": "preserveTimeStamp",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "onLimit",
+									"value": "TRUNCATE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Outbound - IM - Master Data Integration",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "document",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "navigate",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-User",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-metrics/v1/metrics?version=V1&period=C24H&provider=mdi&dimensions=ServiceName,ServiceRole,CommunicationScenario,ObjectTypes,Direction,StatusGroup,serviceId&prefix=mdi&resolution=5Mi&metrics=measure:Count&shift=1&format=protobuf-json&preserveTimeStamp=true&limit=10&offset=0&onLimit=TRUNCATE",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-metrics",
+								"v1",
+								"metrics"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "V1"
+								},
+								{
+									"key": "period",
+									"value": "C24H"
+								},
+								{
+									"key": "provider",
+									"value": "mdi"
+								},
+								{
+									"key": "dimensions",
+									"value": "ServiceName,ServiceRole,CommunicationScenario,ObjectTypes,Direction,StatusGroup,serviceId"
+								},
+								{
+									"key": "prefix",
+									"value": "mdi"
+								},
+								{
+									"key": "resolution",
+									"value": "5Mi"
+								},
+								{
+									"key": "metrics",
+									"value": "measure:Count"
+								},
+								{
+									"key": "shift",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "d290e459-c872-421d-948d-e79819ce6b4c",
+									"disabled": true
+								},
+								{
+									"key": "format",
+									"value": "protobuf-json"
+								},
+								{
+									"key": "preserveTimeStamp",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "onLimit",
+									"value": "TRUNCATE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Outbound - IM - Mobile Services",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "document",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "navigate",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-User",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-metrics/v1/metrics?version=V1&period=C24H&provider=mobsrv&dimensions=ServiceName,ApplicationID,Feature,Direction,StatusGroup,serviceId&prefix=mobsrv&resolution=5Mi&metrics=measure:Count&shift=1&format=protobuf-json&preserveTimeStamp=true&limit=10&offset=0&onLimit=TRUNCATE",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-metrics",
+								"v1",
+								"metrics"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "V1"
+								},
+								{
+									"key": "period",
+									"value": "C24H"
+								},
+								{
+									"key": "provider",
+									"value": "mobsrv"
+								},
+								{
+									"key": "dimensions",
+									"value": "ServiceName,ApplicationID,Feature,Direction,StatusGroup,serviceId"
+								},
+								{
+									"key": "prefix",
+									"value": "mobsrv"
+								},
+								{
+									"key": "resolution",
+									"value": "5Mi"
+								},
+								{
+									"key": "metrics",
+									"value": "measure:Count"
+								},
+								{
+									"key": "shift",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "d290e459-c872-421d-948d-e79819ce6b4c",
+									"disabled": true
+								},
+								{
+									"key": "format",
+									"value": "protobuf-json"
+								},
+								{
+									"key": "preserveTimeStamp",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "onLimit",
+									"value": "TRUNCATE"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "Outbound - IM - IDocs",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "document",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "navigate",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-User",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-metrics/v1/metrics?version=V1&period=C24H&provider=idoc&dimensions=ServiceName,MessageType,SenderPort,SenderParticipantNumber,ReceiverPort,ReceiverParticipantNumber,Direction,Mandant,StatusGroup,serviceId&prefix=idoc&resolution=5Mi&metrics=measure:Count&shift=1&format=protobuf-json&preserveTimeStamp=true&limit=10&offset=0&onLimit=TRUNCATE",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-metrics",
+								"v1",
+								"metrics"
+							],
+							"query": [
+								{
+									"key": "version",
+									"value": "V1"
+								},
+								{
+									"key": "period",
+									"value": "C24H"
+								},
+								{
+									"key": "provider",
+									"value": "idoc"
+								},
+								{
+									"key": "dimensions",
+									"value": "ServiceName,MessageType,SenderPort,SenderParticipantNumber,ReceiverPort,ReceiverParticipantNumber,Direction,Mandant,StatusGroup,serviceId"
+								},
+								{
+									"key": "prefix",
+									"value": "idoc"
+								},
+								{
+									"key": "resolution",
+									"value": "5Mi"
+								},
+								{
+									"key": "metrics",
+									"value": "measure:Count"
+								},
+								{
+									"key": "shift",
+									"value": "1"
+								},
+								{
+									"key": "serviceId",
+									"value": "d290e459-c872-421d-948d-e79819ce6b4c",
+									"disabled": true
+								},
+								{
+									"key": "format",
+									"value": "protobuf-json"
+								},
+								{
+									"key": "preserveTimeStamp",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "onLimit",
+									"value": "TRUNCATE"
+								}
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Raw Data - Logs",
+			"item": [
+				{
+					"name": "Outbound - ALM Exception Monitoring",
+					"event": [
+						{
+							"listen": "prerequest",
+							"script": {
+								"exec": [
+									""
+								],
+								"type": "text/javascript"
+							}
+						}
+					],
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Sec-Fetch-Dest",
+								"value": "document",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Mode",
+								"value": "navigate",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-Site",
+								"value": "same-origin",
+								"type": "text"
+							},
+							{
+								"key": "Sec-Fetch-User",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Upgrade-Insecure-Requests",
+								"value": "1",
+								"type": "text"
+							},
+							{
+								"key": "Authorization",
+								"value": "Bearer {{TOKEN}}",
+								"type": "text"
+							},
+							{
+								"key": "apiKey",
+								"value": "{{CALM_DEMO_API_KEY}}",
+								"type": "text"
+							}
+						],
+						"url": {
+							"raw": "{{CALM_DEMO_ROOT_URL}}/calm-logs/v1/logs?provider=hm&version=V1&period=30M&serviceId=a863426f-9156-475b-9a89-723d9ea54b14&observedTimestamp=true&format=protobuf-json&preserveTimeStamp=true&limit=10&offset=0&onLimit=TRUNCATE",
+							"host": [
+								"{{CALM_DEMO_ROOT_URL}}"
+							],
+							"path": [
+								"calm-logs",
+								"v1",
+								"logs"
+							],
+							"query": [
+								{
+									"key": "provider",
+									"value": "hm"
+								},
+								{
+									"key": "version",
+									"value": "V1"
+								},
+								{
+									"key": "period",
+									"value": "30M"
+								},
+								{
+									"key": "serviceId",
+									"value": "a863426f-9156-475b-9a89-723d9ea54b14"
+								},
+								{
+									"key": "observedTimestamp",
+									"value": "true"
+								},
+								{
+									"key": "format",
+									"value": "protobuf-json"
+								},
+								{
+									"key": "preserveTimeStamp",
+									"value": "true"
+								},
+								{
+									"key": "limit",
+									"value": "10"
+								},
+								{
+									"key": "offset",
+									"value": "0"
+								},
+								{
+									"key": "onLimit",
+									"value": "TRUNCATE"
+								}
 							]
 						}
 					},
