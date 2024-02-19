@@ -246,12 +246,19 @@ export default function Builder() {
             const diagrams = rawDiagrams.filter(diagram => diagram['Type'] === type)
             diagrams.map(diagram => {
                 let svgData = null
+                let bpmnData = null
                 try {
-                    svgData = readFileSync(Path.join(__dirname, diagram.SVG), 'utf-8')                    
+                    if(diagram.BPMN){
+                        bpmnData = readFileSync(Path.join(__dirname, diagram.BPMN), 'utf-8')
+                    }
+                    if(diagram.SVG){
+                        svgData = readFileSync(Path.join(__dirname, diagram.SVG), 'utf-8')
+                    }      
                     result.push({
                         parentId: diagram['Solution Process ID'],
                         name: diagram['Diagram Name'],
-                        svg: svgData
+                        svg: svgData,
+                        bpmn: bpmnData
                     })
                 } catch (error) {
                     throw new Error(error)
