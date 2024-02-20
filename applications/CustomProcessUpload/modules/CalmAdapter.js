@@ -169,8 +169,18 @@ export default function CalmAdapter(secret) {
     }
   }
 
-  async function _createSolutionProcessFlowDiagram(solutionProcessFlowId, body) {
+  async function _createSolutionProcessFlowSVGDiagram(solutionProcessFlowId, body) {
     const url = `/api/calm-processauthoring/v1/solutionProcessFlows/${solutionProcessFlowId}/solutionProcessFlowDiagrams`
+    try {
+      const response = await instance.post(url, body)
+      return response.data
+    } catch (error) {
+      throw new Error(error)
+    }
+  }
+
+  async function _createSolutionProcessFlowBPMNDiagram(solutionProcessFlowId, body) {
+    const url = `/api/calm-processauthoring/v1/solutionProcessFlows/${solutionProcessFlowId}/solutionProcessFlowDiagrams/bpmn`
     try {
       const response = await instance.post(url, body)
       return response.data
@@ -363,7 +373,14 @@ export default function CalmAdapter(secret) {
       const solutionProcessFlowDiagramsPromise = solutionProcessFlowDiagrams.map(async diagram => {
         const solutionProcess = solutionProcessFlows.find(solutionProcessFlow => diagram.parentId === solutionProcessFlow.externalId)
         delete diagram.parentId
-        const solutionProcessFlowDiagram = await _createSolutionProcessFlowDiagram(solutionProcess.solutionProcessFlow.id, diagram)
+        let solutionProcessFlowDiagram = null
+        if(diagram.bpmn){
+          delete diagram.svg
+          solutionProcessFlowDiagram = await _createSolutionProcessFlowBPMNDiagram(solutionProcess.solutionProcessFlow.id, diagram)
+        }else{
+          delete diagram.bpmn
+          solutionProcessFlowDiagram = await _createSolutionProcessFlowSVGDiagram(solutionProcess.solutionProcessFlow.id, diagram)
+        }
         return solutionProcessFlowDiagram
       })
       const solutionProcessFlowDiagramsPromiseResult = Promise.all(solutionProcessFlowDiagramsPromise)
