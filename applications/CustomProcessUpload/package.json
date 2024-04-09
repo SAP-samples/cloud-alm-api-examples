@@ -29,6 +29,6 @@
     "loading-indicator": "^2.0.0",
     "loadsh": "^0.0.4",
     "path": "^0.12.7",
-    "xlsx": "^0.18.5"
+    "xlsx": "https://cdn.sheetjs.com/xlsx-0.20.2/xlsx-0.20.2.tgz"
   }
 }
