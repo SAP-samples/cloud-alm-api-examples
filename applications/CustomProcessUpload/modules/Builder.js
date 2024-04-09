@@ -4,7 +4,7 @@
  * Builder Utility
  *******************************************************************************/
 
-import XLSX from 'xlsx'
+import { read, utils } from "xlsx";
 import Path from 'path'
 import { fileURLToPath } from 'url'
 import loadsh from 'loadsh'
@@ -85,11 +85,12 @@ export default function Builder() {
             const result = {}
             let excel = undefined
             try {
-                excel = XLSX.readFile(file)
-                result.customer = XLSX.utils.sheet_to_json(excel.Sheets['Customer'])
-                result.solutionProcesses = XLSX.utils.sheet_to_json(excel.Sheets['Solution Processes'])
-                result.diagrams = XLSX.utils.sheet_to_json(excel.Sheets['Diagrams'])
-                result.accelerators = XLSX.utils.sheet_to_json(excel.Sheets['Accelerators'])
+                const buf = readFileSync(file);
+                excel = read(buf);
+                result.customer = utils.sheet_to_json(excel.Sheets['Customer'])
+                result.solutionProcesses = utils.sheet_to_json(excel.Sheets['Solution Processes'])
+                result.diagrams = utils.sheet_to_json(excel.Sheets['Diagrams'])
+                result.accelerators = utils.sheet_to_json(excel.Sheets['Accelerators'])
                 return result
             } catch (error) {
                 throw new Error(error.message)
