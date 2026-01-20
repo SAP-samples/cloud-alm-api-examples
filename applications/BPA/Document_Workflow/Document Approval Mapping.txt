@@ -1,0 +1,119 @@
+{
+    "_information":
+    {
+        "_version": "1",
+        "_source": "SAP Cloud ALM Workflow",
+        "_destination": "SAP Build",
+        "_name": "SAP Cloud ALM Workflow to SAP Build",
+        "_comment": ""
+    },
+    "switches":
+    [
+        {
+            "name": "switchExternalStatus",
+            "cases":
+            [
+                {
+                    "when": "RUNNING",
+                    "then": "STARTED"
+                },
+                {
+                    "when": "CANCELED",
+                    "then": "FAILED"
+                },
+                {
+                    "when": "ERRONEOUS",
+                    "then": "FAILED"
+                },
+                {
+                    "when": "COMPLETED",
+                    "then": "COMPLETED"
+                },
+                {
+                    "when": "SUSPENDED",
+                    "then": "FAILED"
+                }
+            ],
+            "default": "FAILED"
+        }
+    ],
+    "structure":
+    {
+        "request":
+        {
+            "definitionId": "#{@USER_VAR(workflowDefinitionId)}",
+            "context":
+            {
+                "objectId": "#{id}",
+                "objectTitle": "#{title}",
+                "objectLink": "#{@CLOUD_ALM_URL}/launchpad#DocumentationObject-manage?sap-ui-app-id-hint=com.sap.calm.imp.sd.docu.ui&/Documents(#{displayId})",
+                "triggeredby": "#{triggeredBy}",
+                "toBeReviewedBy": ["#{@USER_VAR(reviewedBy)}", "#{responsibleId}"],
+                "owner": "#{ownerId}",
+                "responsible": "#{responsibleId}",
+                "type": "#{typeName}",
+                "status": "#{statusName}",
+                "priority": "#{priorityName}",
+                "tags": "#{tags}",
+                "projectId": "#{projectId}",
+                "projectName": "#{projectName}"
+            }
+        },
+        "response":
+        {
+            "externalResourceId": "#{id}",
+            "externalResourceStatus": "${SWITCH(switchExternalStatus,status)}"
+        }
+    },
+    "eventTypeMapping":
+    {
+        "_comment": "Specific event type mapping",
+        "operationMappings":
+        [
+            {
+                "eventType": "WORKFLOW.STARTED",
+                "operation": "POST",
+                "responseRoot": "",
+                "externalIdProperty": "/id"
+            },
+            {
+                "eventType": "WORKFLOW.PING",
+                "operation": "GET",
+                "responseRoot": "",
+                "path": "/#{@CLOUD_ALM_EXTERNAL_ID}/outputs",
+                "structure":
+                {
+                    "request":
+                    {
+                        "definitionId": "#{@USER_VAR(workflowDefinitionId)}"
+                    },
+                    "response":
+                    {
+                        "externalResourceId": "#{workflowId}",
+                        "externalDecision": "#{decision}",
+                        "externalResourceStatus": "${SWITCH(switchExternalStatus,workflowStatus)}"
+                    }
+                }
+            },
+            {
+                "eventType": "WORKFLOW.CANCELED",
+                "operation": "PATCH",
+                "responseRoot": "",
+                "path": "/#{@CLOUD_ALM_EXTERNAL_ID}",
+                "structure":
+                {
+                    "request":
+                    {
+                        "status": "CANCELED",
+                        "cascade": false
+                    },
+                    "response":
+                    {
+                        "sentCancelRequest": true,
+                        "externalResourceStatus": "FAILED"
+                    }
+                }
+            }
+        ]
+    }
+}
