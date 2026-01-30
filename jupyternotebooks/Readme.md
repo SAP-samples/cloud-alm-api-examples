@@ -31,3 +31,10 @@ Notebook `calm-copy-template-project.ipynb` contains an example of copying a tem
 ### Add and Remove Users from a Project Team 2025-07-15
 
 Notebook `calm-project-user-staffing.ipynb` contains a sample using the new PATCH operation, allowing updates of users assigned to teams in a project.
+
+
+## Test Management API
+
+### Initial Release of Manual Test Cases API Notebook 2025-12-09
+
+Notebook `calm-tm-manual-test-cases-api-v1.ipynb` released showing how to use the Manual Test Cases API.

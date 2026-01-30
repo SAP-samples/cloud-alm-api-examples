@@ -1,0 +1,123 @@
+{
+    "_information":
+    {
+        "_version": "1",
+        "_source": "SAP Cloud ALM Workflow",
+        "_destination": "SAP Build",
+        "_name": "SAP Cloud ALM Feature to SAP Build",
+        "_comment": ""
+    },
+    "switches":
+    [
+        {
+            "name": "switchExternalStatus",
+            "cases":
+            [
+                {
+                    "when": "RUNNING",
+                    "then": "STARTED"
+                },
+                {
+                    "when": "CANCELED",
+                    "then": "FAILED"
+                },
+                {
+                    "when": "ERRONEOUS",
+                    "then": "FAILED"
+                },
+                {
+                    "when": "COMPLETED",
+                    "then": "COMPLETED"
+                },
+                 {
+                    "when": "Completed",
+                    "then": "COMPLETED"
+                },
+                {
+                    "when": "SUSPENDED",
+                    "then": "FAILED"
+                }
+            ],
+            "default": "FAILED"
+        }
+    ],
+    "structure":
+    {
+        "request":
+        {
+            "definitionId": "#{@USER_VAR(workflowDefinitionId)}",
+            "context":
+            {
+                "featureId": "#{item.id}",
+                "linkToFeature": "#{@CLOUD_ALM_URL}/launchpad#feature-display?sap-ui-app-id-hint=com.sap.calm.imp.cdm.features.ui&/list/details/#{item.universalId}",
+                "statusName": "#{item.statusName}",
+                "targetStatusName": "#{item.targetStatusName}",
+                "priority": "#{item.priorityName}",
+                "projectName": "#{item.projectName}",
+                "featureTitle": "#{item.title}",
+                "universalId": "#{item.universalId}",
+                "responsibleId": "#{item.responsibleId}",
+                "triggeredBy": "#{triggeredBy}",
+                "toBeReviewedBy": ["#{item.responsibleId}"]
+            }
+        },
+        "response":
+        {
+            "externalResourceId": "#{id}",
+            "externalResourceStatus": "${SWITCH(switchExternalStatus,status)}"
+        }
+    },
+    "eventTypeMapping":
+    {
+        "_comment": "Specific event type mapping",
+        "operationMappings":
+        [
+            {
+                "eventType": "WORKFLOW.STARTED",
+                "operation": "POST",
+                "responseRoot": "",
+                "externalIdProperty": "/id",
+                "path": "/?environmentId=#{@USER_VAR(workflowEnvironmentId)}"
+            },
+            {
+                "eventType": "WORKFLOW.PING",
+                "operation": "GET",
+                "responseRoot": "",
+                "path": "/#{@CLOUD_ALM_EXTERNAL_ID}/outputs?environmentId=#{@USER_VAR(workflowEnvironmentId)}",
+                "structure":
+                {
+                    "request":
+                    {
+                        "definitionId": "#{@USER_VAR(workflowDefinitionId)}"
+                    },
+                    "response":
+                    {
+                        "externalResourceId": "#{workflowId}",
+                        "externalDecision": "#{decision}",
+                        "externalApprovers": "#{approvers}",
+                        "externalResourceStatus": "${SWITCH(switchExternalStatus,workflowStatus)}"
+                    }
+                }
+            },
+            {
+                "eventType": "WORKFLOW.CANCELED",
+                "operation": "PATCH",
+                "responseRoot": "",
+                "path": "/#{@CLOUD_ALM_EXTERNAL_ID}/?environmentId=#{@USER_VAR(workflowEnvironmentId)}",
+                "structure":
+                {
+                    "request":
+                    {
+                        "status": "CANCELED",
+                        "cascade": false
+                    },
+                    "response":
+                    {
+                        "sentCancelRequest": true,
+                        "externalResourceStatus": "FAILED"
+                    }
+                }
+            }
+        ]
+    }
+}
