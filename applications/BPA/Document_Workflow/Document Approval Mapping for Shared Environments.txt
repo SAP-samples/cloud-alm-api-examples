@@ -35,6 +35,21 @@
                 }
             ],
             "default": "FAILED"
+        },
+        {
+            "name": "switchResponsibleValue",
+            "cases":
+            [ 
+                {
+                    "when": "",
+                    "then": ""
+                },
+                {
+                    "when": null,
+                    "then": ""
+                }
+            ],
+            "default": "#{responsibleId}"
         }
     ],
     "structure":
@@ -46,11 +61,11 @@
             {
                 "objectId": "#{id}",
                 "objectTitle": "#{title}",
-                "objectLink": "#{@CLOUD_ALM_URL}/launchpad#DocumentationObject-manage?sap-ui-app-id-hint=com.sap.calm.imp.sd.docu.ui&/Documents(#{displayId})",
+                "objectLink": "#{@CLOUD_ALM_URL}/launchpad#DocumentationObject-manage?displayId=#{displayId}",
                 "triggeredby": "#{triggeredBy}",
                 "toBeReviewedBy": ["#{@USER_VAR(reviewedBy)}", "#{responsibleId}"],
                 "owner": "#{ownerId}",
-                "responsible": "#{responsibleId}",
+                "responsible": "${SWITCH(switchResponsibleValue,responsibleId)}",
                 "type": "#{typeName}",
                 "status": "#{statusName}",
                 "priority": "#{priorityName}",
