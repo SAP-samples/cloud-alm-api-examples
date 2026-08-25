@@ -9,7 +9,8 @@
 
         certificate.pem   client certificate (+ CA chain)  -> curl --cert
         key.pem           private key                      -> curl --key
-        certificate.p12   PKCS#12 bundle                   -> Postman, Java, SoapUI, ...
+        certificate.pfx   PKCS#12 bundle, password protected
+                                                           -> Postman, Java, SoapUI, ...
         calm-api.env      the non-secret values (client id, token URL, API URL)
 
     Nothing has to be installed: the script only uses Windows PowerShell 5.1
@@ -23,7 +24,7 @@
     Where to write the files. Default: the current folder.
 
 .PARAMETER Password
-    Password for certificate.p12. If omitted you are asked interactively.
+    Password for certificate.pfx. If omitted you are asked interactively.
 
 .PARAMETER Force
     Overwrite existing files.
@@ -157,7 +158,7 @@ function Get-PemBlocks {
 # ------------------------------------------------------------ 0. banner -----
 
 Write-Host "SAP Cloud ALM - mTLS setup helper" -ForegroundColor White
-Write-Host "Creates certificate.pem, key.pem and certificate.p12 from a service key."
+Write-Host "Creates certificate.pem, key.pem and certificate.pfx from a service key."
 
 if ($PSVersionTable.Platform -and $PSVersionTable.Platform -ne 'Win32NT') {
     Write-Warn "This script is made for Windows. On macOS and Linux please use setup-calm-mtls.sh instead."
@@ -292,11 +293,11 @@ catch {
 
 $certFile = Join-Path $OutputFolder 'certificate.pem'
 $keyFile  = Join-Path $OutputFolder 'key.pem'
-$p12File  = Join-Path $OutputFolder 'certificate.p12'
+$pfxFile  = Join-Path $OutputFolder 'certificate.pfx'
 $envFile  = Join-Path $OutputFolder 'calm-api.env'
 
 if (-not $Force) {
-    foreach ($f in @($certFile, $keyFile, $p12File)) {
+    foreach ($f in @($certFile, $keyFile, $pfxFile)) {
         if (Test-Path -LiteralPath $f) {
             Stop-WithMessage "The file '$f' already exists." @(
                 "Nothing was changed. Re-run with -Force to overwrite,",
@@ -385,14 +386,14 @@ if ($daysLeft -lt 0)      { Write-Warn "This certificate EXPIRED on $($leaf.NotA
 elseif ($daysLeft -lt 30) { Write-Warn "This certificate expires on $($leaf.NotAfter) (in $daysLeft days) - plan the renewal." }
 else                      { Write-Ok "Certificate is valid until $($leaf.NotAfter) ($daysLeft days left)." }
 
-# --------------------------------------------------------- 5. build p12 -----
+# --------------------------------------------------------- 5. build pfx -----
 
-Write-Step "Step 5/5  Creating certificate.p12"
+Write-Step "Step 5/5  Creating certificate.pfx"
 
-if (-not $Password) { $Password = $env:CALM_P12_PASSWORD }
+if (-not $Password) { $Password = $env:CALM_PFX_PASSWORD }
 if (-not $Password) {
     while ($true) {
-        $s1 = Read-Host "    Choose a password for certificate.p12 (typing is hidden)" -AsSecureString
+        $s1 = Read-Host "    Choose a password for certificate.pfx (typing is hidden)" -AsSecureString
         $s2 = Read-Host "    Repeat the password" -AsSecureString
         $p1 = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($s1))
         $p2 = [Runtime.InteropServices.Marshal]::PtrToStringAuto([Runtime.InteropServices.Marshal]::SecureStringToBSTR($s2))
@@ -452,13 +453,13 @@ try {
     }
 
     $pfxBytes = $collection.Export([System.Security.Cryptography.X509Certificates.X509ContentType]::Pkcs12, $Password)
-    [System.IO.File]::WriteAllBytes($p12File, $pfxBytes)
+    [System.IO.File]::WriteAllBytes($pfxFile, $pfxBytes)
 }
 catch {
-    Stop-WithMessage "certificate.p12 could not be created." @(
+    Stop-WithMessage "certificate.pfx could not be created." @(
         "certificate.pem and key.pem were created and can already be used with curl.",
-        "If you need the .p12 file, create it manually with OpenSSL:",
-        "  openssl pkcs12 -export -out certificate.p12 -in certificate.pem -inkey key.pem",
+        "If you need the .pfx file, create it manually with OpenSSL:",
+        "  openssl pkcs12 -export -out certificate.pfx -in certificate.pem -inkey key.pem",
         "OpenSSL is included in Git for Windows: C:\Program Files\Git\usr\bin\openssl.exe",
         "On macOS and Linux use setup-calm-mtls.sh - it does the same automatically.",
         "Technical detail: $($_.Exception.Message)"
@@ -471,8 +472,8 @@ finally {
     }
 }
 
-try { & icacls.exe $p12File /inheritance:r /grant:r "$($env:USERNAME):(R,W)" | Out-Null } catch { }
-Write-Ok "$p12File   (protected with the password you entered)"
+try { & icacls.exe $pfxFile /inheritance:r /grant:r "$($env:USERNAME):(R,W)" | Out-Null } catch { }
+Write-Ok "$pfxFile   (protected with the password you entered)"
 
 $envLines = @(
     "# SAP Cloud ALM API - non-secret connection data",
@@ -488,12 +489,12 @@ Write-Ok "$envFile   (client id and URLs, no secrets)"
 
 Write-Host ""
 Write-Host "All done. Files in $OutputFolder :" -ForegroundColor Green
-Write-Host "  certificate.pem  certificate.p12  key.pem  calm-api.env"
+Write-Host "  certificate.pem  certificate.pfx  key.pem  calm-api.env"
 Write-Host ""
 Write-Host "Check that it works - request an access token:" -ForegroundColor White
-Write-Host "  The curl.exe of Windows uses Schannel and therefore needs the .p12 file,"
+Write-Host "  The curl.exe of Windows uses Schannel and therefore needs the .pfx file,"
 Write-Host "  not the .pem files:"
-Write-Host "  curl.exe --cert `"certificate.p12`" --cert-type P12 --pass <your-p12-password> ``"
+Write-Host "  curl.exe --cert `"certificate.pfx`" --cert-type P12 --pass <your-pfx-password> ``"
 Write-Host "       -X POST `"$certUrl/oauth/token`" ``"
 Write-Host "       -d `"grant_type=client_credentials`" --data-urlencode `"client_id=$clientId`""
 if ($apiUrl) {
@@ -502,6 +503,6 @@ if ($apiUrl) {
     Write-Host "  curl.exe -H `"Authorization: Bearer <access_token>`" `"$apiUrl/...`""
 }
 Write-Host ""
-Write-Host "Keep key.pem and certificate.p12 secret - they are as powerful as a password." -ForegroundColor Yellow
+Write-Host "Keep key.pem and certificate.pfx secret - they are as powerful as a password." -ForegroundColor Yellow
 Write-Host "Never commit them to Git and never send them by e-mail."
 Write-Host ""
