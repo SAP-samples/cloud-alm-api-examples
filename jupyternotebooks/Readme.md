@@ -38,3 +38,16 @@ Notebook `calm-project-user-staffing.ipynb` contains a sample using the new PATC
 ### Initial Release of Manual Test Cases API Notebook 2025-12-09
 
 Notebook `calm-tm-manual-test-cases-api-v1.ipynb` released showing how to use the Manual Test Cases API.
+
+
+## CDM Features API
+
+### CDM Features API initial notebook release 2026-08-07
+
+Notebook `calm-cdm-features-api-v1.ipynb` contains samples of the CDM Features API, demonstrating authentication (OAuth2 and sandbox), reading reference data, querying features with OData options ($filter, $select, $expand), creating and updating features, and pagination.
+
+> **See also:** [calm-project-task-api.ipynb](calm-project-task-api.ipynb) demonstrates `GET /api/calm-projects/v1/projects` to list projects and obtain the `projectId` UUID required by the CDM Features API.
+
+### CDM Features References API initial notebook release 2026-08-07
+
+Notebook `calm-cdm-features-references-api-v1.ipynb` contains samples of managing URL references and external references (including idempotent create with composite key), and reading related entities such as task assignments, transports, and transport references.
