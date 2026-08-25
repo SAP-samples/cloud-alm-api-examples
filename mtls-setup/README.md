@@ -13,7 +13,7 @@ Reference documentation: <https://help.sap.com/docs/cloud-alm/apis/creating-serv
 | ----------------- | ------------------------------------------------ | --------------------------------------------------------------------- |
 | `certificate.pem` | Your client certificate + the SAP CA chain       | `curl --cert`, Python, Node.js, Java                                  |
 | `key.pem`         | Your **private key** – keep it secret            | `curl --key`                                                          |
-| `certificate.p12` | Both of the above in one password-protected file | Postman, SoapUI, SAP tools, Java keystores, Windows certificate store |
+| `certificate.pfx` | Both of the above in one password-protected file | Postman, SoapUI, SAP tools, Java keystores, Windows certificate store |
 | `calm-api.env`    | Client ID and URLs (no secrets)                  | Copy/paste reference                                                  |
 
 ---
@@ -59,7 +59,7 @@ for example on your Desktop:
    * do nothing if you used **Copy JSON** – the script picks it up from the clipboard, or
    * paste the path of the downloaded file. To get the path: right-click the file in the
      Explorer → **Copy as path** → right-click into the PowerShell window to paste.
-5. Choose a password for `certificate.p12` when asked (you type it twice, nothing is shown).
+5. Choose a password for `certificate.pfx` when asked (you type it twice, nothing is shown).
 
 You can also give the file directly:
 
@@ -96,7 +96,7 @@ it does not change any system setting.
 5. When asked for the service key, drag the downloaded `.json` file from Finder into the
    Terminal window and press <kbd>Enter</kbd>. (If you used **Copy JSON**, the script finds it
    in the clipboard by itself.)
-6. Choose a password for `certificate.p12` (typed twice, nothing is shown while typing).
+6. Choose a password for `certificate.pfx` (typed twice, nothing is shown while typing).
 
 You can also give the file directly:
 
@@ -122,7 +122,7 @@ chmod +x setup-calm-mtls.sh
 | Windows                 | macOS / Linux | Meaning                                        |
 | ----------------------- | ------------- | ---------------------------------------------- |
 | `-OutputFolder C:\calm` | `-o ~/calm`   | Write the files somewhere else                 |
-| `-Password 'secret'`    | `-p 'secret'` | Set the `.p12` password without being asked    |
+| `-Password 'secret'`    | `-p 'secret'` | Set the `.pfx` password without being asked    |
 | –                       | `--no-test`   | Do not request a test token (macOS/Linux only) |
 | `-Force`                | `--force`     | Overwrite files that already exist             |
 | `-?`                    | `--help`      | Show help                                      |
@@ -137,7 +137,7 @@ chmod +x setup-calm-mtls.sh
    `certificate.pem` and `key.pem` (the private key gets restrictive file permissions).
 4. Checks that certificate and key belong together and warns if the certificate is
    expired or expires within 30 days.
-5. Creates `certificate.p12` with the password you choose.
+5. Creates `certificate.pfx` with the password you choose.
 6. On macOS and Linux it additionally requests a real access token from
    `<certurl>/oauth/token` so you immediately know whether everything works.
    On Windows this check is not done automatically – run the `curl.exe` command from
@@ -159,10 +159,10 @@ curl --cert certificate.pem --key key.pem \
 ```
 
 Windows – the `curl.exe` shipped with Windows 10/11 uses **Schannel** and therefore cannot read
-`key.pem`. Use the `.p12` file instead (note the `.exe`, otherwise PowerShell uses its own alias):
+`key.pem`. Use the `.pfx` file instead (note the `.exe`, otherwise PowerShell uses its own alias):
 
 ```powershell
-curl.exe --cert "certificate.p12" --cert-type P12 --pass "YourP12Password" `
+curl.exe --cert "certificate.pfx" --cert-type P12 --pass "YourPfxPassword" `
      -X POST "https://<your-subaccount>.authentication.cert.<region>.hana.ondemand.com/oauth/token" `
      -d "grant_type=client_credentials" --data-urlencode "client_id=sb-xxxx|sapcloudalm!xxxx"
 ```
@@ -170,7 +170,7 @@ curl.exe --cert "certificate.p12" --cert-type P12 --pass "YourP12Password" `
 Or fully in PowerShell, without curl:
 
 ```powershell
-$cert  = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2("certificate.p12", "YourP12Password", "Exportable,PersistKeySet,UserKeySet")
+$cert  = New-Object System.Security.Cryptography.X509Certificates.X509Certificate2("certificate.pfx", "YourPfxPassword", "Exportable,PersistKeySet,UserKeySet")
 $token = (Invoke-RestMethod -Method Post -Certificate $cert `
             -Uri "https://<your-subaccount>.authentication.cert.<region>.hana.ondemand.com/oauth/token" `
             -Body @{ grant_type = "client_credentials"; client_id = "sb-xxxx|sapcloudalm!xxxx" }).access_token
@@ -192,22 +192,22 @@ The token is short-lived – request a new one when it expires.
 ### Postman
 
 *Settings → Certificates → Add Certificate* → enter the host of the API,
-select **PFX file** = `certificate.p12` and enter your password.
+select **PFX file** = `certificate.pfx` and enter your password.
 Alternatively use CRT = `certificate.pem` and KEY = `key.pem`.
 
 ### Java (keytool / SSLContext)
 
-`certificate.p12` is a standard PKCS#12 keystore:
+`certificate.pfx` is a standard PKCS#12 keystore:
 
 ```bash
-keytool -list -v -keystore certificate.p12 -storetype PKCS12
+keytool -list -v -keystore certificate.pfx -storetype PKCS12
 ```
 
 Use it as `javax.net.ssl.keyStore` with `javax.net.ssl.keyStoreType=PKCS12`.
 
 ### Windows certificate store
 
-Double-click `certificate.p12`, enter the password and follow the import wizard.
+Double-click `certificate.pfx`, enter the password and follow the import wizard.
 
 ---
 
@@ -215,7 +215,7 @@ Double-click `certificate.p12`, enter the password and follow the import wizard.
 
 **No.**
 
-* **Windows**: the PowerShell script builds the `.p12` file with built-in .NET functions.
+* **Windows**: the PowerShell script builds the `.pfx` file with built-in .NET functions.
 * **macOS**: OpenSSL (LibreSSL) is pre-installed at `/usr/bin/openssl`.
 * **Linux**: OpenSSL is part of every common distribution.
 
@@ -232,7 +232,7 @@ Only if you want to run the OpenSSL commands manually:
 The manual equivalent of what the script does:
 
 ```bash
-openssl pkcs12 -export -out certificate.p12 -in certificate.pem -inkey key.pem
+openssl pkcs12 -export -out certificate.pfx -in certificate.pem -inkey key.pem
 ```
 
 (You are prompted for the export password – safer than putting it into the command line
@@ -254,9 +254,9 @@ with `-passout pass:...`, because command lines are visible to other users of th
 | `HTTP 403`                                                           | The certificate was not accepted – the service key was probably deleted in SAP BTP.                                                                                                                                                                                               |
 | `HTTP 404`                                                           | Wrong URL – it must be the value of `certurl` plus `/oauth/token`, **not** the value of `url`.                                                                                                                                                                                    |
 | curl error 35 / 58 / 60 / 77, `SecureChannelFailure`, `TrustFailure` | The TLS handshake failed. In almost all cases a company proxy is inspecting HTTPS traffic – mutual TLS cannot work through it. Ask your network team to exclude `*.authentication.cert.*.hana.ondemand.com`, or test from a network without such a proxy (e.g. a mobile hotspot). |
-| `unable to set private key file` / `--key` ignored (Windows)         | The `curl.exe` of Windows uses Schannel and cannot read PEM keys. Use `--cert certificate.p12 --cert-type P12 --pass <password>` instead.                                                                                                                                         |
+| `unable to set private key file` / `--key` ignored (Windows)         | The `curl.exe` of Windows uses Schannel and cannot read PEM keys. Use `--cert certificate.pfx --cert-type P12 --pass <password>` instead.                                                                                                                                         |
 | `Could not resolve host` / `NameResolutionFailure`                   | No internet connection, VPN not active, or a proxy must be configured (`HTTPS_PROXY` / `HTTP_PROXY`).                                                                                                                                                                             |
-| `[failed] The test call ... failed`                                  | Only the online check failed – `certificate.pem`, `key.pem` and `certificate.p12` were written correctly and can be used.                                                                                                                                                         |
+| `[failed] The test call ... failed`                                  | Only the online check failed – `certificate.pem`, `key.pem` and `certificate.pfx` were written correctly and can be used.                                                                                                                                                         |
 | `The file '...' already exists`                                      | Re-run with `--force` / `-Force`, or write to another folder with `-o` / `-OutputFolder`.                                                                                                                                                                                         |
 | PowerShell: `cannot be loaded because running scripts is disabled`   | Start it as `powershell -ExecutionPolicy Bypass -File .\setup-calm-mtls.ps1`.                                                                                                                                                                                                     |
 
@@ -264,10 +264,10 @@ with `-passout pass:...`, because command lines are visible to other users of th
 
 ## Security notes
 
-* `key.pem`, `certificate.p12` and the service key JSON are **credentials**. Anyone who has them
+* `key.pem`, `certificate.pfx` and the service key JSON are **credentials**. Anyone who has them
   can access your SAP Cloud ALM data.
 * Store them in a password manager or a secrets store, not in a shared folder or a Git repository.
-* Delete the downloaded service key JSON once the PEM/P12 files are created.
+* Delete the downloaded service key JSON once the PEM/PFX files are created.
 * Client certificates expire (typically after one year). Plan the renewal: create a new service
   key in SAP BTP, run the script again, then delete the old service key.
 * If a key was ever exposed, delete the service key in SAP BTP immediately – this revokes it.
