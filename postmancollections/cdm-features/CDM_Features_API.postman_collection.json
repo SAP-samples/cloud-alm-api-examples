@@ -1,0 +1,492 @@
+{
+  "info": {
+    "name": "SAP Cloud ALM CDM Features API",
+    "_postman_id": "cdm-features-collection-v1",
+    "description": "Postman collection for the SAP Cloud ALM CDM Features OData V4 API (calm-features/v1).\n\nCovered operations:\n- Reference data: FeatureStatus, FeaturePriorities\n- List and filter Features with OData options ($filter, $select, $expand, $count)\n- Create and update (PATCH) Features\n- URL References and External References (create, list, delete)\n- Task Assignments, Transports, Transport References (read-only)\n- Sandbox mode (API key, no credentials required)\n\nBefore running:\n1. Import this collection and the matching environment file.\n2. Fill in ACCESS_TOKEN_URL, CLIENT_ID, CLIENT_SECRET, and PROJECT_UUID in the environment.\n3. Set BASE_URL to the full resolved URL without a trailing slash,\n   e.g. https://mytenant.eu10.alm.cloud.sap/api/calm-features/v1\n4. For sandbox requests use the '6 - Sandbox (read-only, no credentials)' folder — set APIKEY instead.\n\nBase URL (production): https://<tenant>.<region>.alm.cloud.sap/api/calm-features/v1  (no trailing slash)\nBase URL (sandbox):    https://sandbox.api.sap.com/SAPCALM/calm-features/v1",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+  },
+  "event": [
+    {
+      "listen": "prerequest",
+      "script": {
+        "type": "text/javascript",
+        "exec": [
+          "// Auto-fetch OAuth2 token before each request (skipped for sandbox folder).",
+          "// Requires environment variables: ACCESS_TOKEN_URL, CLIENT_ID, CLIENT_SECRET.",
+          "// Caches the token until 60 seconds before expiry to avoid fetching on every request.",
+          "const tokenUrl = pm.environment.get('ACCESS_TOKEN_URL');",
+          "const clientId = pm.environment.get('CLIENT_ID');",
+          "const clientSecret = pm.environment.get('CLIENT_SECRET');",
+          "if (tokenUrl && clientId && clientSecret) {",
+          "    const expiresAt = pm.environment.get('BEARER_TOKEN_EXPIRES_AT');",
+          "    if (expiresAt && Date.now() < Number(expiresAt)) { return; }",
+          "    pm.sendRequest({",
+          "        url: tokenUrl,",
+          "        method: 'POST',",
+          "        header: {",
+          "            'Content-Type': 'application/x-www-form-urlencoded',",
+          "            'Authorization': 'Basic ' + Buffer.from(clientId + ':' + clientSecret).toString('base64')",
+          "        },",
+          "        body: { mode: 'urlencoded', urlencoded: [{ key: 'grant_type', value: 'client_credentials' }] }",
+          "    }, function (err, res) {",
+          "        if (!err && res && res.code === 200) {",
+          "            const body = res.json();",
+          "            if (body.access_token) {",
+          "                pm.environment.set('BEARER_TOKEN', body.access_token);",
+          "                const expiresIn = body.expires_in || 43200;",
+          "                pm.environment.set('BEARER_TOKEN_EXPIRES_AT', String(Date.now() + (expiresIn - 60) * 1000));",
+          "            }",
+          "        }",
+          "    });",
+          "} else {",
+          "    const isSandbox = pm.request.url.toString().indexOf('sandbox.api.sap.com') !== -1;",
+          "    if (!isSandbox) {",
+          "        const missing = [];",
+          "        if (!tokenUrl) missing.push('ACCESS_TOKEN_URL');",
+          "        if (!clientId) missing.push('CLIENT_ID');",
+          "        if (!clientSecret) missing.push('CLIENT_SECRET');",
+          "        console.warn('[CDM Features] Bearer token not fetched. Missing environment variables: ' + missing.join(', ') + '. Fill in these values in the environment to authenticate. Requests will return 401 without a token.');",
+          "    }",
+          "}"
+        ]
+      }
+    }
+  ],
+  "item": [
+    {
+      "name": "0 - Reference Data",
+      "description": "Read-only reference lists for valid status and priority codes. Run these to discover allowed values for statusCode and priorityCode before creating or updating Features.",
+      "item": [
+        {
+          "name": "GET FeatureStatus",
+          "request": {
+            "method": "GET",
+            "description": "Returns valid Feature status codes and display labels. Use these values for the statusCode field in POST/PATCH requests.",
+            "header": [{ "key": "Authorization", "value": "Bearer {{BEARER_TOKEN}}" }],
+            "url": {
+              "raw": "{{BASE_URL}}/FeatureStatus",
+              "host": ["{{BASE_URL}}"],
+              "path": ["FeatureStatus"]
+            }
+          }
+        },
+        {
+          "name": "GET FeaturePriorities",
+          "request": {
+            "method": "GET",
+            "description": "Returns valid Feature priority codes and display labels. Use these values for the priorityCode field in POST/PATCH requests.",
+            "header": [{ "key": "Authorization", "value": "Bearer {{BEARER_TOKEN}}" }],
+            "url": {
+              "raw": "{{BASE_URL}}/FeaturePriorities",
+              "host": ["{{BASE_URL}}"],
+              "path": ["FeaturePriorities"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "1 - Read Features",
+      "description": "OData V4 GET requests demonstrating $top, $orderby, $filter, $select, $expand, $count, and $skip. Run these first to explore your data and copy a Feature UUID into the FEATURE_UUID environment variable.",
+      "item": [
+        {
+          "name": "GET Features (basic, $top + $orderby)",
+          "request": {
+            "method": "GET",
+            "description": "Returns the 5 most-recently-modified Features. Good starting point to verify connectivity and discover Feature UUIDs.",
+            "header": [{ "key": "Authorization", "value": "Bearer {{BEARER_TOKEN}}" }],
+            "url": {
+              "raw": "{{BASE_URL}}/Features?$top=5&$orderby=modifiedAt desc",
+              "host": ["{{BASE_URL}}"],
+              "path": ["Features"]
+            }
+          }
+        },
+        {
+          "name": "GET Features ($filter + $select + $expand)",
+          "request": {
+            "method": "GET",
+            "description": "Demonstrates combining $filter (status + priority), $select (specific fields), and $expand (related entities) in one request. Adjust the filter values to match your data.",
+            "header": [{ "key": "Authorization", "value": "Bearer {{BEARER_TOKEN}}" }],
+            "url": {
+              "raw": "{{BASE_URL}}/Features?$filter=statusCode eq 'IN_REALIZATION' and priorityCode le 20&$select=uuid,displayId,title,projectId,statusCode,priorityCode,modifiedAt&$expand=toStatus,toPriority,toProject,toScope,toRelease,toWorkstream&$orderby=modifiedAt desc&$top=25",
+              "host": ["{{BASE_URL}}"],
+              "path": ["Features"]
+            }
+          }
+        },
+        {
+          "name": "GET Features ($count + pagination)",
+          "request": {
+            "method": "GET",
+            "description": "Returns up to 10 Features and includes @odata.count (total count) in the response. Increase $skip by 10 to page through results.",
+            "header": [{ "key": "Authorization", "value": "Bearer {{BEARER_TOKEN}}" }],
+            "url": {
+              "raw": "{{BASE_URL}}/Features?$count=true&$top=10&$skip=0&$orderby=modifiedAt desc",
+              "host": ["{{BASE_URL}}"],
+              "path": ["Features"]
+            }
+          }
+        },
+        {
+          "name": "GET Feature by UUID ($expand references)",
+          "event": [
+            {
+              "listen": "prerequest",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "if (!pm.environment.get('FEATURE_UUID')) {",
+                  "    throw new Error('[CDM Features] FEATURE_UUID is not set. Run one of the GET Features requests first, copy a uuid from the response, and save it as FEATURE_UUID in the environment. Alternatively, run POST Feature (section 2) which sets FEATURE_UUID automatically.');",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "GET",
+            "description": "Retrieves a single Feature by UUID with URL References and External References expanded inline. Set FEATURE_UUID in the environment first (or run POST Feature in section 2 which captures it automatically).",
+            "header": [{ "key": "Authorization", "value": "Bearer {{BEARER_TOKEN}}" }],
+            "url": {
+              "raw": "{{BASE_URL}}/Features/{{FEATURE_UUID}}?$expand=toStatus,toPriority,toURLReferences,toExternalReferences",
+              "host": ["{{BASE_URL}}"],
+              "path": ["Features", "{{FEATURE_UUID}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "2 - Create and Update",
+      "description": "Create new Features (POST) and update existing ones (PATCH). The POST requests include test scripts that automatically capture the new Feature UUID into FEATURE_UUID — no manual copy-paste needed. Set PROJECT_UUID in the environment before running POST requests.",
+      "item": [
+        {
+          "name": "POST Feature (minimal)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 201', function () { pm.response.to.have.status(201); });",
+                  "if (pm.response.code === 201) {",
+                  "    const body = pm.response.json();",
+                  "    if (body.uuid) {",
+                  "        pm.environment.set('FEATURE_UUID', body.uuid);",
+                  "        console.log('[CDM Features] FEATURE_UUID set to: ' + body.uuid);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "description": "Creates a Feature with the minimum required fields. Set PROJECT_UUID in the environment before running. On success (201), FEATURE_UUID is automatically captured by the test script — no manual copy-paste needed.",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{BEARER_TOKEN}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"API Demo Feature\",\n  \"projectId\": \"{{PROJECT_UUID}}\",\n  \"statusCode\": \"CREATED\",\n  \"priorityCode\": 30\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/Features",
+              "host": ["{{BASE_URL}}"],
+              "path": ["Features"]
+            }
+          }
+        },
+        {
+          "name": "POST Feature (with references)",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 201', function () { pm.response.to.have.status(201); });",
+                  "if (pm.response.code === 201) {",
+                  "    const body = pm.response.json();",
+                  "    if (body.uuid) {",
+                  "        pm.environment.set('FEATURE_UUID', body.uuid);",
+                  "        console.log('[CDM Features] FEATURE_UUID set to: ' + body.uuid);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "description": "Creates a Feature in one call with nested URL References and External References. Set PROJECT_UUID in the environment before running. On success (201), FEATURE_UUID is automatically captured. Replace jira:ABC-123 with your own reference IDs.",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{BEARER_TOKEN}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"title\": \"API Demo Feature – Full\",\n  \"projectId\": \"{{PROJECT_UUID}}\",\n  \"description\": \"Created via Postman with nested references\",\n  \"statusCode\": \"CREATED\",\n  \"priorityCode\": 20,\n  \"toURLReferences\": [\n    { \"name\": \"Specification\", \"url\": \"https://example.com/spec\" }\n  ],\n  \"toExternalReferences\": [\n    { \"id\": \"jira:ABC-123\", \"name\": \"Jira ABC-123\", \"url\": \"https://jira.example.com/browse/ABC-123\" }\n  ]\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/Features",
+              "host": ["{{BASE_URL}}"],
+              "path": ["Features"]
+            }
+          }
+        },
+        {
+          "name": "PATCH Feature (status + description)",
+          "request": {
+            "method": "PATCH",
+            "description": "Updates statusCode and description on the Feature identified by FEATURE_UUID. Only the fields included in the body are changed — omitted fields are left unchanged.",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{BEARER_TOKEN}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"statusCode\": \"IN_REALIZATION\",\n  \"description\": \"Implementation in progress\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/Features/{{FEATURE_UUID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["Features", "{{FEATURE_UUID}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "3 - URL References",
+      "description": "Manage URL References attached to a Feature — hyperlinks to external documents such as specifications or design documents. Requires FEATURE_UUID. The POST request auto-captures URL_REF_UUID for the DELETE request.",
+      "item": [
+        {
+          "name": "GET Feature URLReferences",
+          "request": {
+            "method": "GET",
+            "description": "Lists all URL References attached to the Feature identified by FEATURE_UUID.",
+            "header": [{ "key": "Authorization", "value": "Bearer {{BEARER_TOKEN}}" }],
+            "url": {
+              "raw": "{{BASE_URL}}/Features/{{FEATURE_UUID}}/toURLReferences",
+              "host": ["{{BASE_URL}}"],
+              "path": ["Features", "{{FEATURE_UUID}}", "toURLReferences"]
+            }
+          }
+        },
+        {
+          "name": "POST Feature URLReference",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 201', function () { pm.response.to.have.status(201); });",
+                  "if (pm.response.code === 201) {",
+                  "    const body = pm.response.json();",
+                  "    if (body.uuid) {",
+                  "        pm.environment.set('URL_REF_UUID', body.uuid);",
+                  "        console.log('[CDM Features] URL_REF_UUID set to: ' + body.uuid);",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "description": "Adds a URL Reference to the Feature identified by FEATURE_UUID. On success (201), URL_REF_UUID is automatically captured by the test script for use in the DELETE request.",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{BEARER_TOKEN}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"name\": \"Design Document\",\n  \"url\": \"https://example.com/design\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/Features/{{FEATURE_UUID}}/toURLReferences",
+              "host": ["{{BASE_URL}}"],
+              "path": ["Features", "{{FEATURE_UUID}}", "toURLReferences"]
+            }
+          }
+        },
+        {
+          "name": "DELETE URLReference by uuid",
+          "request": {
+            "method": "DELETE",
+            "description": "Deletes the URL Reference identified by URL_REF_UUID. Operates on the standalone /URLReferences endpoint using the reference UUID as key. URL_REF_UUID is auto-set by the POST Feature URLReference test script.",
+            "header": [{ "key": "Authorization", "value": "Bearer {{BEARER_TOKEN}}" }],
+            "url": {
+              "raw": "{{BASE_URL}}/URLReferences/{{URL_REF_UUID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["URLReferences", "{{URL_REF_UUID}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "4 - External References",
+      "description": "Manage External References — typed links to external systems such as Jira tickets or GitHub issues. Requires FEATURE_UUID. EXT_REF_ID is auto-captured (URL-encoded) after POST for the idempotency check and DELETE requests.",
+      "item": [
+        {
+          "name": "GET Feature ExternalReferences",
+          "request": {
+            "method": "GET",
+            "description": "Lists all External References attached to the Feature identified by FEATURE_UUID.",
+            "header": [{ "key": "Authorization", "value": "Bearer {{BEARER_TOKEN}}" }],
+            "url": {
+              "raw": "{{BASE_URL}}/Features/{{FEATURE_UUID}}/toExternalReferences",
+              "host": ["{{BASE_URL}}"],
+              "path": ["Features", "{{FEATURE_UUID}}", "toExternalReferences"]
+            }
+          }
+        },
+        {
+          "name": "GET ExternalReferences (idempotency check)",
+          "request": {
+            "method": "GET",
+            "description": "Checks whether an External Reference with id 'jira:ABC-123' already exists on the Feature. Returns an empty value array if not found. Run this before POST ExternalReference to implement an idempotent upsert pattern — only POST if the result array is empty.",
+            "header": [{ "key": "Authorization", "value": "Bearer {{BEARER_TOKEN}}" }],
+            "url": {
+              "raw": "{{BASE_URL}}/Features/{{FEATURE_UUID}}/toExternalReferences?$filter=id eq 'jira:ABC-456'",
+              "host": ["{{BASE_URL}}"],
+              "path": ["Features", "{{FEATURE_UUID}}", "toExternalReferences"]
+            }
+          }
+        },
+        {
+          "name": "POST Feature ExternalReference",
+          "event": [
+            {
+              "listen": "test",
+              "script": {
+                "type": "text/javascript",
+                "exec": [
+                  "pm.test('Status code is 201', function () { pm.response.to.have.status(201); });",
+                  "if (pm.response.code === 201) {",
+                  "    const body = pm.response.json();",
+                  "    if (body.id) {",
+                  "        pm.environment.set('EXT_REF_ID', encodeURIComponent(body.id));",
+                  "        console.log('[CDM Features] EXT_REF_ID set to: ' + encodeURIComponent(body.id));",
+                  "    }",
+                  "}"
+                ]
+              }
+            }
+          ],
+          "request": {
+            "method": "POST",
+            "description": "Adds an External Reference to the Feature identified by FEATURE_UUID. On success (201), EXT_REF_ID is automatically captured (URL-encoded, colons → %3A) by the test script for use in the DELETE request.",
+            "header": [
+              { "key": "Authorization", "value": "Bearer {{BEARER_TOKEN}}" },
+              { "key": "Content-Type", "value": "application/json" }
+            ],
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"id\": \"jira:ABC-456\",\n  \"name\": \"Jira Story ABC-456\",\n  \"url\": \"https://jira.example.com/browse/ABC-456\"\n}"
+            },
+            "url": {
+              "raw": "{{BASE_URL}}/Features/{{FEATURE_UUID}}/toExternalReferences",
+              "host": ["{{BASE_URL}}"],
+              "path": ["Features", "{{FEATURE_UUID}}", "toExternalReferences"]
+            }
+          }
+        },
+        {
+          "name": "DELETE ExternalReference (composite key)",
+          "request": {
+            "method": "DELETE",
+            "description": "Deletes the External Reference identified by EXT_REF_ID on the Feature identified by FEATURE_UUID. Uses a composite key path /ExternalReferences/{encoded-id}/{featureUuid}. EXT_REF_ID must be URL-encoded (colons → %3A) — auto-set by the POST Feature ExternalReference test script.",
+            "header": [{ "key": "Authorization", "value": "Bearer {{BEARER_TOKEN}}" }],
+            "url": {
+              "raw": "{{BASE_URL}}/ExternalReferences/{{EXT_REF_ID}}/{{FEATURE_UUID}}",
+              "host": ["{{BASE_URL}}"],
+              "path": ["ExternalReferences", "{{EXT_REF_ID}}", "{{FEATURE_UUID}}"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "5 - Related Entities (read-only)",
+      "description": "Read-only navigation to entities linked to a Feature: Task Assignments, Transports, and Transport References. These are created by other SAP Cloud ALM modules; the Features API exposes them as read-only navigation properties.",
+      "item": [
+        {
+          "name": "GET Feature TaskAssignments",
+          "request": {
+            "method": "GET",
+            "description": "Lists Task Assignments linked to the Feature identified by FEATURE_UUID. Task Assignments are created by other SAP Cloud ALM modules; read-only from the Features API.",
+            "header": [{ "key": "Authorization", "value": "Bearer {{BEARER_TOKEN}}" }],
+            "url": {
+              "raw": "{{BASE_URL}}/Features/{{FEATURE_UUID}}/toTaskAssignments?$top=50&$select=uuid,parent_uuid,title,type&$orderby=title asc",
+              "host": ["{{BASE_URL}}"],
+              "path": ["Features", "{{FEATURE_UUID}}", "toTaskAssignments"]
+            }
+          }
+        },
+        {
+          "name": "GET Feature Transports",
+          "request": {
+            "method": "GET",
+            "description": "Lists Transport objects linked to the Feature. Read-only navigation — transports are managed by the Change and Transport Management module.",
+            "header": [{ "key": "Authorization", "value": "Bearer {{BEARER_TOKEN}}" }],
+            "url": {
+              "raw": "{{BASE_URL}}/Features/{{FEATURE_UUID}}/toTransports",
+              "host": ["{{BASE_URL}}"],
+              "path": ["Features", "{{FEATURE_UUID}}", "toTransports"]
+            }
+          }
+        },
+        {
+          "name": "GET Feature TransportReferences",
+          "request": {
+            "method": "GET",
+            "description": "Lists Transport References linked to the Feature. Read-only navigation to on-premise transport requests associated with this Feature.",
+            "header": [{ "key": "Authorization", "value": "Bearer {{BEARER_TOKEN}}" }],
+            "url": {
+              "raw": "{{BASE_URL}}/Features/{{FEATURE_UUID}}/toTransportReferences",
+              "host": ["{{BASE_URL}}"],
+              "path": ["Features", "{{FEATURE_UUID}}", "toTransportReferences"]
+            }
+          }
+        }
+      ]
+    },
+    {
+      "name": "6 - Sandbox (read-only, no credentials)",
+      "description": "Read-only requests against the SAP API Business Hub sandbox. No OAuth2 setup needed — set APIKEY in the environment to your free key from https://api.sap.com. The collection pre-request script is automatically skipped when OAuth2 credentials are absent.",
+      "item": [
+        {
+          "name": "GET FeatureStatus (sandbox)",
+          "request": {
+            "method": "GET",
+            "description": "Retrieves Feature status reference data from the SAP API Business Hub sandbox using the apikey header. No OAuth2 credentials needed.",
+            "header": [{ "key": "apikey", "value": "{{APIKEY}}" }],
+            "url": {
+              "raw": "{{SANDBOX_BASE_URL}}/FeatureStatus",
+              "host": ["{{SANDBOX_BASE_URL}}"],
+              "path": ["FeatureStatus"]
+            }
+          }
+        },
+        {
+          "name": "GET Features (sandbox, $top=3)",
+          "request": {
+            "method": "GET",
+            "description": "Lists the first 3 Features from the sandbox. Sandbox data is read-only and shared across all API Business Hub users. Useful for exploring the response structure without a tenant setup.",
+            "header": [{ "key": "apikey", "value": "{{APIKEY}}" }],
+            "url": {
+              "raw": "{{SANDBOX_BASE_URL}}/Features?$top=3&$orderby=modifiedAt desc",
+              "host": ["{{SANDBOX_BASE_URL}}"],
+              "path": ["Features"]
+            }
+          }
+        }
+      ]
+    }
+  ]
+}
