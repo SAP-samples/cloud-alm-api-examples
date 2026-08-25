@@ -8,7 +8,8 @@
 #
 #   certificate.pem   client certificate (+ CA chain)  -> curl --cert
 #   key.pem           private key                      -> curl --key
-#   certificate.p12   PKCS#12 bundle                   -> Postman, Java, SoapUI, ...
+#   certificate.pfx   PKCS#12 bundle, password protected
+#                                                      -> Postman, Java, SoapUI, ...
 #   calm-api.env      the non-secret values (client id, token URL, API URL)
 #
 # It then requests a real access token so you know the setup works.
@@ -20,8 +21,8 @@
 #
 # Options:
 #   -o, --output DIR   where to write the files (default: current folder)
-#   -p, --password PW  password for certificate.p12 (otherwise asked interactively,
-#                      or taken from the CALM_P12_PASSWORD environment variable)
+#   -p, --password PW  password for certificate.pfx (otherwise asked interactively,
+#                      or taken from the CALM_PFX_PASSWORD environment variable)
 #       --no-test      skip the "request an access token" check
 #       --force        overwrite existing files
 #   -h, --help         show this help
@@ -35,7 +36,7 @@ SCRIPT_NAME=$(basename "$0")
 
 JSON_INPUT=""
 OUT_DIR="."
-P12_PASSWORD="${CALM_P12_PASSWORD:-}"
+PFX_PASSWORD="${CALM_PFX_PASSWORD:-}"
 RUN_TEST=1
 FORCE=0
 TMP_FILES=""
@@ -83,7 +84,7 @@ mktemp_secure() {
   printf '%s' "$f"
 }
 
-usage() { sed -n '3,32p' "$0" | sed 's/^# \{0,1\}//'; }
+usage() { sed -n '3,33p' "$0" | sed 's/^# \{0,1\}//'; }
 
 # ------------------------------------------------------------ arguments -----
 
@@ -91,7 +92,7 @@ while [ $# -gt 0 ]; do
   case "$1" in
     -h|--help)     usage; exit 0 ;;
     -o|--output)   [ $# -ge 2 ] || die "Option $1 needs a folder name."; OUT_DIR="$2"; shift 2 ;;
-    -p|--password) [ $# -ge 2 ] || die "Option $1 needs a password.";    P12_PASSWORD="$2"; shift 2 ;;
+    -p|--password) [ $# -ge 2 ] || die "Option $1 needs a password.";    PFX_PASSWORD="$2"; shift 2 ;;
     --no-test)     RUN_TEST=0; shift ;;
     --force)       FORCE=1; shift ;;
     -*)            die "Unknown option: $1" "Run '$SCRIPT_NAME --help' to see all options." ;;
@@ -162,8 +163,8 @@ json_unescape() {
   printf '%s' "$1" | awk '{ gsub(/\\r/, ""); gsub(/\\"/, "\""); gsub(/\\n/, "\n"); printf "%s", $0 } END { printf "\n" }'
 }
 
-# Writes the leaf certificate (1st) or the CA chain (2nd..n) of a PEM file.
-pem_part() { awk -v want="$2" '/-----BEGIN CERTIFICATE-----/ { n++ } (want=="leaf" && n==1) || (want=="chain" && n>1) { print }' "$1"; }
+# Writes the first (= client) certificate of a PEM file that holds a chain.
+pem_leaf() { awk '/-----BEGIN CERTIFICATE-----/ { n++ } n == 1 { print }' "$1"; }
 
 require_cmd() {
   command -v "$1" >/dev/null 2>&1 && return 0
@@ -176,20 +177,20 @@ require_cmd() {
 }
 
 read_password() {
-  if [ -n "$P12_PASSWORD" ]; then return 0; fi
+  if [ -n "$PFX_PASSWORD" ]; then return 0; fi
   if [ ! -r /dev/tty ]; then
-    die "No password for certificate.p12 was given and this terminal cannot ask for one." \
+    die "No password for certificate.pfx was given and this terminal cannot ask for one." \
         "Re-run with:  $SCRIPT_NAME <file.json> -p 'YourPassword'" \
-        "or set the environment variable CALM_P12_PASSWORD first."
+        "or set the environment variable CALM_PFX_PASSWORD first."
   fi
   while :; do
-    printf '    Choose a password for certificate.p12 (typing is hidden): ' >&2
+    printf '    Choose a password for certificate.pfx (typing is hidden): ' >&2
     IFS= read -r -s p1 < /dev/tty; printf '\n' >&2
     if [ ${#p1} -lt 4 ]; then warn "Please use at least 4 characters."; continue; fi
     printf '    Repeat the password: ' >&2
     IFS= read -r -s p2 < /dev/tty; printf '\n' >&2
     if [ "$p1" != "$p2" ]; then warn "The two entries did not match, please try again."; continue; fi
-    P12_PASSWORD="$p1"
+    PFX_PASSWORD="$p1"
     break
   done
 }
@@ -197,7 +198,7 @@ read_password() {
 # ------------------------------------------------------------ 0. checks -----
 
 printf '%s\n' "${C_BLD}SAP Cloud ALM - mTLS setup helper${C_OFF}"
-printf '%s\n' "Creates certificate.pem, key.pem and certificate.p12 from a service key."
+printf '%s\n' "Creates certificate.pem, key.pem and certificate.pfx from a service key."
 
 require_cmd awk
 require_cmd sed
@@ -312,11 +313,11 @@ mkdir -p "$OUT_DIR" 2>/dev/null || die "Cannot create the output folder '$OUT_DI
 
 CERT_FILE="$OUT_DIR/certificate.pem"
 KEY_FILE="$OUT_DIR/key.pem"
-P12_FILE="$OUT_DIR/certificate.p12"
+PFX_FILE="$OUT_DIR/certificate.pfx"
 ENV_FILE="$OUT_DIR/calm-api.env"
 
 if [ "$FORCE" -eq 0 ]; then
-  for f in "$CERT_FILE" "$KEY_FILE" "$P12_FILE"; do
+  for f in "$CERT_FILE" "$KEY_FILE" "$PFX_FILE"; do
     [ -e "$f" ] && die "The file '$f' already exists." \
         "Nothing was changed. Re-run with --force to overwrite," \
         "or write to another folder with -o <folder>."
@@ -344,7 +345,7 @@ ok "$KEY_FILE   (private key, readable only by you)"
 step "Step 4/6  Checking that certificate and key belong together"
 
 LEAF_FILE=$(mktemp_secure)
-pem_part "$CERT_FILE" leaf > "$LEAF_FILE"
+pem_leaf "$CERT_FILE" > "$LEAF_FILE"
 
 CERT_MOD=$(openssl x509 -noout -modulus -in "$LEAF_FILE" 2>/dev/null)
 [ -n "$CERT_MOD" ] || die "OpenSSL cannot read the certificate in '$CERT_FILE'." \
@@ -376,42 +377,37 @@ else
   ok "Certificate is valid until $NOT_AFTER."
 fi
 
-# --------------------------------------------------------- 5. build p12 -----
+# --------------------------------------------------------- 5. build pfx -----
 
-step "Step 5/6  Creating certificate.p12"
+step "Step 5/6  Creating certificate.pfx"
 
 read_password
 
-CHAIN_FILE=$(mktemp_secure)
-pem_part "$CERT_FILE" chain > "$CHAIN_FILE"
-
+# certificate.pem already contains the client certificate followed by the CA
+# chain, so it can be handed to OpenSSL as it is: the certificate matching the
+# private key becomes the leaf, the remaining ones are added as chain.
+#
 # The password is handed over through the environment, never on the command
 # line - otherwise other users could read it in the process list.
-CALM_P12_PASS_INTERNAL="$P12_PASSWORD"
-export CALM_P12_PASS_INTERNAL
+CALM_PFX_PASS_INTERNAL="$PFX_PASSWORD"
+export CALM_PFX_PASS_INTERNAL
 
-P12_ERR=$(mktemp_secure)
-if [ -s "$CHAIN_FILE" ]; then
-  openssl pkcs12 -export \
-      -in "$LEAF_FILE" -inkey "$KEY_FILE" -certfile "$CHAIN_FILE" \
-      -name "SAP Cloud ALM API" -out "$P12_FILE" \
-      -passout env:CALM_P12_PASS_INTERNAL 2>"$P12_ERR"
-else
-  openssl pkcs12 -export \
-      -in "$LEAF_FILE" -inkey "$KEY_FILE" \
-      -name "SAP Cloud ALM API" -out "$P12_FILE" \
-      -passout env:CALM_P12_PASS_INTERNAL 2>"$P12_ERR"
-fi
-P12_RC=$?
-unset CALM_P12_PASS_INTERNAL
+PFX_ERR=$(mktemp_secure)
+openssl pkcs12 -export \
+    -in "$CERT_FILE" \
+    -inkey "$KEY_FILE" \
+    -out "$PFX_FILE" \
+    -passout env:CALM_PFX_PASS_INTERNAL 2>"$PFX_ERR"
+PFX_RC=$?
+unset CALM_PFX_PASS_INTERNAL
 
-if [ $P12_RC -ne 0 ] || [ ! -s "$P12_FILE" ]; then
-  die "OpenSSL could not create '$P12_FILE'." \
-      "OpenSSL said: $(tr '\n' ' ' < "$P12_ERR")" \
+if [ $PFX_RC -ne 0 ] || [ ! -s "$PFX_FILE" ]; then
+  die "OpenSSL could not create '$PFX_FILE'." \
+      "OpenSSL said: $(tr '\n' ' ' < "$PFX_ERR")" \
       "certificate.pem and key.pem were created and can already be used with curl."
 fi
-chmod 600 "$P12_FILE" 2>/dev/null
-ok "$P12_FILE   (protected with the password you entered)"
+chmod 600 "$PFX_FILE" 2>/dev/null
+ok "$PFX_FILE   (protected with the password you entered)"
 
 {
   echo "# SAP Cloud ALM API - non-secret connection data"
@@ -479,7 +475,7 @@ fi
 ABS_DIR=$(cd "$OUT_DIR" 2>/dev/null && pwd)
 
 printf '\n%sAll done.%s Files in %s%s%s:\n' "$C_GRN$C_BLD" "$C_OFF" "$C_BLD" "$ABS_DIR" "$C_OFF"
-printf '  certificate.pem  certificate.p12  key.pem  calm-api.env\n'
+printf '  certificate.pem  certificate.pfx  key.pem  calm-api.env\n'
 printf '\n%sHow to get a token from now on:%s\n' "$C_BLD" "$C_OFF"
 printf "  curl --cert certificate.pem --key key.pem \\\\\n"
 printf "       -X POST '%s/oauth/token' \\\\\n" "$CERT_URL"
@@ -489,5 +485,5 @@ if [ -n "$API_URL" ]; then
   printf '\n%sHow to call an API with the token:%s\n' "$C_BLD" "$C_OFF"
   printf "  curl -H 'Authorization: Bearer <access_token>' '%s/...'\n" "$API_URL"
 fi
-printf '\n%sKeep key.pem and certificate.p12 secret%s - they are as powerful as a password.\n' "$C_YEL" "$C_OFF"
+printf '\n%sKeep key.pem and certificate.pfx secret%s - they are as powerful as a password.\n' "$C_YEL" "$C_OFF"
 printf 'Never commit them to Git and never send them by e-mail.\n\n'
