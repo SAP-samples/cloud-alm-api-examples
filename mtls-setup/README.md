@@ -37,8 +37,8 @@ Reference documentation: <https://help.sap.com/docs/cloud-alm/apis/creating-serv
 Download the script that matches your computer and put it in a folder you can find again,
 for example on your Desktop:
 
-* **Windows** → `setup-calm-mtls.ps1`
-* **macOS / Linux** → `setup-calm-mtls.sh`
+* **Windows** → `setup-cloudalm-mtls.ps1`
+* **macOS / Linux** → `setup-cloudalm-mtls.sh`
 
 ---
 
@@ -46,13 +46,13 @@ for example on your Desktop:
 
 ### Windows 10 / 11
 
-1. Open the folder containing `setup-calm-mtls.ps1` in the **File Explorer**.
+1. Open the folder containing `setup-cloudalm-mtls.ps1` in the **File Explorer**.
 2. Click into the address bar, type `powershell` and press <kbd>Enter</kbd>.
    A blue PowerShell window opens, already in the right folder.
 3. Paste the following line and press <kbd>Enter</kbd>:
 
    ```powershell
-   powershell -ExecutionPolicy Bypass -File .\setup-calm-mtls.ps1
+   powershell -ExecutionPolicy Bypass -File .\setup-cloudalm-mtls.ps1
    ```
 
 4. When asked for the service key, either
@@ -64,13 +64,13 @@ for example on your Desktop:
 You can also give the file directly:
 
 ```powershell
-powershell -ExecutionPolicy Bypass -File .\setup-calm-mtls.ps1 "C:\Users\Me\Downloads\service-key.json"
+powershell -ExecutionPolicy Bypass -File .\setup-cloudalm-mtls.ps1 "C:\Users\Me\Downloads\service-key.json"
 ```
 
 **If Windows blocks the script** with *"... is not digitally signed"* or *"cannot be loaded"*:
 
 ```powershell
-Unblock-File .\setup-calm-mtls.ps1
+Unblock-File .\setup-cloudalm-mtls.ps1
 ```
 
 and use the `-ExecutionPolicy Bypass` form shown above. This affects only this one command,
@@ -84,13 +84,13 @@ it does not change any system setting.
 3. Make the script executable (only needed once):
 
    ```bash
-   chmod +x setup-calm-mtls.sh
+   chmod +x setup-cloudalm-mtls.sh
    ```
 
 4. Start it:
 
    ```bash
-   ./setup-calm-mtls.sh
+   ./setup-cloudalm-mtls.sh
    ```
 
 5. When asked for the service key, drag the downloaded `.json` file from Finder into the
@@ -101,7 +101,7 @@ it does not change any system setting.
 You can also give the file directly:
 
 ```bash
-./setup-calm-mtls.sh ~/Downloads/service-key.json
+./setup-cloudalm-mtls.sh ~/Downloads/service-key.json
 ```
 
 **If macOS says "cannot be opened because it is from an unidentified developer"** –
@@ -113,8 +113,8 @@ then it does not appear.
 Same as macOS:
 
 ```bash
-chmod +x setup-calm-mtls.sh
-./setup-calm-mtls.sh ~/Downloads/service-key.json
+chmod +x setup-cloudalm-mtls.sh
+./setup-cloudalm-mtls.sh ~/Downloads/service-key.json
 ```
 
 ### Useful options (both scripts)
@@ -258,7 +258,7 @@ with `-passout pass:...`, because command lines are visible to other users of th
 | `Could not resolve host` / `NameResolutionFailure`                   | No internet connection, VPN not active, or a proxy must be configured (`HTTPS_PROXY` / `HTTP_PROXY`).                                                                                                                                                                             |
 | `[failed] The test call ... failed`                                  | Only the online check failed – `certificate.pem`, `key.pem` and `certificate.pfx` were written correctly and can be used.                                                                                                                                                         |
 | `The file '...' already exists`                                      | Re-run with `--force` / `-Force`, or write to another folder with `-o` / `-OutputFolder`.                                                                                                                                                                                         |
-| PowerShell: `cannot be loaded because running scripts is disabled`   | Start it as `powershell -ExecutionPolicy Bypass -File .\setup-calm-mtls.ps1`.                                                                                                                                                                                                     |
+| PowerShell: `cannot be loaded because running scripts is disabled`   | Start it as `powershell -ExecutionPolicy Bypass -File .\setup-cloudalm-mtls.ps1`.                                                                                                                                                                                                     |
 
 ---
 
