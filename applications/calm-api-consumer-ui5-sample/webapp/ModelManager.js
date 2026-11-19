@@ -225,7 +225,7 @@ sap.ui.define([
          */
         getProjects: function () {
             var oModel = this.component.getModel("project");
-            var sHeaders = { "DataServiceVersion": "2.0", "Accept": "application/json", "Content-Type": "application/json", "APIKey": "NyhUxpfiJIG9PsIdzXnAGl4OWhZsXu6l" };
+            var sHeaders = { "DataServiceVersion": "2.0", "Accept": "application/json", "Content-Type": "application/json", "APIKey": "" };
 
             // Event to trigger the busy indicators for the projects in the UI            
             this.fireEvent("requestLoadProjectsStart", {});
