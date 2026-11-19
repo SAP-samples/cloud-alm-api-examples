@@ -225,9 +225,9 @@ sap.ui.define([
          */
         getProjects: function () {
             var oModel = this.component.getModel("project");
-            var sHeaders = { "DataServiceVersion": "2.0", "Accept": "application/json", "Content-Type": "application/json", "APIKey": "REMOVED_PLACEHOLDER" };
+            var sHeaders = { "DataServiceVersion": "2.0", "Accept": "application/json", "Content-Type": "application/json", "APIKey": "<YOUR_API_KEY>" };
 
-            // Event to trigger the busy indicators for the projects in the UI            
+            // Event to trigger the busy indicators for the projects in the UI
             this.fireEvent("requestLoadProjectsStart", {});
             // Sending request
             oModel.loadData(this.getBaseUrl() + "/calm-projects/v1/projects", null, true, "GET", null, true, sHeaders);
@@ -256,7 +256,7 @@ sap.ui.define([
 
             var oModel = this.component.getModel("task");
 
-            var sHeaders = { "DataServiceVersion": "2.0", "Accept": "application/json", "Content-Type": "application/json", "APIKey": "REMOVED_PLACEHOLDER" };
+            var sHeaders = { "DataServiceVersion": "2.0", "Accept": "application/json", "Content-Type": "application/json", "APIKey": "<YOUR_API_KEY>" };
             var parameter = { "projectId": this.currentProjectId };
 
             // Event to trigger the busy indicators for the task in the UI     
@@ -269,7 +269,7 @@ sap.ui.define([
         getInfoTask: function(idTask){
             console.log("idOfTheTask :", idTask); 
             var oModel = this.component.getModel("infoTask");
-            var sHeaders = { "DataServiceVersion": "2.0", "Accept": "application/json", "Content-Type": "application/json", "APIKey": "REMOVED_PLACEHOLDER" };
+            var sHeaders = { "DataServiceVersion": "2.0", "Accept": "application/json", "Content-Type": "application/json", "APIKey": "<YOUR_API_KEY>" };
             const URL = this.getBaseUrl() + "/calm-tasks/v1/tasks/" + idTask; 
             console.log("URL :", URL); 
             this.fireEvent("requestLoadInfoTaskStart", {});
